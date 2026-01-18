@@ -625,13 +625,17 @@ class TypewriterFlow {
     updateCharacter(character, deltaTime, speed) {
         character.age += deltaTime;
 
-        // Remove characters that are too many lines behind
+        // Remove characters that are on lines we're about to overwrite or have already passed
         const currentActiveLine = this.lineNumber;
         const linesBehind = currentActiveLine - character.lineNumber;
 
-        if (linesBehind > this.maxLines) {
-            // Fade out old text that's been pushed off
-            character.opacity = Math.max(0, character.opacity - 0.05);
+        // If we've written more than maxLines since this character, it should be gone
+        // Also remove characters on the current line we're typing on (to clear before new text)
+        if (linesBehind >= this.maxLines ||
+            (character.lineNumber < currentActiveLine &&
+             character.y === this.currentLine * this.lineHeight + 150)) {
+            // Immediately remove old text
+            return false;
         }
 
         return character.opacity > 0;
