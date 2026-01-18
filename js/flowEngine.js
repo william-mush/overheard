@@ -627,12 +627,7 @@ class TypewriterFlow {
         character.age += deltaTime;
 
         // Word appears all at once when its time comes
-        const timeSinceStart = character.age - character.typingDelay;
-
-        // Speed slider controls delay: speed 1 = 200ms/word, speed 10 = 20ms/word
-        const adjustedDelay = 220 - (speed * 20);
-
-        if (timeSinceStart >= 0) {
+        if (character.age >= character.typingDelay) {
             // Fade in quickly
             character.opacity = Math.min(1, character.opacity + 0.2);
         }
