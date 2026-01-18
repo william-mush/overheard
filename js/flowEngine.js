@@ -19,6 +19,7 @@ export class FlowEngine {
             orbit: new OrbitFlow(),
             redacted: new RedactedFlow(),
             typewriter: new TypewriterFlow(),
+            overwrite: new OverwriteFlow(),
             ticker: new TickerFlow()
         };
         this.animationFrame = null;
@@ -577,20 +578,20 @@ class RedactedFlow {
     }
 }
 
-// Flow Mode: Typewriter (classic typing effect - one word at a time, stays visible)
+// Flow Mode: Typewriter (scrolling - old text disappears from bottom as new appears)
 class TypewriterFlow {
     constructor() {
         this.currentLine = 0;
         this.currentX = 100;
         this.lineHeight = 70;
         this.maxLines = Math.floor((window.innerHeight - 200) / this.lineHeight);
-        this.wordDelay = 0;
+        this.lineNumber = 0; // Track absolute line number
     }
 
     reset() {
         this.currentLine = 0;
         this.currentX = 100;
-        this.wordDelay = 0;
+        this.lineNumber = 0;
     }
 
     initializeCharacter(character) {
@@ -601,8 +602,65 @@ class TypewriterFlow {
         character.y = this.currentLine * this.lineHeight + 150;
         character.vx = 0;
         character.vy = 0;
-        character.opacity = 1; // Start visible immediately
-        character.appeared = false;
+        character.opacity = 1;
+        character.lineNumber = this.lineNumber; // Tag with absolute line number
+
+        // Calculate word width for positioning next word
+        const wordWidth = word.length * 22;
+        this.currentX += wordWidth + 10;
+
+        // Wrap to next line if needed
+        if (this.currentX > window.innerWidth - 200) {
+            this.currentX = 100;
+            this.currentLine++;
+            this.lineNumber++;
+
+            // When we reach max lines, wrap back to top
+            if (this.currentLine >= this.maxLines) {
+                this.currentLine = 0;
+            }
+        }
+    }
+
+    updateCharacter(character, deltaTime, speed) {
+        character.age += deltaTime;
+
+        // Remove characters that are too many lines behind
+        const currentActiveLine = this.lineNumber;
+        const linesBehind = currentActiveLine - character.lineNumber;
+
+        if (linesBehind > this.maxLines) {
+            // Fade out old text that's been pushed off
+            character.opacity = Math.max(0, character.opacity - 0.05);
+        }
+
+        return character.opacity > 0;
+    }
+}
+
+// Flow Mode: Overwrite (overwrites text at top when reaching bottom)
+class OverwriteFlow {
+    constructor() {
+        this.currentLine = 0;
+        this.currentX = 100;
+        this.lineHeight = 70;
+        this.maxLines = Math.floor((window.innerHeight - 200) / this.lineHeight);
+    }
+
+    reset() {
+        this.currentLine = 0;
+        this.currentX = 100;
+    }
+
+    initializeCharacter(character) {
+        const word = character.word || '';
+
+        // Position at current typing location
+        character.x = this.currentX;
+        character.y = this.currentLine * this.lineHeight + 150;
+        character.vx = 0;
+        character.vy = 0;
+        character.opacity = 1;
 
         // Calculate word width for positioning next word
         const wordWidth = word.length * 22;
@@ -613,6 +671,7 @@ class TypewriterFlow {
             this.currentX = 100;
             this.currentLine++;
 
+            // Wrap back to top - overwrites old text
             if (this.currentLine >= this.maxLines) {
                 this.currentLine = 0;
             }
@@ -621,8 +680,6 @@ class TypewriterFlow {
 
     updateCharacter(character, deltaTime, speed) {
         character.age += deltaTime;
-
-        // Words are visible immediately - no delays
 
         // Keep visible for long time, then fade out
         if (character.age > 20000) {
