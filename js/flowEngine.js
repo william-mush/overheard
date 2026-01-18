@@ -601,11 +601,8 @@ class TypewriterFlow {
         character.y = this.currentLine * this.lineHeight + 150;
         character.vx = 0;
         character.vy = 0;
-        character.opacity = 0;
-        character.typingDelay = this.wordDelay;
-
-        // Update delay for next word - speed slider will control this
-        this.wordDelay += 100; // Base delay between words
+        character.opacity = 1; // Start visible immediately
+        character.appeared = false;
 
         // Calculate word width for positioning next word
         const wordWidth = word.length * 22;
@@ -615,7 +612,6 @@ class TypewriterFlow {
         if (this.currentX > window.innerWidth - 200) {
             this.currentX = 100;
             this.currentLine++;
-            this.wordDelay += 200; // Extra pause at line break
 
             if (this.currentLine >= this.maxLines) {
                 this.currentLine = 0;
@@ -626,11 +622,7 @@ class TypewriterFlow {
     updateCharacter(character, deltaTime, speed) {
         character.age += deltaTime;
 
-        // Word appears all at once when its time comes
-        if (character.age >= character.typingDelay) {
-            // Fade in quickly
-            character.opacity = Math.min(1, character.opacity + 0.2);
-        }
+        // Words are visible immediately - no delays
 
         // Keep visible for long time, then fade out
         if (character.age > 20000) {
