@@ -4,6 +4,9 @@ export class DataSourceManager {
     constructor() {
         this.listeners = [];
         this.sources = [
+            // Time & Date
+            new TimeSource(),
+
             // Tech & Code
             new HackerNewsSource(),
             new RedditSource(),
@@ -115,6 +118,44 @@ export class DataSourceManager {
         this.listeners
             .filter(l => l.event === event)
             .forEach(l => l.callback(data));
+    }
+}
+
+// Time & Date Source
+class TimeSource {
+    constructor() {
+        this.name = 'Time';
+    }
+
+    async initialize() {
+        // No initialization needed
+    }
+
+    async fetch() {
+        const items = [];
+        const now = new Date();
+
+        // Various time formats
+        const formats = [
+            now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+            now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
+            `UTC ${now.toUTCString()}`,
+            `Unix timestamp: ${Math.floor(now.getTime() / 1000)}`,
+            `Day ${Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 86400000)} of ${now.getFullYear()}`,
+            `Week ${Math.ceil((now - new Date(now.getFullYear(), 0, 1)) / 604800000)} of ${now.getFullYear()}`
+        ];
+
+        // Return a random time format
+        const randomFormat = formats[Math.floor(Math.random() * formats.length)];
+
+        items.push({
+            source: 'TIME',
+            content: randomFormat,
+            timestamp: Date.now(),
+            url: '#'
+        });
+
+        return items;
     }
 }
 
