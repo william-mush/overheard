@@ -41,6 +41,20 @@ export class FlowEngine {
 
     setMode(mode) {
         this.mode = mode;
+
+        // Clear all active characters from screen
+        this.activeCharacters.forEach(char => {
+            if (char.element && char.element.parentNode) {
+                char.element.remove();
+            }
+        });
+        this.activeCharacters = [];
+
+        // Clear any featured headlines
+        const headlines = this.container.querySelectorAll('.featured-headline');
+        headlines.forEach(h => h.remove());
+
+        // Reset the new flow mode
         this.flowModes[mode].reset();
     }
 
