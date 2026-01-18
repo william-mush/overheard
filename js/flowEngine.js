@@ -641,7 +641,9 @@ class TypewriterFlow {
         if (character.fullWord) {
             const timeSinceStart = character.age - character.typingDelay;
             if (timeSinceStart >= 0) {
-                const charsToShow = Math.floor(timeSinceStart / character.charTypingSpeed);
+                // Speed slider controls typing speed: speed 1 = 100ms/char, speed 10 = 10ms/char
+                const adjustedSpeed = 110 - (speed * 10);
+                const charsToShow = Math.floor(timeSinceStart / adjustedSpeed);
                 character.revealedChars = Math.min(charsToShow, character.fullWord.length);
 
                 // Update the visible text
