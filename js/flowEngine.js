@@ -577,46 +577,35 @@ class RedactedFlow {
     }
 }
 
-// Flow Mode: Typewriter (classic typing effect - one character at a time, stays visible)
+// Flow Mode: Typewriter (classic typing effect - one word at a time, stays visible)
 class TypewriterFlow {
     constructor() {
         this.currentLine = 0;
         this.currentX = 100;
         this.lineHeight = 70;
         this.maxLines = Math.floor((window.innerHeight - 200) / this.lineHeight);
-        this.charDelay = 0;
-        this.sentences = []; // Buffer to collect full sentences
-        this.currentSentence = '';
+        this.wordDelay = 0;
     }
 
     reset() {
         this.currentLine = 0;
         this.currentX = 100;
-        this.charDelay = 0;
-        this.sentences = [];
-        this.currentSentence = '';
+        this.wordDelay = 0;
     }
 
     initializeCharacter(character) {
-        // For typewriter mode, we want character-by-character appearance
-        // Each "word" (which is our unit) gets typed out letter by letter
         const word = character.word || '';
-
-        // Store the full word but we'll reveal it character by character
-        character.fullWord = word;
-        character.revealedChars = 0;
-        character.charTypingSpeed = 30; // ms per character (faster typing)
 
         // Position at current typing location
         character.x = this.currentX;
         character.y = this.currentLine * this.lineHeight + 150;
         character.vx = 0;
         character.vy = 0;
-        character.opacity = 1;
-        character.typingDelay = this.charDelay;
+        character.opacity = 0;
+        character.typingDelay = this.wordDelay;
 
-        // Update delay for next word based on number of characters
-        this.charDelay += word.length * 30 + 60; // 30ms per char + 60ms word gap
+        // Update delay for next word - speed slider will control this
+        this.wordDelay += 100; // Base delay between words
 
         // Calculate word width for positioning next word
         const wordWidth = word.length * 22;
@@ -626,7 +615,7 @@ class TypewriterFlow {
         if (this.currentX > window.innerWidth - 200) {
             this.currentX = 100;
             this.currentLine++;
-            this.charDelay += 400; // Extra pause at line break
+            this.wordDelay += 200; // Extra pause at line break
 
             if (this.currentLine >= this.maxLines) {
                 this.currentLine = 0;
@@ -637,22 +626,15 @@ class TypewriterFlow {
     updateCharacter(character, deltaTime, speed) {
         character.age += deltaTime;
 
-        // Character-by-character reveal
-        if (character.fullWord) {
-            const timeSinceStart = character.age - character.typingDelay;
-            if (timeSinceStart >= 0) {
-                // Speed slider controls typing speed: speed 1 = 20ms/char, speed 10 = 2ms/char
-                const adjustedSpeed = 22 - (speed * 2);
-                const charsToShow = Math.floor(timeSinceStart / adjustedSpeed);
-                character.revealedChars = Math.min(charsToShow, character.fullWord.length);
+        // Word appears all at once when its time comes
+        const timeSinceStart = character.age - character.typingDelay;
 
-                // Update the visible text
-                const visibleText = character.fullWord.substring(0, character.revealedChars);
-                character.element.textContent = visibleText;
-            } else {
-                // Not yet time to start typing this word
-                character.element.textContent = '';
-            }
+        // Speed slider controls delay: speed 1 = 200ms/word, speed 10 = 20ms/word
+        const adjustedDelay = 220 - (speed * 20);
+
+        if (timeSinceStart >= 0) {
+            // Fade in quickly
+            character.opacity = Math.min(1, character.opacity + 0.2);
         }
 
         // Keep visible for long time, then fade out
