@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overheard - The Internet Washing Over You</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
+</head>
+<body>
+    <div class="ocean-container" id="oceanContainer"></div>
+
+    <div class="controls">
+        <div class="control-group">
+            <label>Flow Mode:</label>
+            <select id="flowMode">
+                <option value="wave">Wave Flow</option>
+                <option value="probability">AI Probability Flow</option>
+                <option value="cascade">Cascade</option>
+                <option value="chaos">Chaos</option>
+                <option value="matrix">Matrix Rain</option>
+                <option value="spiral">Spiral Vortex</option>
+                <option value="explosion">Explosion</option>
+                <option value="river">River Stream</option>
+                <option value="orbit">Orbital</option>
+                <option value="redacted">Redacted</option>
+                <option value="typewriter">Typewriter</option>
+                <option value="ticker">News Ticker</option>
+            </select>
+        </div>
+        <div class="control-group">
+            <label>Speed:</label>
+            <input type="range" id="speedControl" min="1" max="10" value="5">
+        </div>
+        <div class="control-group">
+            <label>Density:</label>
+            <input type="range" id="densityControl" min="1" max="10" value="5">
+        </div>
+        <button id="toggleAnalytics">Analytics: OFF</button>
+    </div>
+
+    <div class="analytics-panel" id="analyticsPanel" style="display: none;">
+        <h3>Flow Analytics</h3>
+        <div id="analyticsData"></div>
+    </div>
+
+    <script type="module" src="main.js"></script>
+</body>
+</html>
