@@ -20,7 +20,8 @@ export class FlowEngine {
             redacted: new RedactedFlow(),
             typewriter: new TypewriterFlow(),
             overwrite: new OverwriteFlow(),
-            ticker: new TickerFlow()
+            ticker: new TickerFlow(),
+            takeover: new TakeoverFlow()
         };
         this.animationFrame = null;
         this.lastTime = 0;
@@ -74,7 +75,11 @@ export class FlowEngine {
 
         words.forEach((word, index) => {
             setTimeout(() => {
-                const wordElement = this.createWord(word + ' ', data.source, data.isLogo);
+                // Allow flow mode to potentially transform the word (for takeover mode)
+                const transformedWord = this.flowModes[this.mode].transformWord
+                    ? this.flowModes[this.mode].transformWord(word + ' ')
+                    : word + ' ';
+                const wordElement = this.createWord(transformedWord, data.source, data.isLogo);
                 this.activeCharacters.push(wordElement);
                 this.container.appendChild(wordElement.element);
                 this.flowModes[this.mode].initializeCharacter(wordElement);
@@ -714,5 +719,92 @@ class TickerFlow {
         character.x += character.vx * speed;
 
         return character.x > -500;
+    }
+}
+
+// Flow Mode: Takeover - "fuck you" gradually takes over all words
+class TakeoverFlow {
+    constructor() {
+        this.startTime = Date.now();
+        this.takeoverWords = ['fuck', 'you'];
+        this.waveOffset = 0;
+    }
+
+    reset() {
+        this.startTime = Date.now();
+        this.waveOffset = 0;
+    }
+
+    transformWord(word) {
+        const elapsed = Date.now() - this.startTime;
+        const takeoverProgress = Math.min(elapsed / 30000, 1); // Full takeover in 30 seconds
+
+        // Gradually increase probability of replacement
+        if (Math.random() < takeoverProgress) {
+            return this.takeoverWords[Math.floor(Math.random() * this.takeoverWords.length)] + ' ';
+        }
+
+        return word;
+    }
+
+    initializeCharacter(character) {
+        character.x = -50;
+        character.y = Math.random() * (window.innerHeight - 50);
+        character.vx = 0;
+        character.baseY = character.y;
+
+        // Apply takeover styling to "fuck" and "you" words
+        const wordText = character.word.trim().toLowerCase();
+        if (wordText === 'fuck' || wordText === 'you') {
+            character.element.style.fontSize = '48px';
+            character.element.style.fontWeight = '900';
+            character.element.style.color = '#ff0000';
+            character.element.style.textShadow = '0 0 20px #ff0000, 0 0 40px #ff0000';
+            character.isTakeoverWord = true;
+        }
+    }
+
+    updateCharacter(character, deltaTime, speed) {
+        character.age += deltaTime;
+        const elapsed = Date.now() - this.startTime;
+        const takeoverProgress = Math.min(elapsed / 30000, 1);
+
+        // Slower movement for normal words, faster for takeover words
+        const moveSpeed = character.isTakeoverWord ? speed * 0.8 : speed * 0.3;
+        character.x += moveSpeed;
+
+        // Wave motion
+        const waveFreq = 0.003;
+        const waveAmp = character.isTakeoverWord ? 50 : 30;
+        character.y = character.baseY + Math.sin(character.x * waveFreq + this.waveOffset) * waveAmp;
+
+        this.waveOffset += 0.008;
+
+        // Transform existing words into "fuck you" as takeover progresses
+        if (!character.isTakeoverWord && Math.random() < takeoverProgress * 0.001) {
+            const newWord = this.takeoverWords[Math.floor(Math.random() * this.takeoverWords.length)];
+            character.element.textContent = newWord + ' ';
+            character.word = newWord + ' ';
+            character.element.style.fontSize = '48px';
+            character.element.style.fontWeight = '900';
+            character.element.style.color = '#ff0000';
+            character.element.style.textShadow = '0 0 20px #ff0000, 0 0 40px #ff0000';
+            character.isTakeoverWord = true;
+        }
+
+        // Make takeover words more opaque as time goes on
+        if (character.isTakeoverWord) {
+            character.opacity = Math.min(1, 0.7 + takeoverProgress * 0.3);
+        } else {
+            // Fade out normal words as takeover progresses
+            character.opacity = Math.max(0.3, 1 - takeoverProgress * 0.5);
+        }
+
+        // Fade out near end
+        if (character.x > window.innerWidth - 300) {
+            character.opacity = Math.max(0, (window.innerWidth - character.x) / 300);
+        }
+
+        return character.x < window.innerWidth + 50;
     }
 }
