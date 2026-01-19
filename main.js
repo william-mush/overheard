@@ -79,7 +79,8 @@ let recentMainstreamNews = [];
 // Subscribe to news items and track mainstream sources (in addition to the one in init)
 setTimeout(() => {
     dataSource.on('newData', (data) => {
-        const isMainstream = data.source.includes('BBC') ||
+        const isMainstream = data.source.includes('NY Times') ||
+                            data.source.includes('BBC') ||
                             data.source.includes('Guardian') ||
                             data.source.includes('Reuters') ||
                             data.source.includes('NPR') ||

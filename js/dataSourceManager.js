@@ -25,6 +25,7 @@ export class DataSourceManager {
             new PubMedSource(),
 
             // News - International
+            new NYTimesSource(),
             new BBCNewsSource(),
             new GuardianSource(),
             new ReutersSource(),
@@ -594,6 +595,59 @@ class YouTubeSource {
             timestamp: Date.now(),
             url: '#'
         }];
+    }
+}
+
+// NY Times Source - Front page headlines
+class NYTimesSource {
+    constructor() {
+        this.name = 'The New York Times';
+        this.feeds = [
+            'https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml',
+            'https://rss.nytimes.com/services/xml/rss/nyt/World.xml',
+            'https://rss.nytimes.com/services/xml/rss/nyt/US.xml',
+            'https://rss.nytimes.com/services/xml/rss/nyt/Politics.xml',
+            'https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml'
+        ];
+    }
+
+    async initialize() {}
+
+    async fetch() {
+        const items = [];
+        try {
+            // Rotate through different feeds
+            const feedUrl = this.feeds[Math.floor(Math.random() * this.feeds.length)];
+            const response = await fetch(feedUrl);
+            const text = await response.text();
+            const parser = new DOMParser();
+            const xml = parser.parseFromString(text, 'text/xml');
+            const itemElements = xml.querySelectorAll('item');
+
+            if (itemElements.length > 0) {
+                // Get multiple headlines for more content
+                const numHeadlines = Math.min(3, itemElements.length);
+                for (let i = 0; i < numHeadlines; i++) {
+                    const randomItem = itemElements[Math.floor(Math.random() * Math.min(15, itemElements.length))];
+                    const title = randomItem.querySelector('title')?.textContent;
+                    const link = randomItem.querySelector('link')?.textContent;
+                    const description = randomItem.querySelector('description')?.textContent;
+
+                    if (title) {
+                        items.push({
+                            source: 'NY Times',
+                            content: title,
+                            timestamp: Date.now(),
+                            url: link || '#',
+                            description: description
+                        });
+                    }
+                }
+            }
+        } catch (error) {
+            console.error('NY Times fetch error:', error);
+        }
+        return items;
     }
 }
 

@@ -181,6 +181,8 @@ export class FlowEngine {
         // Color coding for different source types
         if (source === 'OVERHEARD.COM') {
             return '#4af'; // Bright blue for logo
+        } else if (source.includes('NY Times')) {
+            return '#ffaa00'; // Gold/orange for NY Times - "All the News That's Fit to Print"
         } else if (source.includes('News') || source.includes('BBC') || source.includes('Guardian') ||
             source.includes('Reuters') || source.includes('NPR') || source.includes('Jazeera')) {
             return '#ff6b6b'; // Red for news
