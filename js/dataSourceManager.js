@@ -90,9 +90,16 @@ export class DataSourceManager {
         // Fetch from multiple sources simultaneously each cycle
         const sourcesToFetch = [];
 
-        // Randomly select 5-8 sources to fetch from each cycle for variety
+        // ALWAYS include NY Times in every fetch cycle
+        const nyTimesSource = this.sources.find(s => s.name === 'The New York Times');
+        if (nyTimesSource) {
+            sourcesToFetch.push(nyTimesSource);
+        }
+
+        // Randomly select 5-8 other sources to fetch from each cycle for variety
         const numSources = Math.floor(Math.random() * 4) + 5;
-        const shuffled = [...this.sources].sort(() => Math.random() - 0.5);
+        const otherSources = this.sources.filter(s => s.name !== 'The New York Times');
+        const shuffled = [...otherSources].sort(() => Math.random() - 0.5);
 
         for (let i = 0; i < Math.min(numSources, shuffled.length); i++) {
             sourcesToFetch.push(shuffled[i]);
