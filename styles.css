@@ -130,22 +130,21 @@ button:hover {
     z-index: 100;
     background: rgba(10, 14, 39, 0.95);
     backdrop-filter: blur(15px);
-    border: 2px solid #ff6b6b;
     border-radius: 15px;
     padding: 30px 50px;
     max-width: 800px;
-    box-shadow: 0 0 30px rgba(255, 107, 107, 0.5), 0 0 60px rgba(255, 107, 107, 0.3);
     pointer-events: none;
+    /* Border and box-shadow now set dynamically via JavaScript */
 }
 
 .featured-source {
     font-size: 0.9rem;
-    color: #ff6b6b;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 2px;
     margin-bottom: 15px;
     text-align: center;
+    /* Color now set dynamically via JavaScript */
 }
 
 .featured-content {

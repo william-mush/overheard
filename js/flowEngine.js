@@ -91,6 +91,10 @@ export class FlowEngine {
         // Create a large, slow-moving, centered headline for important news
         const element = document.createElement('div');
         element.className = 'featured-headline';
+
+        // Get the source color
+        const sourceColor = this.getSourceColor(data.source);
+
         element.innerHTML = `
             <div class="featured-source">${data.source}</div>
             <div class="featured-content">${data.content}</div>
@@ -104,6 +108,11 @@ export class FlowEngine {
         element.style.top = '50%';
         element.style.transform = 'translate(-50%, -50%)';
         element.style.opacity = '0';
+
+        // Apply dynamic color based on source
+        element.style.border = `2px solid ${sourceColor}`;
+        element.style.boxShadow = `0 0 30px ${sourceColor}80, 0 0 60px ${sourceColor}50`;
+        element.querySelector('.featured-source').style.color = sourceColor;
 
         // Fade in
         setTimeout(() => {
