@@ -37,6 +37,18 @@ async function init() {
     // Subscribe to new data
     dataSource.on('newData', (data) => {
         console.log('New data received:', data.source);
+
+        // Filter data based on flow mode
+        const currentMode = flowEngine.mode;
+        const isNYTimesMode = currentMode === 'nytimeschaos' || currentMode === 'nytimestypewriter';
+        const isNYTimesData = data.source.includes('NY Times');
+
+        // If we're in NY Times mode, only show NY Times content
+        // If we're in regular mode, show everything
+        if (isNYTimesMode && !isNYTimesData) {
+            return; // Skip non-NY Times data in NY Times modes
+        }
+
         flowEngine.addItem(data);
         analytics.track(data);
     });

@@ -21,7 +21,9 @@ export class FlowEngine {
             typewriter: new TypewriterFlow(),
             overwrite: new OverwriteFlow(),
             ticker: new TickerFlow(),
-            takeover: new TakeoverFlow()
+            takeover: new TakeoverFlow(),
+            nytimeschaos: new ChaosFlow(), // NY Times only chaos mode
+            nytimestypewriter: new TypewriterFlow() // NY Times only typewriter mode
         };
         this.animationFrame = null;
         this.lastTime = 0;
