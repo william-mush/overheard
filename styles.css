@@ -155,3 +155,345 @@ button:hover {
     text-align: center;
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
+
+/* Custom Content Panel */
+.custom-content-panel {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 450px;
+    max-height: 85vh;
+    overflow-y: auto;
+    background: rgba(10, 14, 39, 0.98);
+    padding: 0;
+    border-radius: 15px;
+    backdrop-filter: blur(15px);
+    z-index: 2000;
+    border: 2px solid rgba(68, 170, 255, 0.4);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    border-bottom: 1px solid rgba(68, 170, 255, 0.2);
+    background: rgba(68, 170, 255, 0.05);
+}
+
+.panel-header h3 {
+    color: #4af;
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 2rem;
+    line-height: 1;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.close-btn:hover {
+    color: #f44;
+    background: none;
+}
+
+.panel-content {
+    padding: 25px;
+}
+
+.toggle-section {
+    margin-bottom: 25px;
+}
+
+.toggle-switch {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.toggle-switch input[type="checkbox"] {
+    display: none;
+}
+
+.slider {
+    position: relative;
+    width: 50px;
+    height: 26px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 13px;
+    transition: background 0.3s;
+    margin-right: 12px;
+}
+
+.slider::before {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: white;
+    top: 3px;
+    left: 3px;
+    transition: transform 0.3s;
+}
+
+.toggle-switch input:checked + .slider {
+    background: #4af;
+}
+
+.toggle-switch input:checked + .slider::before {
+    transform: translateX(24px);
+}
+
+.toggle-label {
+    color: #ccc;
+    font-size: 0.95rem;
+}
+
+.input-section {
+    margin-bottom: 25px;
+}
+
+.input-section > label {
+    display: block;
+    color: #4af;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+#customTextInput {
+    width: 100%;
+    min-height: 150px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: #e0e0e0;
+    padding: 12px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    resize: vertical;
+}
+
+#customTextInput::placeholder {
+    color: #666;
+}
+
+#customTextInput:focus {
+    outline: none;
+    border-color: #4af;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.input-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.small-btn {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #aaa;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.image-upload-area {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+}
+
+.upload-btn {
+    padding: 10px 20px;
+    background: rgba(68, 170, 255, 0.2);
+    border: 2px dashed #4af;
+    flex-shrink: 0;
+}
+
+.image-preview {
+    position: relative;
+    max-width: 200px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid #4af;
+}
+
+.image-preview img {
+    width: 100%;
+    display: block;
+}
+
+.remove-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(244, 67, 54, 0.9);
+    color: white;
+    font-size: 1.5rem;
+    line-height: 1;
+    padding: 0;
+    border: none;
+}
+
+.remove-btn:hover {
+    background: rgba(244, 67, 54, 1);
+}
+
+.image-mode-selection {
+    margin-top: 15px;
+    padding: 15px;
+    background: rgba(68, 170, 255, 0.05);
+    border-radius: 8px;
+}
+
+.image-mode-selection > label {
+    display: block;
+    color: #aaa;
+    font-size: 0.9rem;
+    margin-bottom: 12px;
+}
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.radio-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.radio-label:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.radio-label input[type="radio"] {
+    margin-top: 3px;
+    cursor: pointer;
+}
+
+.radio-label span {
+    font-weight: 600;
+    color: #e0e0e0;
+    display: block;
+}
+
+.radio-label small {
+    display: block;
+    color: #888;
+    font-size: 0.8rem;
+    margin-top: 3px;
+}
+
+.apply-btn {
+    width: 100%;
+    padding: 14px;
+    font-size: 1rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, #4af 0%, #2d8cf0 100%);
+    border: none;
+    margin-top: 10px;
+}
+
+.apply-btn:hover {
+    background: linear-gradient(135deg, #6bf 0%, #4aa6ff 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(68, 170, 255, 0.4);
+}
+
+.custom-stats {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(76, 175, 80, 0.1);
+    border-radius: 8px;
+    border: 1px solid rgba(76, 175, 80, 0.3);
+}
+
+.custom-stats h4 {
+    color: #4caf50;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+#statsDisplay {
+    font-size: 0.8rem;
+    color: #ccc;
+    line-height: 1.6;
+}
+
+.toggle-btn {
+    background: linear-gradient(135deg, rgba(156, 39, 176, 0.3) 0%, rgba(123, 31, 162, 0.3) 100%);
+    border-color: #9c27b0;
+    color: #e1bee7;
+}
+
+.toggle-btn:hover {
+    background: linear-gradient(135deg, rgba(156, 39, 176, 0.5) 0%, rgba(123, 31, 162, 0.5) 100%);
+}
+
+/* Scrollbar styling for custom content panel */
+.custom-content-panel::-webkit-scrollbar {
+    width: 8px;
+}
+
+.custom-content-panel::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+}
+
+.custom-content-panel::-webkit-scrollbar-thumb {
+    background: rgba(68, 170, 255, 0.5);
+    border-radius: 4px;
+}
+
+.custom-content-panel::-webkit-scrollbar-thumb:hover {
+    background: rgba(68, 170, 255, 0.7);
+}

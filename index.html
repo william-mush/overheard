@@ -41,6 +41,87 @@
             <input type="range" id="densityControl" min="1" max="10" value="5">
         </div>
         <button id="toggleAnalytics">Analytics: OFF</button>
+        <button id="toggleCustomContent" class="toggle-btn">Custom Content</button>
+    </div>
+
+    <!-- Custom Content Panel -->
+    <div class="custom-content-panel" id="customContentPanel" style="display: none;">
+        <div class="panel-header">
+            <h3>🎨 Custom Content</h3>
+            <button id="closeCustomPanel" class="close-btn">×</button>
+        </div>
+
+        <div class="panel-content">
+            <!-- Toggle Switch -->
+            <div class="toggle-section">
+                <label class="toggle-switch">
+                    <input type="checkbox" id="useCustomContent">
+                    <span class="slider"></span>
+                    <span class="toggle-label">Use Custom Content (stops live data)</span>
+                </label>
+            </div>
+
+            <!-- Text Input -->
+            <div class="input-section">
+                <label>📝 Your Text:</label>
+                <textarea id="customTextInput" placeholder="Enter any text... paste a poem, article, message, or anything you want to see flow across the screen.
+
+You can paste as much text as you want!
+
+Try 'Typewriter' mode for the most readable experience." rows="6"></textarea>
+                <div class="input-controls">
+                    <button id="clearTextBtn" class="small-btn">Clear Text</button>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="loopContent" checked>
+                        Loop content continuously
+                    </label>
+                </div>
+            </div>
+
+            <!-- Image Input -->
+            <div class="input-section">
+                <label>🖼️ Your Image:</label>
+                <div class="image-upload-area">
+                    <input type="file" id="imageInput" accept="image/*" style="display: none;">
+                    <button id="uploadImageBtn" class="upload-btn">📁 Choose Image</button>
+                    <div id="imagePreview" class="image-preview" style="display: none;">
+                        <img id="previewImg" alt="Preview">
+                        <button id="clearImageBtn" class="remove-btn">×</button>
+                    </div>
+                </div>
+
+                <!-- Image Mode Selection -->
+                <div class="image-mode-selection" id="imageModeSection" style="display: none;">
+                    <label>Image Display Mode:</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="imageMode" value="ascii" checked>
+                            <span>ASCII Art</span>
+                            <small>Convert image to flowing text characters</small>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="imageMode" value="particles">
+                            <span>Particle Cloud</span>
+                            <small>Image becomes flowing colored particles</small>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="imageMode" value="background">
+                            <span>Background</span>
+                            <small>Image as background with text flowing over it</small>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button id="applyCustomContent" class="apply-btn">✨ Apply & Start Flow</button>
+
+            <!-- Stats -->
+            <div class="custom-stats" id="customStats" style="display: none;">
+                <h4>Content Stats:</h4>
+                <div id="statsDisplay"></div>
+            </div>
+        </div>
     </div>
 
     <div class="analytics-panel" id="analyticsPanel" style="display: none;">
