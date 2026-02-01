@@ -70,9 +70,9 @@ async function init() {
         flowEngine.start();
         console.log('Flow engine started');
 
-        // Start data sources
+        // Start data sources (political-only mode for display)
         console.log('Starting data sources...');
-        await dataSource.initialize();
+        await dataSource.initialize(true); // true = political only, skip external sources
         console.log('Data sources initialized');
 
         // Get political source and verify it loaded

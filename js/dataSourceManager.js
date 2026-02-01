@@ -70,14 +70,24 @@ export class DataSourceManager {
         return this.politicalSpeechSource;
     }
 
-    async initialize() {
+    async initialize(politicalOnly = false) {
         console.log('Initializing data sources...');
 
         // Initialize political speech source
         await this.politicalSpeechSource.initialize();
 
-        // Initialize all sources
-        await Promise.all(this.sources.map(source => source.initialize()));
+        // Only initialize external sources if not in political-only mode
+        // This avoids CSP violations when we only need database content
+        if (!politicalOnly) {
+            try {
+                await Promise.all(this.sources.map(source => source.initialize()));
+            } catch (error) {
+                console.warn('Some external sources failed to initialize:', error.message);
+            }
+        } else {
+            console.log('Political-only mode: skipping external sources');
+            this.politicalOnlyMode = true;
+        }
 
         // Start fetching
         this.startFetching();
