@@ -1,7 +1,14 @@
 // API endpoint for fetching political speech data from Neon database
 import { neon } from '@neondatabase/serverless';
 
-const sql = neon(process.env.POSTGRES_URL);
+let sql;
+
+function getDb() {
+    if (!sql) {
+        sql = neon(process.env.POSTGRES_URL);
+    }
+    return sql;
+}
 
 export default async function handler(req, res) {
     // Set CORS headers
@@ -60,7 +67,7 @@ export default async function handler(req, res) {
 }
 
 async function getSpeakers() {
-    const speakers = await sql`
+    const speakers = await getDb()`
         SELECT id, name, roles, party, bioguide_id, channels, color, category
         FROM speakers
         ORDER BY name
@@ -87,7 +94,7 @@ async function getQuotes({ speaker, topic, limit }) {
     let quotes;
 
     if (speaker && topic) {
-        quotes = await sql`
+        quotes = await getDb()`
             SELECT q.*, s.name as speaker_name, s.color as speaker_color
             FROM quotes q
             JOIN speakers s ON q.speaker_id = s.id
@@ -97,7 +104,7 @@ async function getQuotes({ speaker, topic, limit }) {
             LIMIT ${limit}
         `;
     } else if (speaker) {
-        quotes = await sql`
+        quotes = await getDb()`
             SELECT q.*, s.name as speaker_name, s.color as speaker_color
             FROM quotes q
             JOIN speakers s ON q.speaker_id = s.id
@@ -106,7 +113,7 @@ async function getQuotes({ speaker, topic, limit }) {
             LIMIT ${limit}
         `;
     } else if (topic) {
-        quotes = await sql`
+        quotes = await getDb()`
             SELECT q.*, s.name as speaker_name, s.color as speaker_color
             FROM quotes q
             JOIN speakers s ON q.speaker_id = s.id
@@ -115,7 +122,7 @@ async function getQuotes({ speaker, topic, limit }) {
             LIMIT ${limit}
         `;
     } else {
-        quotes = await sql`
+        quotes = await getDb()`
             SELECT q.*, s.name as speaker_name, s.color as speaker_color
             FROM quotes q
             JOIN speakers s ON q.speaker_id = s.id
@@ -148,7 +155,7 @@ async function getContradictions({ speaker, limit }) {
     let contradictions;
 
     if (speaker) {
-        contradictions = await sql`
+        contradictions = await getDb()`
             SELECT c.*, s.color as speaker_color
             FROM contradictions c
             JOIN speakers s ON c.speaker_id = s.id
@@ -158,7 +165,7 @@ async function getContradictions({ speaker, limit }) {
             LIMIT ${limit}
         `;
     } else {
-        contradictions = await sql`
+        contradictions = await getDb()`
             SELECT c.*, s.color as speaker_color
             FROM contradictions c
             JOIN speakers s ON c.speaker_id = s.id
@@ -191,7 +198,7 @@ async function getContradictions({ speaker, limit }) {
 }
 
 async function getRandomContradiction() {
-    const contradictions = await sql`
+    const contradictions = await getDb()`
         SELECT c.*, s.color as speaker_color
         FROM contradictions c
         JOIN speakers s ON c.speaker_id = s.id
@@ -226,7 +233,7 @@ async function getRandomContradiction() {
 }
 
 async function getCategories() {
-    const categories = await sql`
+    const categories = await getDb()`
         SELECT id, type, label, keywords, color
         FROM categories
         ORDER BY type, label
@@ -263,7 +270,7 @@ async function getTranscripts({ speaker, limit }) {
     let transcripts;
 
     if (speaker) {
-        transcripts = await sql`
+        transcripts = await getDb()`
             SELECT t.*, s.color as speaker_color
             FROM transcripts t
             JOIN speakers s ON t.speaker_id = s.id
@@ -272,7 +279,7 @@ async function getTranscripts({ speaker, limit }) {
             LIMIT ${limit}
         `;
     } else {
-        transcripts = await sql`
+        transcripts = await getDb()`
             SELECT t.*, s.color as speaker_color
             FROM transcripts t
             JOIN speakers s ON t.speaker_id = s.id
@@ -303,7 +310,7 @@ async function getAllData() {
     ]);
 
     // Get counts
-    const stats = await sql`
+    const stats = await getDb()`
         SELECT
             (SELECT COUNT(*) FROM speakers) as speaker_count,
             (SELECT COUNT(*) FROM quotes) as quote_count,

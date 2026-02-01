@@ -3,7 +3,14 @@
 
 import { neon } from '@neondatabase/serverless';
 
-const sql = neon(process.env.POSTGRES_URL);
+let sql;
+
+function getDb() {
+    if (!sql) {
+        sql = neon(process.env.POSTGRES_URL);
+    }
+    return sql;
+}
 
 // Simple admin key check (in production, use proper auth)
 const ADMIN_KEY = process.env.ADMIN_API_KEY || 'overheard-admin-2025';
@@ -85,10 +92,10 @@ async function handleDelete(action, query, res) {
 
     switch (action) {
         case 'quote':
-            await sql`DELETE FROM quotes WHERE id = ${id}`;
+            await getDb()`DELETE FROM quotes WHERE id = ${id}`;
             return res.status(200).json({ success: true, deleted: id });
         case 'contradiction':
-            await sql`DELETE FROM contradictions WHERE id = ${id}`;
+            await getDb()`DELETE FROM contradictions WHERE id = ${id}`;
             return res.status(200).json({ success: true, deleted: id });
         default:
             return res.status(400).json({ error: 'Invalid action' });
@@ -98,7 +105,7 @@ async function handleDelete(action, query, res) {
 async function handleGet(action, query, res) {
     switch (action) {
         case 'stats':
-            const stats = await sql`
+            const stats = await getDb()`
                 SELECT
                     (SELECT COUNT(*) FROM speakers) as speakers,
                     (SELECT COUNT(*) FROM quotes) as quotes,
@@ -107,7 +114,7 @@ async function handleGet(action, query, res) {
             `;
             return res.status(200).json(stats[0]);
         case 'recent':
-            const recent = await sql`
+            const recent = await getDb()`
                 SELECT id, text, speaker_id, created_at
                 FROM quotes
                 ORDER BY created_at DESC
@@ -129,7 +136,7 @@ async function addQuote(data, res) {
         return res.status(400).json({ error: 'id, speakerId, and text are required' });
     }
 
-    await sql`
+    await getDb()`
         INSERT INTO quotes (id, speaker_id, text, date, source, source_url, event_type, categories, rhetoric, fact_check_rating, fact_check_source, context)
         VALUES (
             ${id},
@@ -182,7 +189,7 @@ async function addQuotes(data, res) {
                 continue;
             }
 
-            await sql`
+            await getDb()`
                 INSERT INTO quotes (id, speaker_id, text, date, source, source_url, event_type, categories, rhetoric, fact_check_rating, fact_check_source, context)
                 VALUES (
                     ${id},
@@ -226,7 +233,7 @@ async function addContradiction(data, res) {
         return res.status(400).json({ error: 'Required fields: id, speakerId, speaker, quote1Text, quote2Text' });
     }
 
-    await sql`
+    await getDb()`
         INSERT INTO contradictions (id, speaker_id, speaker_name, topic, quote1_text, quote1_date, quote1_source, quote1_source_url, quote2_text, quote2_date, quote2_source, quote2_source_url, context, enabled)
         VALUES (
             ${id},
@@ -283,7 +290,7 @@ async function addContradictions(data, res) {
                 continue;
             }
 
-            await sql`
+            await getDb()`
                 INSERT INTO contradictions (id, speaker_id, speaker_name, topic, quote1_text, quote1_date, quote1_source, quote1_source_url, quote2_text, quote2_date, quote2_source, quote2_source_url, context, enabled)
                 VALUES (
                     ${id},
@@ -326,7 +333,7 @@ async function addSpeaker(data, res) {
         return res.status(400).json({ error: 'id and name required' });
     }
 
-    await sql`
+    await getDb()`
         INSERT INTO speakers (id, name, roles, party, bioguide_id, channels, color, category)
         VALUES (
             ${id},
@@ -361,7 +368,7 @@ async function addTranscript(data, res) {
         return res.status(400).json({ error: 'id, speakerId, and speakerName required' });
     }
 
-    await sql`
+    await getDb()`
         INSERT INTO transcripts (id, speaker_id, speaker_name, role, date, source, source_url, event_type, title, full_text)
         VALUES (
             ${id},
@@ -412,7 +419,7 @@ async function updateQuote(data, res) {
     }
 
     // For simplicity, update all provided fields
-    await sql`
+    await getDb()`
         UPDATE quotes SET
             text = COALESCE(${updates.text}, text),
             categories = COALESCE(${updates.categories}, categories),
@@ -434,7 +441,7 @@ async function updateContradiction(data, res) {
         return res.status(400).json({ error: 'id required' });
     }
 
-    await sql`
+    await getDb()`
         UPDATE contradictions SET
             topic = COALESCE(${updates.topic}, topic),
             quote1_text = COALESCE(${updates.quote1Text}, quote1_text),
@@ -455,7 +462,7 @@ async function updateSpeaker(data, res) {
         return res.status(400).json({ error: 'id required' });
     }
 
-    await sql`
+    await getDb()`
         UPDATE speakers SET
             name = COALESCE(${updates.name}, name),
             roles = COALESCE(${updates.roles}, roles),
