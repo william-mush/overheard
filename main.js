@@ -348,6 +348,13 @@ flowModeSelect.addEventListener('change', (e) => {
 // Art mode quote feeder
 let artModeInterval = null;
 
+// Art mode timing configuration (can be updated live from control panel)
+let artModeConfig = {
+    speakerTime: 30000,      // 30 seconds per speaker
+    quoteInterval: 3000,     // 3 seconds between quotes
+    quotesPerSpeaker: 5      // 5 quotes per speaker
+};
+
 function startArtModeQuotes(mode) {
     // Stop any existing intervals
     if (artModeInterval) {
@@ -1185,7 +1192,7 @@ controlChannel.onmessage = (event) => {
     const { type, data, token } = event.data;
 
     // Commands that don't require auth (most controls are safe for art installation)
-    const publicCommands = ['ping', 'heartbeat', 'stats', 'currentQuote', 'setMode', 'setSpeed', 'setDensity', 'setSpeakers', 'setContradictions', 'startArt', 'skipSpeaker', 'stopArt', 'setQuoteFilter', 'clearFilters'];
+    const publicCommands = ['ping', 'heartbeat', 'stats', 'currentQuote', 'setMode', 'setSpeed', 'setDensity', 'setTiming', 'setSpeakers', 'setContradictions', 'startArt', 'skipSpeaker', 'stopArt', 'setQuoteFilter', 'clearFilters'];
 
     // If not a public command, verify token and rate limit
     if (!publicCommands.includes(type)) {
@@ -1269,8 +1276,9 @@ controlChannel.onmessage = (event) => {
                 console.warn('Invalid speed rejected:', data);
                 break;
             }
-            speedControl.value = speed;
+            if (speedControl) speedControl.value = speed;
             flowEngine.setSpeed(speed);
+            console.log('Speed set to:', speed);
             break;
 
         case 'setDensity':
@@ -1280,8 +1288,23 @@ controlChannel.onmessage = (event) => {
                 console.warn('Invalid density rejected:', data);
                 break;
             }
-            densityControl.value = density;
+            if (densityControl) densityControl.value = density;
             flowEngine.setDensity(density);
+            console.log('Density set to:', density);
+            break;
+
+        case 'setTiming':
+            // Update art mode timing parameters live
+            if (data.speakerTime !== undefined) {
+                artModeConfig.speakerTime = data.speakerTime;
+            }
+            if (data.quoteInterval !== undefined) {
+                artModeConfig.quoteInterval = data.quoteInterval;
+            }
+            if (data.quotesPerSpeaker !== undefined) {
+                artModeConfig.quotesPerSpeaker = data.quotesPerSpeaker;
+            }
+            console.log('Timing updated:', artModeConfig);
             break;
 
         case 'setSpeakers':

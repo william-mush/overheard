@@ -1202,17 +1202,20 @@
             sendCommand('setDensity', parseInt(e.target.value));
         });
 
-        // Timing sliders
+        // Timing sliders - send updates live to display
         document.getElementById('speakerTime').addEventListener('input', (e) => {
             document.getElementById('speakerTimeValue').textContent = e.target.value;
+            sendCommand('setTiming', { speakerTime: parseInt(e.target.value) * 1000 });
         });
 
         document.getElementById('quoteInterval').addEventListener('input', (e) => {
             document.getElementById('quoteIntervalValue').textContent = e.target.value;
+            sendCommand('setTiming', { quoteInterval: parseInt(e.target.value) * 1000 });
         });
 
         document.getElementById('quotesPerSpeaker').addEventListener('input', (e) => {
             document.getElementById('quotesPerSpeakerValue').textContent = e.target.value;
+            sendCommand('setTiming', { quotesPerSpeaker: parseInt(e.target.value) });
         });
 
         // Select all/none
@@ -1261,6 +1264,12 @@
                     document.getElementById('quotesShown').textContent = data.quotesShown || 0;
                     document.getElementById('currentMode').textContent = data.mode || '--';
                     document.getElementById('currentSpeaker').textContent = data.currentSpeaker || '--';
+                    // Sync mode buttons with actual display mode
+                    if (data.mode) {
+                        document.querySelectorAll('.mode-btn').forEach(btn => {
+                            btn.classList.toggle('active', btn.dataset.mode === data.mode);
+                        });
+                    }
                     break;
 
                 case 'currentQuote':
