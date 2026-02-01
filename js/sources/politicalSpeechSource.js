@@ -13,6 +13,7 @@ export class PoliticalSpeechSource {
     async initialize() {
         try {
             // Fetch all data from API
+            console.log('Fetching from API:', `${this.apiBase}?type=all`);
             const response = await fetch(`${this.apiBase}?type=all`);
 
             if (!response.ok) {
@@ -20,9 +21,14 @@ export class PoliticalSpeechSource {
             }
 
             const data = await response.json();
+            console.log('API response received:', data ? 'valid' : 'null', 'speakers:', !!data?.speakers);
+
+            if (!data || !data.speakers) {
+                throw new Error('Invalid API response: missing speakers data');
+            }
 
             this.speakers = data.speakers;
-            this.categories = data.categories;
+            this.categories = data.categories || {};
             this.contradictions = data.contradictions || [];
 
             // Fetch quotes separately
