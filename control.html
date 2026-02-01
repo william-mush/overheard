@@ -674,7 +674,7 @@
         // To generate a new hash:
         // 1. Open browser console
         // 2. Run: crypto.subtle.digest('SHA-256', new TextEncoder().encode('YOUR_PASSWORD')).then(h => console.log(Array.from(new Uint8Array(h)).map(b => b.toString(16).padStart(2, '0')).join('')))
-        const ACCESS_CODE_HASH = '25bbb7f68c71ad1a4951a07f155ac53930724d1467dad42257d9ad38fdc46aeb'; // Password: Ov3rh3ard!C0ntr0l
+        const ACCESS_CODE_HASH = '25bbb7f68c71ad1a4951a07f155ac53930724d1467dad42257d9ad38fdc46aeb';
 
         // Session token for BroadcastChannel authentication
         let sessionToken = null;
@@ -713,14 +713,35 @@
             return false;
         }
 
+        // Brute force protection
+        const loginAttempts = {
+            count: 0,
+            lockoutUntil: 0,
+            maxAttempts: 5,
+            lockoutDuration: 60000 // 60 seconds lockout
+        };
+
         async function attemptAuth() {
             const input = document.getElementById('authInput');
             const error = document.getElementById('authError');
-            const password = input.value;
+            const now = Date.now();
 
+            // Check if locked out
+            if (now < loginAttempts.lockoutUntil) {
+                const remaining = Math.ceil((loginAttempts.lockoutUntil - now) / 1000);
+                error.textContent = `Too many attempts. Try again in ${remaining}s`;
+                error.style.display = 'block';
+                input.value = '';
+                return;
+            }
+
+            const password = input.value;
             const hash = await hashPassword(password);
 
             if (hash === ACCESS_CODE_HASH) {
+                // Reset attempts on success
+                loginAttempts.count = 0;
+
                 // Generate session token
                 sessionToken = await generateSessionToken();
                 sessionStorage.setItem('overheard_auth_token', sessionToken);
@@ -729,6 +750,17 @@
                 error.style.display = 'none';
                 showMainContent();
             } else {
+                // Increment failed attempts
+                loginAttempts.count++;
+
+                if (loginAttempts.count >= loginAttempts.maxAttempts) {
+                    loginAttempts.lockoutUntil = now + loginAttempts.lockoutDuration;
+                    loginAttempts.count = 0;
+                    error.textContent = `Too many attempts. Locked for 60 seconds.`;
+                } else {
+                    error.textContent = `Invalid access code (${loginAttempts.maxAttempts - loginAttempts.count} attempts remaining)`;
+                }
+
                 input.classList.add('error');
                 error.style.display = 'block';
                 input.value = '';
