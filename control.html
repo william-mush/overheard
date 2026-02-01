@@ -506,6 +506,63 @@
             font-style: italic;
         }
 
+        .contradiction-quotes {
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .contradiction-quote-box {
+            background: #1a1a1a;
+            border-radius: 6px;
+            padding: 12px;
+            border-left: 2px solid #444;
+        }
+
+        .contradiction-quote-box.quote1 {
+            border-left-color: #4a9eff;
+        }
+
+        .contradiction-quote-box.quote2 {
+            border-left-color: #ff6b6b;
+        }
+
+        .contradiction-quote-label {
+            font-size: 10px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        .contradiction-quote-text {
+            font-size: 13px;
+            color: #ddd;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        .contradiction-quote-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 11px;
+            color: #666;
+        }
+
+        .contradiction-quote-date {
+            color: #888;
+        }
+
+        .contradiction-quote-source {
+            color: #4a9eff;
+            text-decoration: none;
+        }
+
+        .contradiction-quote-source:hover {
+            text-decoration: underline;
+        }
+
         .contradiction-delete {
             background: none;
             border: none;
@@ -1236,8 +1293,11 @@
                 contradictions = data.map(c => ({
                     id: c.id,
                     speaker: c.speaker,
+                    speakerColor: c.speakerColor,
                     topic: c.topic,
-                    preview: createPreview(c.quote1?.text, c.quote2?.text),
+                    quote1: c.quote1,
+                    quote2: c.quote2,
+                    context: c.context,
                     enabled: true
                 }));
                 initContradictionList();
@@ -1245,6 +1305,13 @@
                 console.error('Failed to load contradictions:', error);
                 contradictions = [];
             }
+        }
+
+        // Format date for display
+        function formatDate(dateStr) {
+            if (!dateStr) return 'Unknown date';
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
         }
 
         // Load stats from database
@@ -1290,6 +1357,9 @@
                 const item = document.createElement('div');
                 item.className = 'contradiction-item' + (c.enabled ? '' : ' disabled');
                 item.dataset.id = c.id;
+                if (c.speakerColor) {
+                    item.style.borderLeftColor = c.speakerColor;
+                }
 
                 const checkbox = document.createElement('input');
                 checkbox.type = 'checkbox';
@@ -1305,24 +1375,113 @@
 
                 const speaker = document.createElement('div');
                 speaker.className = 'contradiction-speaker';
+                speaker.style.color = c.speakerColor || '#cc0000';
                 speaker.textContent = c.speaker;
 
                 const topic = document.createElement('div');
                 topic.className = 'contradiction-topic';
                 topic.textContent = c.topic;
 
-                const preview = document.createElement('div');
-                preview.className = 'contradiction-preview';
-                preview.textContent = c.preview;
+                // Full quotes section
+                const quotesSection = document.createElement('div');
+                quotesSection.className = 'contradiction-quotes';
+
+                // Quote 1 (Then)
+                if (c.quote1) {
+                    const quote1Box = document.createElement('div');
+                    quote1Box.className = 'contradiction-quote-box quote1';
+
+                    const quote1Label = document.createElement('div');
+                    quote1Label.className = 'contradiction-quote-label';
+                    quote1Label.textContent = 'THEN';
+
+                    const quote1Text = document.createElement('div');
+                    quote1Text.className = 'contradiction-quote-text';
+                    quote1Text.textContent = '"' + c.quote1.text + '"';
+
+                    const quote1Meta = document.createElement('div');
+                    quote1Meta.className = 'contradiction-quote-meta';
+
+                    const quote1Date = document.createElement('span');
+                    quote1Date.className = 'contradiction-quote-date';
+                    quote1Date.textContent = formatDate(c.quote1.date);
+                    quote1Meta.appendChild(quote1Date);
+
+                    if (c.quote1.source) {
+                        const quote1Source = document.createElement('span');
+                        if (c.quote1.sourceUrl) {
+                            const link = document.createElement('a');
+                            link.className = 'contradiction-quote-source';
+                            link.href = c.quote1.sourceUrl;
+                            link.target = '_blank';
+                            link.textContent = c.quote1.source;
+                            quote1Source.appendChild(link);
+                        } else {
+                            quote1Source.className = 'contradiction-quote-source';
+                            quote1Source.style.color = '#888';
+                            quote1Source.textContent = c.quote1.source;
+                        }
+                        quote1Meta.appendChild(quote1Source);
+                    }
+
+                    quote1Box.appendChild(quote1Label);
+                    quote1Box.appendChild(quote1Text);
+                    quote1Box.appendChild(quote1Meta);
+                    quotesSection.appendChild(quote1Box);
+                }
+
+                // Quote 2 (Now)
+                if (c.quote2) {
+                    const quote2Box = document.createElement('div');
+                    quote2Box.className = 'contradiction-quote-box quote2';
+
+                    const quote2Label = document.createElement('div');
+                    quote2Label.className = 'contradiction-quote-label';
+                    quote2Label.textContent = 'NOW';
+
+                    const quote2Text = document.createElement('div');
+                    quote2Text.className = 'contradiction-quote-text';
+                    quote2Text.textContent = '"' + c.quote2.text + '"';
+
+                    const quote2Meta = document.createElement('div');
+                    quote2Meta.className = 'contradiction-quote-meta';
+
+                    const quote2Date = document.createElement('span');
+                    quote2Date.className = 'contradiction-quote-date';
+                    quote2Date.textContent = formatDate(c.quote2.date);
+                    quote2Meta.appendChild(quote2Date);
+
+                    if (c.quote2.source) {
+                        const quote2Source = document.createElement('span');
+                        if (c.quote2.sourceUrl) {
+                            const link = document.createElement('a');
+                            link.className = 'contradiction-quote-source';
+                            link.href = c.quote2.sourceUrl;
+                            link.target = '_blank';
+                            link.textContent = c.quote2.source;
+                            quote2Source.appendChild(link);
+                        } else {
+                            quote2Source.className = 'contradiction-quote-source';
+                            quote2Source.style.color = '#888';
+                            quote2Source.textContent = c.quote2.source;
+                        }
+                        quote2Meta.appendChild(quote2Source);
+                    }
+
+                    quote2Box.appendChild(quote2Label);
+                    quote2Box.appendChild(quote2Text);
+                    quote2Box.appendChild(quote2Meta);
+                    quotesSection.appendChild(quote2Box);
+                }
 
                 content.appendChild(speaker);
                 content.appendChild(topic);
-                content.appendChild(preview);
+                content.appendChild(quotesSection);
 
                 // Delete button
                 const deleteBtn = document.createElement('button');
                 deleteBtn.className = 'contradiction-delete';
-                deleteBtn.textContent = 'x';
+                deleteBtn.textContent = '×';
                 deleteBtn.title = 'Delete this contradiction';
                 deleteBtn.addEventListener('click', async (e) => {
                     e.stopPropagation();
