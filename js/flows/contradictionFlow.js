@@ -25,19 +25,21 @@ export class ContradictionFlow {
         this.containerElement = document.createElement('div');
         this.containerElement.className = 'contradiction-container';
         this.containerElement.style.cssText = `
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             background: #000000;
             overflow: hidden;
             pointer-events: none;
+            z-index: 1000;
         `;
         parentContainer.appendChild(this.containerElement);
+        console.log('Container appended to parent, checking DOM:', document.querySelector('.contradiction-container'));
     }
 
     initializeCharacter(character) {
@@ -55,8 +57,13 @@ export class ContradictionFlow {
 
     // Method to directly show a contradiction
     showContradiction(contradiction, parentContainer) {
+        console.log('showContradiction called with:', contradiction.id);
+        console.log('Parent container:', parentContainer);
+        console.log('Existing containerElement:', this.containerElement);
+
         if (!this.containerElement && parentContainer) {
             this.createContainer(parentContainer);
+            console.log('Created container:', this.containerElement);
         }
 
         // Clear any existing content
