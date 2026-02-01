@@ -236,7 +236,8 @@ setTimeout(() => {
     }, 20000);
 }, 1000);
 
-// Event Handlers
+// Event Handlers (only if flowModeSelect exists)
+if (flowModeSelect) {
 flowModeSelect.addEventListener('change', (e) => {
     const selectedMode = e.target.value;
     const politicalModes = ['testimony'];
@@ -245,7 +246,7 @@ flowModeSelect.addEventListener('change', (e) => {
     // Handle Custom Text mode specially
     if (selectedMode === 'customtext') {
         // Open custom content panel
-        customContentPanel.style.display = 'block';
+        if (customContentPanel) customContentPanel.style.display = 'block';
         document.body.classList.remove('art-mode-active');
 
         // Set flow mode to typewriter (most readable for custom text)
@@ -256,7 +257,7 @@ flowModeSelect.addEventListener('change', (e) => {
         // Political art mode selected
         if (customContent.isActive) {
             customContent.setActive(false);
-            useCustomContentCheckbox.checked = false;
+            if (useCustomContentCheckbox) useCustomContentCheckbox.checked = false;
             stopCustomContentFlow();
         }
 
@@ -282,7 +283,7 @@ flowModeSelect.addEventListener('change', (e) => {
         // Political speech mode selected
         if (customContent.isActive) {
             customContent.setActive(false);
-            useCustomContentCheckbox.checked = false;
+            if (useCustomContentCheckbox) useCustomContentCheckbox.checked = false;
             stopCustomContentFlow();
         }
 
@@ -304,7 +305,7 @@ flowModeSelect.addEventListener('change', (e) => {
         // Regular mode selected - deactivate custom content
         if (customContent.isActive) {
             customContent.setActive(false);
-            useCustomContentCheckbox.checked = false;
+            if (useCustomContentCheckbox) useCustomContentCheckbox.checked = false;
             stopCustomContentFlow();
         }
         document.body.classList.remove('art-mode-active');
@@ -315,6 +316,7 @@ flowModeSelect.addEventListener('change', (e) => {
         analytics.logEvent('flow_mode_change', { mode: selectedMode });
     }
 });
+} // End of flowModeSelect null check
 
 // Art mode quote feeder
 let artModeInterval = null;
@@ -493,20 +495,27 @@ function sendNextFactCheckQuote(politicalSource) {
     flowEngine.addItem(enrichedQuote);
 }
 
-speedControl.addEventListener('input', (e) => {
-    flowEngine.setSpeed(parseInt(e.target.value));
-});
+// Only add event listeners if elements exist (not in display-only mode)
+if (speedControl) {
+    speedControl.addEventListener('input', (e) => {
+        flowEngine.setSpeed(parseInt(e.target.value));
+    });
+}
 
-densityControl.addEventListener('input', (e) => {
-    flowEngine.setDensity(parseInt(e.target.value));
-});
+if (densityControl) {
+    densityControl.addEventListener('input', (e) => {
+        flowEngine.setDensity(parseInt(e.target.value));
+    });
+}
 
-toggleAnalyticsBtn.addEventListener('click', () => {
-    analyticsEnabled = !analyticsEnabled;
-    analyticsPanel.style.display = analyticsEnabled ? 'block' : 'none';
-    toggleAnalyticsBtn.textContent = `Analytics: ${analyticsEnabled ? 'ON' : 'OFF'}`;
-    toggleAnalyticsBtn.style.background = analyticsEnabled ? 'rgba(68, 170, 255, 0.4)' : 'rgba(68, 170, 255, 0.2)';
-});
+if (toggleAnalyticsBtn) {
+    toggleAnalyticsBtn.addEventListener('click', () => {
+        analyticsEnabled = !analyticsEnabled;
+        if (analyticsPanel) analyticsPanel.style.display = analyticsEnabled ? 'block' : 'none';
+        toggleAnalyticsBtn.textContent = `Analytics: ${analyticsEnabled ? 'ON' : 'OFF'}`;
+        toggleAnalyticsBtn.style.background = analyticsEnabled ? 'rgba(68, 170, 255, 0.4)' : 'rgba(68, 170, 255, 0.2)';
+    });
+}
 
 function updateAnalytics() {
     if (!analyticsEnabled) return;
@@ -527,128 +536,132 @@ function updateAnalytics() {
     `;
 }
 
-// Custom Content Event Handlers
+// Custom Content Event Handlers (only if elements exist)
+if (toggleCustomContentBtn && customContentPanel) {
+    toggleCustomContentBtn.addEventListener('click', () => {
+        customContentPanel.style.display = customContentPanel.style.display === 'none' ? 'block' : 'none';
+    });
+}
 
-// Toggle custom content panel
-toggleCustomContentBtn.addEventListener('click', () => {
-    customContentPanel.style.display = customContentPanel.style.display === 'none' ? 'block' : 'none';
-});
+if (closeCustomPanelBtn && customContentPanel) {
+    closeCustomPanelBtn.addEventListener('click', () => {
+        customContentPanel.style.display = 'none';
+    });
+}
 
-closeCustomPanelBtn.addEventListener('click', () => {
-    customContentPanel.style.display = 'none';
-});
-
-// Toggle custom content mode
-useCustomContentCheckbox.addEventListener('change', (e) => {
-    if (e.target.checked) {
-        console.log('Custom content mode enabled');
-        customContent.setActive(true);
-    } else {
-        console.log('Custom content mode disabled');
-        customContent.setActive(false);
-        stopCustomContentFlow();
-    }
-});
-
-// Loop content toggle
-loopContentCheckbox.addEventListener('change', (e) => {
-    customContent.setLoop(e.target.checked);
-});
-
-// Image upload
-uploadImageBtn.addEventListener('click', () => {
-    imageInput.click();
-});
-
-imageInput.addEventListener('change', async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    // Show preview
-    const reader = new FileReader();
-    reader.onload = (event) => {
-        previewImg.src = event.target.result;
-        imagePreview.style.display = 'block';
-        imageModeSection.style.display = 'block';
-    };
-    reader.readAsDataURL(file);
-
-    // Set image in custom content manager
-    const success = await customContent.setImage(file);
-    if (success) {
-        console.log('Image loaded successfully');
-        updateCustomStats();
-    } else {
-        alert('Failed to load image. Please try a different image.');
-    }
-});
-
-// Clear image
-clearImageBtn.addEventListener('click', () => {
-    customContent.clearImage();
-    imagePreview.style.display = 'none';
-    imageModeSection.style.display = 'none';
-    imageInput.value = '';
-    updateCustomStats();
-});
-
-// Clear text
-clearTextBtn.addEventListener('click', () => {
-    customTextInput.value = '';
-    customContent.clearText();
-    updateCustomStats();
-});
-
-// Image mode change
-imageModeRadios.forEach(radio => {
-    radio.addEventListener('change', async (e) => {
+if (useCustomContentCheckbox) {
+    useCustomContentCheckbox.addEventListener('change', (e) => {
         if (e.target.checked) {
-            console.log(`Changing image mode to: ${e.target.value}`);
-            await customContent.setImageMode(e.target.value);
-            updateCustomStats();
+            customContent.setActive(true);
+        } else {
+            customContent.setActive(false);
+            stopCustomContentFlow();
         }
     });
-});
+}
 
-// Apply custom content
-applyCustomContentBtn.addEventListener('click', () => {
-    const text = customTextInput.value.trim();
+if (loopContentCheckbox) {
+    loopContentCheckbox.addEventListener('change', (e) => {
+        customContent.setLoop(e.target.checked);
+    });
+}
 
-    if (!text && !customContent.imageData) {
-        alert('Please enter some text or upload an image first!');
-        return;
-    }
+if (uploadImageBtn && imageInput) {
+    uploadImageBtn.addEventListener('click', () => {
+        imageInput.click();
+    });
 
-    // Set text
-    if (text) {
-        customContent.setText(text);
-    }
+    imageInput.addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
 
-    // Enable custom content mode
-    customContent.setActive(true);
-    useCustomContentCheckbox.checked = true;
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            if (previewImg) previewImg.src = event.target.result;
+            if (imagePreview) imagePreview.style.display = 'block';
+            if (imageModeSection) imageModeSection.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
 
-    // Set dropdown to Custom Text mode
-    flowModeSelect.value = 'customtext';
+        const success = await customContent.setImage(file);
+        if (success) {
+            updateCustomStats();
+        } else {
+            alert('Failed to load image.');
+        }
+    });
+}
 
-    // Set flow engine to typewriter mode (most readable)
-    flowEngine.setMode('typewriter');
+if (clearImageBtn) {
+    clearImageBtn.addEventListener('click', () => {
+        customContent.clearImage();
+        if (imagePreview) imagePreview.style.display = 'none';
+        if (imageModeSection) imageModeSection.style.display = 'none';
+        if (imageInput) imageInput.value = '';
+        updateCustomStats();
+    });
+}
 
-    // Stop live data if custom content is active
-    if (customContent.isActive) {
-        console.log('Starting custom content flow...');
-        startCustomContentFlow();
-    }
+if (clearTextBtn && customTextInput) {
+    clearTextBtn.addEventListener('click', () => {
+        customTextInput.value = '';
+        customContent.clearText();
+        updateCustomStats();
+    });
+}
 
-    // Update stats
-    updateCustomStats();
-    customStats.style.display = 'block';
+if (imageModeRadios) {
+    imageModeRadios.forEach(radio => {
+        radio.addEventListener('change', async (e) => {
+            if (e.target.checked) {
+                await customContent.setImageMode(e.target.value);
+                updateCustomStats();
+            }
+        });
+    });
+}
 
-    // Close panel
-    customContentPanel.style.display = 'none';
+// Apply custom content (only if elements exist)
+if (applyCustomContentBtn) {
+    applyCustomContentBtn.addEventListener('click', () => {
+        const text = customTextInput ? customTextInput.value.trim() : '';
 
-    console.log('Custom content applied!', customContent.getStats());
-});
+        if (!text && !customContent.imageData) {
+            alert('Please enter some text or upload an image first!');
+            return;
+        }
+
+        // Set text
+        if (text) {
+            customContent.setText(text);
+        }
+
+        // Enable custom content mode
+        customContent.setActive(true);
+        if (useCustomContentCheckbox) useCustomContentCheckbox.checked = true;
+
+        // Set dropdown to Custom Text mode
+        if (flowModeSelect) flowModeSelect.value = 'customtext';
+
+        // Set flow engine to typewriter mode (most readable)
+        flowEngine.setMode('typewriter');
+
+        // Stop live data if custom content is active
+        if (customContent.isActive) {
+            console.log('Starting custom content flow...');
+            startCustomContentFlow();
+        }
+
+        // Update stats
+        updateCustomStats();
+        if (customStats) customStats.style.display = 'block';
+
+        // Close panel
+        if (customContentPanel) customContentPanel.style.display = 'none';
+
+        console.log('Custom content applied!', customContent.getStats());
+    });
+}
 
 // Start custom content flow
 function startCustomContentFlow() {
@@ -944,7 +957,7 @@ if (startAccumulationBtn) {
 
         // Make sure we're in accumulation mode
         if (flowEngine.mode !== 'accumulation') {
-            flowModeSelect.value = 'accumulation';
+            if (flowModeSelect) flowModeSelect.value = 'accumulation';
             flowEngine.setMode('accumulation');
             document.body.classList.add('art-mode-active');
         }
@@ -1047,15 +1060,16 @@ function showAccumulationPanel() {
     }
 }
 
-// Update the flow mode change handler to show accumulation panel
-const originalFlowModeHandler = flowModeSelect.onchange;
-flowModeSelect.addEventListener('change', (e) => {
-    if (e.target.value === 'accumulation') {
-        showAccumulationPanel();
-    } else if (accumulationPanel) {
-        accumulationPanel.style.display = 'none';
-    }
-});
+// Update the flow mode change handler to show accumulation panel (only if element exists)
+if (flowModeSelect) {
+    flowModeSelect.addEventListener('change', (e) => {
+        if (e.target.value === 'accumulation') {
+            showAccumulationPanel();
+        } else if (accumulationPanel) {
+            accumulationPanel.style.display = 'none';
+        }
+    });
+}
 
 // Start the application
 init();
@@ -1195,7 +1209,7 @@ controlChannel.onmessage = (event) => {
 
             // Set the mode directly
             flowEngine.setMode(data);
-            flowModeSelect.value = data;
+            if (flowModeSelect) flowModeSelect.value = data;
 
             // Handle art modes (must match list at line 268)
             const artModes = ['therecord', 'accumulation', 'correction', 'echo', 'whosaidit', 'contradiction', 'factcheck'];
