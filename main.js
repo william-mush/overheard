@@ -1184,8 +1184,8 @@ setInterval(() => {
 controlChannel.onmessage = (event) => {
     const { type, data, token } = event.data;
 
-    // Commands that don't require auth
-    const publicCommands = ['ping', 'heartbeat', 'stats', 'currentQuote'];
+    // Commands that don't require auth (most controls are safe for art installation)
+    const publicCommands = ['ping', 'heartbeat', 'stats', 'currentQuote', 'setMode', 'setSpeed', 'setDensity', 'setSpeakers', 'setContradictions', 'startArt', 'skipSpeaker', 'stopArt', 'setQuoteFilter', 'clearFilters'];
 
     // If not a public command, verify token and rate limit
     if (!publicCommands.includes(type)) {
