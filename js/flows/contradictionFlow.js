@@ -56,22 +56,32 @@ export class ContradictionFlow {
 
     // Method to directly show a contradiction
     showContradiction(contradiction, parentContainer) {
+        console.log('showContradiction called:', contradiction?.id);
+        console.log('parentContainer:', parentContainer);
+        console.log('this.containerElement:', this.containerElement);
+
         if (!this.containerElement && parentContainer) {
+            console.log('Creating container...');
             this.createContainer(parentContainer);
         }
 
+        if (!this.containerElement) {
+            console.error('No container element available!');
+            return;
+        }
+
         // Clear any existing content
-        if (this.containerElement) {
-            while (this.containerElement.firstChild) {
-                this.containerElement.removeChild(this.containerElement.firstChild);
-            }
+        while (this.containerElement.firstChild) {
+            this.containerElement.removeChild(this.containerElement.firstChild);
         }
 
         this.currentContradiction = contradiction;
+        console.log('Building contradiction display...');
         this.buildContradictionDisplay(contradiction);
         this.animationPhase = 'showing';
         this.phaseStartTime = performance.now();
         this.startUpdateLoop();
+        console.log('Contradiction display started');
     }
 
     buildContradictionDisplay(contradiction) {
