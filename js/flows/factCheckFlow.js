@@ -78,7 +78,9 @@ export class FactCheckFlow {
 
         const speakerColor = quoteData.speakerColor || '#cc0000';
         const factCheck = quoteData.factCheck || { rating: 'unverified' };
-        const ratingInfo = this.factCheckRatings[factCheck.rating] || this.factCheckRatings['unverified'];
+        // Normalize rating to lowercase for lookup
+        const normalizedRating = (factCheck.rating || 'unverified').toLowerCase().replace(/ /g, '-');
+        const ratingInfo = this.factCheckRatings[normalizedRating] || this.factCheckRatings['unverified'];
 
         // Main wrapper
         const wrapper = document.createElement('div');

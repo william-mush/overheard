@@ -277,7 +277,7 @@ export class PoliticalSpeechSource {
 
     getFactCheckedQuotes() {
         return this.quotes
-            .filter(q => q.factCheck && q.factCheck.rating && q.factCheck.rating !== 'unverified')
+            .filter(q => q.factCheck && q.factCheck.rating && q.factCheck.rating.toLowerCase() !== 'unverified')
             .map(q => this.formatQuote(q));
     }
 
