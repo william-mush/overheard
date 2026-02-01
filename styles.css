@@ -125,6 +125,16 @@ button:hover {
     letter-spacing: 1px;
 }
 
+.flowing-image {
+    position: absolute;
+    pointer-events: none;
+    will-change: transform, opacity;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+}
+
 .featured-headline {
     position: absolute;
     z-index: 100;
@@ -496,4 +506,483 @@ button:hover {
 
 .custom-content-panel::-webkit-scrollbar-thumb:hover {
     background: rgba(68, 170, 255, 0.7);
+}
+
+/* Political Speech Panel */
+.political-btn {
+    background: linear-gradient(135deg, rgba(204, 0, 0, 0.3) 0%, rgba(153, 0, 0, 0.3) 100%);
+    border-color: #cc0000;
+    color: #ffaaaa;
+}
+
+.political-btn:hover {
+    background: linear-gradient(135deg, rgba(204, 0, 0, 0.5) 0%, rgba(153, 0, 0, 0.5) 100%);
+}
+
+.political-panel {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 350px;
+    max-height: 85vh;
+    overflow-y: auto;
+    background: rgba(10, 14, 39, 0.98);
+    padding: 0;
+    border-radius: 15px;
+    backdrop-filter: blur(15px);
+    z-index: 2000;
+    border: 2px solid rgba(204, 0, 0, 0.4);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    animation: slideInLeft 0.3s ease-out;
+}
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.political-panel .panel-header {
+    border-bottom: 1px solid rgba(204, 0, 0, 0.2);
+    background: rgba(204, 0, 0, 0.05);
+}
+
+.political-panel .panel-header h3 {
+    color: #ff6666;
+}
+
+.filter-section {
+    margin-bottom: 20px;
+}
+
+.filter-section > label {
+    display: block;
+    color: #ff6666;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.filter-section select {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    color: #e0e0e0;
+    padding: 10px;
+    font-size: 0.9rem;
+}
+
+.filter-section select:focus {
+    outline: none;
+    border-color: #cc0000;
+}
+
+.checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+}
+
+.speaker-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: background 0.2s;
+}
+
+.speaker-checkbox:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.speaker-checkbox input[type="checkbox"] {
+    cursor: pointer;
+}
+
+.speaker-checkbox .speaker-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.speaker-checkbox .speaker-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #ccc;
+}
+
+/* Testimony Flow Styles */
+.testimony-speaker {
+    position: fixed;
+    bottom: 150px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #fff;
+    opacity: 0.8;
+    z-index: 10;
+}
+
+/* Contradiction Flow Styles */
+.contradiction-date {
+    font-size: 18px;
+    opacity: 0.7;
+    margin-top: 10px;
+    font-style: italic;
+}
+
+.contradiction-flash {
+    animation: flashPulse 0.3s ease-out;
+}
+
+@keyframes flashPulse {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* Fact Check Flow Styles */
+.fact-check-overlay {
+    z-index: 100;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+.fact-check-badge {
+    animation: factCheckAppear 0.5s ease-out;
+}
+
+@keyframes factCheckAppear {
+    from {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Fact check rating colors */
+.fact-check-false { color: #ff0000; }
+.fact-check-mostly-false { color: #ff6600; }
+.fact-check-half-true { color: #ffcc00; }
+.fact-check-mostly-true { color: #99cc00; }
+.fact-check-true { color: #00cc00; }
+.fact-check-unverified { color: #888888; }
+
+/* Political speech word styling */
+.flowing-word.political {
+    text-shadow: 0 0 15px currentColor, 0 0 30px currentColor, 0 0 45px rgba(255, 0, 0, 0.3);
+}
+
+/* Scrollbar for political panel */
+.political-panel::-webkit-scrollbar {
+    width: 8px;
+}
+
+.political-panel::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+}
+
+.political-panel::-webkit-scrollbar-thumb {
+    background: rgba(204, 0, 0, 0.5);
+    border-radius: 4px;
+}
+
+.political-panel::-webkit-scrollbar-thumb:hover {
+    background: rgba(204, 0, 0, 0.7);
+}
+
+/* ========================================
+   POLITICAL ART MODES
+   ======================================== */
+
+/* The Record - stark, centered quote */
+.the-record-container {
+    background: #000000;
+}
+
+.the-record-quote {
+    font-style: italic;
+}
+
+.the-record-speaker {
+    position: relative;
+}
+
+.the-record-speaker::before {
+    content: '—';
+    margin-right: 8px;
+}
+
+/* Accumulation - stacking quotes */
+.accumulation-container {
+    background: linear-gradient(180deg, #000000 0%, #0a0000 100%);
+}
+
+.accumulation-quote {
+    margin-bottom: 4px;
+}
+
+.accumulation-overflow {
+    font-weight: bold;
+    animation: pulse-red 2s infinite;
+}
+
+@keyframes pulse-red {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; text-shadow: 0 0 20px #ff0000; }
+}
+
+/* Correction - fact-check overlay */
+.correction-container {
+    background: #000000;
+}
+
+.correction-crack {
+    box-shadow: 0 0 20px #ff0000, 0 0 40px #ff000080;
+}
+
+.correction-verdict {
+    animation: verdict-glow 2s infinite;
+}
+
+@keyframes verdict-glow {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+}
+
+/* Echo Chamber - repeating quotes */
+.echo-container {
+    background: radial-gradient(ellipse at center, #0a0000 0%, #000000 70%);
+}
+
+.echo-text {
+    pointer-events: none;
+}
+
+/* Who Said It - quiz mode */
+.whosaidit-container {
+    background: #000000;
+}
+
+.whosaidit-countdown {
+    font-weight: bold;
+}
+
+.whosaidit-reveal {
+    animation: reveal-pulse 0.5s ease-out;
+}
+
+@keyframes reveal-pulse {
+    0% { transform: scale(0.5); opacity: 0; }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Art mode active state - hide other UI */
+body.art-mode-active .controls {
+    opacity: 0.3;
+    transition: opacity 0.3s;
+}
+
+body.art-mode-active .controls:hover {
+    opacity: 1;
+}
+
+body.art-mode-active .political-panel,
+body.art-mode-active .custom-content-panel,
+body.art-mode-active .analytics-panel {
+    display: none !important;
+}
+
+/* Dark mode for art - pure black background */
+body.art-mode-active {
+    background: #000000;
+}
+
+body.art-mode-active .ocean-container {
+    background: #000000;
+}
+
+/* Accumulation Panel */
+.accumulation-panel {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    width: 340px;
+    background: rgba(10, 14, 39, 0.98);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    z-index: 1001;
+    border: 1px solid rgba(204, 0, 0, 0.4);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.accumulation-panel .panel-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.accumulation-panel .panel-header h3 {
+    color: #cc0000;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.accumulation-panel .panel-content {
+    padding: 20px;
+}
+
+.accumulation-panel .filter-section {
+    margin-bottom: 20px;
+}
+
+.accumulation-panel .filter-section label {
+    display: block;
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Speaker Sequence - sortable list */
+.speaker-sequence {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.speaker-sequence-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    cursor: grab;
+    transition: all 0.2s;
+    border-left: 3px solid transparent;
+}
+
+.speaker-sequence-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.speaker-sequence-item.active {
+    border-left-color: #cc0000;
+    background: rgba(204, 0, 0, 0.1);
+}
+
+.speaker-sequence-item.dragging {
+    opacity: 0.5;
+    cursor: grabbing;
+}
+
+.speaker-sequence-item input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: #cc0000;
+}
+
+.speaker-sequence-item .speaker-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.speaker-sequence-item .speaker-name {
+    flex: 1;
+    font-size: 13px;
+    color: #ddd;
+}
+
+.speaker-sequence-item .drag-handle {
+    color: #555;
+    cursor: grab;
+}
+
+/* Timing Controls */
+.timing-control {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.timing-control input[type="range"] {
+    flex: 1;
+    accent-color: #cc0000;
+}
+
+.timing-control span {
+    font-size: 12px;
+    color: #cc0000;
+    min-width: 80px;
+    text-align: right;
+}
+
+/* Control Buttons */
+.accumulation-panel .control-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.accumulation-panel .apply-btn {
+    flex: 1;
+    background: rgba(204, 0, 0, 0.3);
+    border-color: #cc0000;
+    color: #ff4444;
+}
+
+.accumulation-panel .apply-btn:hover {
+    background: rgba(204, 0, 0, 0.5);
+}
+
+.accumulation-panel .small-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #555;
+    color: #aaa;
+}
+
+.accumulation-panel .small-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Show accumulation panel in art mode when accumulation is selected */
+body.art-mode-active .accumulation-panel {
+    display: block !important;
+    opacity: 0.9;
+}
+
+body.art-mode-active .accumulation-panel:hover {
+    opacity: 1;
 }

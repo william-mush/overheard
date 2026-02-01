@@ -214,4 +214,59 @@ export class ImageProcessor {
             height: img.height
         };
     }
+
+    /**
+     * Break image into tiles for independent flow
+     * @param {File|Image} imageSource - Image file or image element
+     * @param {number} cols - Number of columns
+     * @param {number} rows - Number of rows
+     * @returns {Promise<Object>} Object with tiles array and metadata
+     */
+    async imageToTiles(imageSource, cols = 4, rows = 4) {
+        const img = await this.loadImage(imageSource);
+
+        // Calculate tile dimensions
+        const tileWidth = Math.floor(img.width / cols);
+        const tileHeight = Math.floor(img.height / rows);
+
+        const tiles = [];
+
+        for (let row = 0; row < rows; row++) {
+            for (let col = 0; col < cols; col++) {
+                // Create canvas for this tile
+                const tileCanvas = document.createElement('canvas');
+                tileCanvas.width = tileWidth;
+                tileCanvas.height = tileHeight;
+                const tileCtx = tileCanvas.getContext('2d');
+
+                // Draw the tile portion of the image
+                tileCtx.drawImage(
+                    img,
+                    col * tileWidth, row * tileHeight, // Source position
+                    tileWidth, tileHeight,             // Source dimensions
+                    0, 0,                              // Destination position
+                    tileWidth, tileHeight              // Destination dimensions
+                );
+
+                tiles.push({
+                    url: tileCanvas.toDataURL(),
+                    col,
+                    row,
+                    width: tileWidth,
+                    height: tileHeight,
+                    originalX: col * tileWidth,
+                    originalY: row * tileHeight
+                });
+            }
+        }
+
+        return {
+            type: 'tiles',
+            tiles,
+            cols,
+            rows,
+            originalWidth: img.width,
+            originalHeight: img.height
+        };
+    }
 }

@@ -1,8 +1,12 @@
 // Data Source Manager - Fetches live data from various sources
 
+import { PoliticalSpeechSource } from './sources/politicalSpeechSource.js';
+
 export class DataSourceManager {
     constructor() {
         this.listeners = [];
+        this.politicalOnlyMode = false;
+        this.politicalSpeechSource = new PoliticalSpeechSource();
         this.sources = [
             // Time & Date
             new TimeSource(),
@@ -57,8 +61,20 @@ export class DataSourceManager {
         this.isRunning = false;
     }
 
+    setPoliticalOnlyMode(enabled) {
+        this.politicalOnlyMode = enabled;
+        console.log(`Political Only Mode: ${enabled ? 'ON' : 'OFF'}`);
+    }
+
+    getPoliticalSpeechSource() {
+        return this.politicalSpeechSource;
+    }
+
     async initialize() {
         console.log('Initializing data sources...');
+
+        // Initialize political speech source
+        await this.politicalSpeechSource.initialize();
 
         // Initialize all sources
         await Promise.all(this.sources.map(source => source.initialize()));
@@ -87,6 +103,17 @@ export class DataSourceManager {
     }
 
     async fetchAll() {
+        // If political only mode, only fetch from political speech source
+        if (this.politicalOnlyMode) {
+            try {
+                const items = await this.politicalSpeechSource.fetch();
+                items.forEach(item => this.emit('newData', item));
+            } catch (error) {
+                console.error('Error fetching political speech data:', error);
+            }
+            return;
+        }
+
         // Fetch from multiple sources simultaneously each cycle
         const sourcesToFetch = [];
 

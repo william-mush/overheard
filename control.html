@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overheard - Control Panel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', sans-serif;
+            background: #111;
+            color: #fff;
+            min-height: 100vh;
+            padding: 30px;
+        }
+
+        /* Authentication Gate Styles */
+        .auth-gate {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        }
+
+        .auth-gate.hidden {
+            display: none;
+        }
+
+        .auth-box {
+            background: #1a1a1a;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .auth-box h2 {
+            color: #4af;
+            font-weight: 300;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+        }
+
+        .auth-box p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .auth-input {
+            width: 100%;
+            padding: 15px;
+            background: #222;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 16px;
+            text-align: center;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+        }
+
+        .auth-input:focus {
+            outline: none;
+            border-color: #4af;
+        }
+
+        .auth-input.error {
+            border-color: #ff4444;
+            animation: shake 0.3s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .auth-btn {
+            width: 100%;
+            padding: 15px;
+            background: #4af;
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .auth-btn:hover {
+            background: #5bf;
+        }
+
+        .auth-error {
+            color: #ff4444;
+            font-size: 14px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .main-content {
+            display: none;
+        }
+
+        .main-content.visible {
+            display: block;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 300;
+            letter-spacing: 4px;
+            margin-bottom: 30px;
+            color: #4af;
+        }
+
+        .status-bar {
+            background: #1a1a1a;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .open-display-btn {
+            margin-left: auto;
+            padding: 10px 20px;
+            background: #4af;
+            color: #000;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .open-display-btn:hover {
+            background: #5bf;
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ff4444;
+        }
+
+        .status-indicator.connected {
+            background: #44ff44;
+            box-shadow: 0 0 10px #44ff44;
+        }
+
+        .status-text {
+            font-size: 14px;
+            color: #888;
+        }
+
+        .control-section {
+            background: #1a1a1a;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .control-section h2 {
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: #666;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .mode-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+        }
+
+        .mode-btn {
+            background: #222;
+            border: 1px solid #333;
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .mode-btn:hover {
+            background: #333;
+            border-color: #4af;
+        }
+
+        .mode-btn.active {
+            background: #4af;
+            color: #000;
+            border-color: #4af;
+        }
+
+        .mode-btn.art {
+            border-color: #cc0000;
+        }
+
+        .mode-btn.art:hover {
+            border-color: #ff0000;
+        }
+
+        .mode-btn.art.active {
+            background: #cc0000;
+            border-color: #cc0000;
+        }
+
+        .slider-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .slider-group label {
+            width: 100px;
+            font-size: 14px;
+            color: #888;
+        }
+
+        .slider-group input[type="range"] {
+            flex: 1;
+            height: 6px;
+            -webkit-appearance: none;
+            background: #333;
+            border-radius: 3px;
+            outline: none;
+        }
+
+        .slider-group input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: #4af;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .slider-value {
+            width: 50px;
+            text-align: right;
+            font-size: 14px;
+            color: #4af;
+        }
+
+        .speaker-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .speaker-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #222;
+            padding: 12px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .speaker-item:hover {
+            background: #333;
+        }
+
+        .speaker-item.selected {
+            background: #333;
+            border: 1px solid #4af;
+        }
+
+        .speaker-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .speaker-name {
+            flex: 1;
+            font-size: 14px;
+        }
+
+        .speaker-count {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .action-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .action-btn.primary {
+            background: #4af;
+            color: #000;
+        }
+
+        .action-btn.primary:hover {
+            background: #5bf;
+        }
+
+        .action-btn.secondary {
+            background: #333;
+            color: #fff;
+        }
+
+        .action-btn.secondary:hover {
+            background: #444;
+        }
+
+        .action-btn.danger {
+            background: #cc0000;
+            color: #fff;
+        }
+
+        .action-btn.danger:hover {
+            background: #ff0000;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .stat-box {
+            background: #222;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 300;
+            color: #4af;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .current-quote {
+            background: #222;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .current-quote-text {
+            font-family: Georgia, serif;
+            font-size: 18px;
+            line-height: 1.5;
+            color: #ccc;
+            font-style: italic;
+        }
+
+        .current-quote-speaker {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #888;
+        }
+
+        .timing-controls {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .timing-control {
+            background: #222;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .timing-control label {
+            display: block;
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .timing-control input {
+            width: 100%;
+            height: 6px;
+            -webkit-appearance: none;
+            background: #333;
+            border-radius: 3px;
+        }
+
+        .timing-control input::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            background: #cc0000;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .timing-value {
+            text-align: center;
+            font-size: 14px;
+            color: #cc0000;
+            margin-top: 8px;
+        }
+
+        .contradiction-list {
+            max-height: 400px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .contradiction-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            background: #222;
+            padding: 12px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 3px solid #cc0000;
+        }
+
+        .contradiction-item:hover {
+            background: #2a2a2a;
+        }
+
+        .contradiction-item.disabled {
+            opacity: 0.4;
+            border-left-color: #444;
+        }
+
+        .contradiction-item input[type="checkbox"] {
+            margin-top: 3px;
+            width: 18px;
+            height: 18px;
+            accent-color: #cc0000;
+        }
+
+        .contradiction-content {
+            flex: 1;
+        }
+
+        .contradiction-speaker {
+            font-size: 11px;
+            color: #cc0000;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .contradiction-topic {
+            font-size: 14px;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+
+        .contradiction-preview {
+            font-size: 12px;
+            color: #666;
+            font-style: italic;
+        }
+
+        .contradiction-delete {
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 5px;
+            transition: color 0.2s;
+        }
+
+        .contradiction-delete:hover {
+            color: #ff4444;
+        }
+    </style>
+</head>
+<body>
+    <!-- Authentication Gate -->
+    <div class="auth-gate" id="authGate">
+        <div class="auth-box">
+            <h2>CONTROL PANEL</h2>
+            <p>Enter access code to continue</p>
+            <input type="password" class="auth-input" id="authInput" placeholder="••••••••" autocomplete="off">
+            <button class="auth-btn" id="authBtn">Access</button>
+            <div class="auth-error" id="authError">Invalid access code</div>
+        </div>
+    </div>
+
+    <!-- Main Content (hidden until authenticated) -->
+    <div class="main-content" id="mainContent">
+        <h1>OVERHEARD CONTROL PANEL</h1>
+
+        <div class="status-bar">
+        <div class="status-indicator" id="connectionStatus"></div>
+        <span class="status-text" id="connectionText">Connecting to display...</span>
+        <button class="open-display-btn" onclick="window.open('/?display', 'OverheardDisplay', 'fullscreen=yes')">Open Display Window</button>
+    </div>
+
+    <!-- Stats -->
+    <div class="control-section">
+        <h2>Live Stats</h2>
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-value" id="quotesShown">0</div>
+                <div class="stat-label">Quotes Shown</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" id="currentMode">--</div>
+                <div class="stat-label">Current Mode</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" id="currentSpeaker">--</div>
+                <div class="stat-label">Current Speaker</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" id="totalQuotes">93</div>
+                <div class="stat-label">Total Quotes</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Flow Mode Selection -->
+    <div class="control-section">
+        <h2>Display Mode</h2>
+        <div class="mode-grid">
+            <button class="mode-btn" data-mode="wave">Wave Flow</button>
+            <button class="mode-btn" data-mode="typewriter">Typewriter</button>
+            <button class="mode-btn" data-mode="chaos">Chaos</button>
+            <button class="mode-btn" data-mode="matrix">Matrix Rain</button>
+            <button class="mode-btn" data-mode="cascade">Cascade</button>
+            <button class="mode-btn" data-mode="ticker">News Ticker</button>
+        </div>
+
+        <h2 style="margin-top: 25px;">Political Art Modes</h2>
+        <div class="mode-grid">
+            <button class="mode-btn art" data-mode="therecord">The Record</button>
+            <button class="mode-btn art" data-mode="accumulation">Accumulation</button>
+            <button class="mode-btn art" data-mode="contradiction">Contradiction</button>
+            <button class="mode-btn art" data-mode="factcheck">Fact Check</button>
+            <button class="mode-btn art" data-mode="correction">The Correction</button>
+            <button class="mode-btn art" data-mode="whosaidit">Who Said It?</button>
+        </div>
+    </div>
+
+    <!-- Speed & Density -->
+    <div class="control-section">
+        <h2>Display Settings</h2>
+        <div class="slider-group">
+            <label>Speed</label>
+            <input type="range" id="speedSlider" min="1" max="10" value="5">
+            <span class="slider-value" id="speedValue">5</span>
+        </div>
+        <div class="slider-group">
+            <label>Density</label>
+            <input type="range" id="densitySlider" min="1" max="10" value="5">
+            <span class="slider-value" id="densityValue">5</span>
+        </div>
+    </div>
+
+    <!-- Speaker Selection -->
+    <div class="control-section">
+        <h2>Speaker Filter</h2>
+        <div class="speaker-grid" id="speakerGrid">
+            <!-- Populated by JavaScript -->
+        </div>
+        <div class="action-buttons">
+            <button class="action-btn primary" id="selectAll">Select All</button>
+            <button class="action-btn secondary" id="selectNone">Select None</button>
+        </div>
+    </div>
+
+    <!-- Timing Controls for Art Modes -->
+    <div class="control-section" id="artTimingSection">
+        <h2>Art Mode Timing</h2>
+        <div class="timing-controls">
+            <div class="timing-control">
+                <label>Time per Speaker</label>
+                <input type="range" id="speakerTime" min="10" max="120" value="30">
+                <div class="timing-value"><span id="speakerTimeValue">30</span>s</div>
+            </div>
+            <div class="timing-control">
+                <label>Quote Interval</label>
+                <input type="range" id="quoteInterval" min="1" max="10" value="3">
+                <div class="timing-value"><span id="quoteIntervalValue">3</span>s</div>
+            </div>
+            <div class="timing-control">
+                <label>Quotes per Speaker</label>
+                <input type="range" id="quotesPerSpeaker" min="5" max="50" value="15">
+                <div class="timing-value"><span id="quotesPerSpeakerValue">15</span></div>
+            </div>
+        </div>
+        <div class="action-buttons">
+            <button class="action-btn primary" id="startArt">Start</button>
+            <button class="action-btn secondary" id="skipSpeaker">Skip Speaker</button>
+            <button class="action-btn danger" id="stopArt">Stop</button>
+        </div>
+    </div>
+
+    <!-- Current Display -->
+    <div class="control-section">
+        <h2>Currently Displaying</h2>
+        <div class="current-quote">
+            <div class="current-quote-text" id="currentQuoteText">Waiting for content...</div>
+            <div class="current-quote-speaker" id="currentQuoteSpeaker"></div>
+        </div>
+    </div>
+
+    <!-- Contradiction Manager -->
+    <div class="control-section">
+        <h2>Contradiction Manager</h2>
+        <div class="contradiction-list" id="contradictionList">
+            <!-- Populated by JavaScript -->
+        </div>
+        <div class="action-buttons">
+            <button class="action-btn primary" id="enableAllContradictions">Enable All</button>
+            <button class="action-btn secondary" id="disableAllContradictions">Disable All</button>
+        </div>
+    </div>
+    </div><!-- End main-content -->
+
+    <script>
+        // ============================================
+        // Authentication System
+        // ============================================
+
+        // SHA-256 hash of the access code (change this hash for your password)
+        // To generate a new hash:
+        // 1. Open browser console
+        // 2. Run: crypto.subtle.digest('SHA-256', new TextEncoder().encode('YOUR_PASSWORD')).then(h => console.log(Array.from(new Uint8Array(h)).map(b => b.toString(16).padStart(2, '0')).join('')))
+        const ACCESS_CODE_HASH = '25bbb7f68c71ad1a4951a07f155ac53930724d1467dad42257d9ad38fdc46aeb'; // Password: Ov3rh3ard!C0ntr0l
+
+        // Session token for BroadcastChannel authentication
+        let sessionToken = null;
+
+        async function hashPassword(password) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        async function generateSessionToken() {
+            const array = new Uint8Array(32);
+            crypto.getRandomValues(array);
+            return Array.from(array).map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        async function checkAuth() {
+            const storedToken = sessionStorage.getItem('overheard_auth_token');
+            const storedTime = sessionStorage.getItem('overheard_auth_time');
+
+            // Check if token exists and is less than 24 hours old
+            if (storedToken && storedTime) {
+                const elapsed = Date.now() - parseInt(storedTime);
+                const maxAge = 24 * 60 * 60 * 1000; // 24 hours
+
+                if (elapsed < maxAge) {
+                    sessionToken = storedToken;
+                    showMainContent();
+                    return true;
+                }
+            }
+
+            showAuthGate();
+            return false;
+        }
+
+        async function attemptAuth() {
+            const input = document.getElementById('authInput');
+            const error = document.getElementById('authError');
+            const password = input.value;
+
+            const hash = await hashPassword(password);
+
+            if (hash === ACCESS_CODE_HASH) {
+                // Generate session token
+                sessionToken = await generateSessionToken();
+                sessionStorage.setItem('overheard_auth_token', sessionToken);
+                sessionStorage.setItem('overheard_auth_time', Date.now().toString());
+
+                error.style.display = 'none';
+                showMainContent();
+            } else {
+                input.classList.add('error');
+                error.style.display = 'block';
+                input.value = '';
+
+                setTimeout(() => {
+                    input.classList.remove('error');
+                }, 300);
+            }
+        }
+
+        function showAuthGate() {
+            document.getElementById('authGate').classList.remove('hidden');
+            document.getElementById('mainContent').classList.remove('visible');
+        }
+
+        function showMainContent() {
+            document.getElementById('authGate').classList.add('hidden');
+            document.getElementById('mainContent').classList.add('visible');
+            initializeControlPanel();
+        }
+
+        // Auth event listeners
+        document.getElementById('authBtn').addEventListener('click', attemptAuth);
+        document.getElementById('authInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') attemptAuth();
+        });
+
+        // Check auth on load
+        checkAuth();
+
+        // ============================================
+        // Control Panel (only runs after auth)
+        // ============================================
+
+        function initializeControlPanel() {
+        // BroadcastChannel for cross-tab communication
+        const channel = new BroadcastChannel('overheard-control');
+        let isConnected = false;
+
+        // Speakers data
+        const speakers = [
+            { id: 'donald-trump', name: 'Donald Trump', color: '#cc0000', count: 25 },
+            { id: 'stephen-miller', name: 'Stephen Miller', color: '#990000', count: 15 },
+            { id: 'kristi-noem', name: 'Kristi Noem', color: '#aa0000', count: 12 },
+            { id: 'jd-vance', name: 'JD Vance', color: '#bb0000', count: 8 },
+            { id: 'marjorie-taylor-greene', name: 'Marjorie Taylor Greene', color: '#dd4400', count: 8 },
+            { id: 'matt-gaetz', name: 'Matt Gaetz', color: '#cc4400', count: 6 },
+            { id: 'jim-jordan', name: 'Jim Jordan', color: '#aa4400', count: 6 }
+        ];
+
+        let selectedSpeakers = new Set(speakers.map(s => s.id));
+
+        // Initialize speaker grid
+        function initSpeakerGrid() {
+            const grid = document.getElementById('speakerGrid');
+            grid.textContent = '';
+
+            speakers.forEach(speaker => {
+                const item = document.createElement('div');
+                item.className = 'speaker-item' + (selectedSpeakers.has(speaker.id) ? ' selected' : '');
+                item.dataset.speakerId = speaker.id;
+
+                const colorDot = document.createElement('div');
+                colorDot.className = 'speaker-color';
+                colorDot.style.background = speaker.color;
+
+                const name = document.createElement('span');
+                name.className = 'speaker-name';
+                name.textContent = speaker.name;
+
+                const count = document.createElement('span');
+                count.className = 'speaker-count';
+                count.textContent = speaker.count + ' quotes';
+
+                item.appendChild(colorDot);
+                item.appendChild(name);
+                item.appendChild(count);
+
+                item.addEventListener('click', () => {
+                    if (selectedSpeakers.has(speaker.id)) {
+                        selectedSpeakers.delete(speaker.id);
+                        item.classList.remove('selected');
+                    } else {
+                        selectedSpeakers.add(speaker.id);
+                        item.classList.add('selected');
+                    }
+                    sendCommand('setSpeakers', Array.from(selectedSpeakers));
+                });
+
+                grid.appendChild(item);
+            });
+        }
+
+        // Send command to display with authentication token
+        function sendCommand(type, data) {
+            channel.postMessage({
+                type,
+                data,
+                timestamp: Date.now(),
+                token: sessionToken  // Include auth token for verification
+            });
+        }
+
+        // Mode buttons
+        document.querySelectorAll('.mode-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                sendCommand('setMode', btn.dataset.mode);
+                document.getElementById('currentMode').textContent = btn.dataset.mode;
+            });
+        });
+
+        // Speed slider
+        document.getElementById('speedSlider').addEventListener('input', (e) => {
+            document.getElementById('speedValue').textContent = e.target.value;
+            sendCommand('setSpeed', parseInt(e.target.value));
+        });
+
+        // Density slider
+        document.getElementById('densitySlider').addEventListener('input', (e) => {
+            document.getElementById('densityValue').textContent = e.target.value;
+            sendCommand('setDensity', parseInt(e.target.value));
+        });
+
+        // Timing sliders
+        document.getElementById('speakerTime').addEventListener('input', (e) => {
+            document.getElementById('speakerTimeValue').textContent = e.target.value;
+        });
+
+        document.getElementById('quoteInterval').addEventListener('input', (e) => {
+            document.getElementById('quoteIntervalValue').textContent = e.target.value;
+        });
+
+        document.getElementById('quotesPerSpeaker').addEventListener('input', (e) => {
+            document.getElementById('quotesPerSpeakerValue').textContent = e.target.value;
+        });
+
+        // Select all/none
+        document.getElementById('selectAll').addEventListener('click', () => {
+            selectedSpeakers = new Set(speakers.map(s => s.id));
+            document.querySelectorAll('.speaker-item').forEach(item => item.classList.add('selected'));
+            sendCommand('setSpeakers', Array.from(selectedSpeakers));
+        });
+
+        document.getElementById('selectNone').addEventListener('click', () => {
+            selectedSpeakers.clear();
+            document.querySelectorAll('.speaker-item').forEach(item => item.classList.remove('selected'));
+            sendCommand('setSpeakers', []);
+        });
+
+        // Art mode controls
+        document.getElementById('startArt').addEventListener('click', () => {
+            sendCommand('startArt', {
+                speakers: Array.from(selectedSpeakers),
+                speakerTime: parseInt(document.getElementById('speakerTime').value) * 1000,
+                quoteInterval: parseInt(document.getElementById('quoteInterval').value) * 1000,
+                quotesPerSpeaker: parseInt(document.getElementById('quotesPerSpeaker').value)
+            });
+        });
+
+        document.getElementById('skipSpeaker').addEventListener('click', () => {
+            sendCommand('skipSpeaker', null);
+        });
+
+        document.getElementById('stopArt').addEventListener('click', () => {
+            sendCommand('stopArt', null);
+        });
+
+        // Listen for updates from display
+        channel.onmessage = (event) => {
+            const { type, data } = event.data;
+
+            switch (type) {
+                case 'heartbeat':
+                    isConnected = true;
+                    document.getElementById('connectionStatus').classList.add('connected');
+                    document.getElementById('connectionText').textContent = 'Connected to display';
+                    break;
+
+                case 'stats':
+                    document.getElementById('quotesShown').textContent = data.quotesShown || 0;
+                    document.getElementById('currentMode').textContent = data.mode || '--';
+                    document.getElementById('currentSpeaker').textContent = data.currentSpeaker || '--';
+                    break;
+
+                case 'currentQuote':
+                    document.getElementById('currentQuoteText').textContent = '"' + data.text + '"';
+                    document.getElementById('currentQuoteSpeaker').textContent = '— ' + data.speaker;
+                    break;
+            }
+        };
+
+        // Ping display periodically
+        setInterval(() => {
+            sendCommand('ping', null);
+        }, 2000);
+
+        // Contradictions data (cabinet only) - all 27 contradictions
+        const contradictions = [
+            // JD Vance (7)
+            { id: 'vance-trump-flip', speaker: 'JD Vance', topic: 'Trump Support', preview: '"America\'s Hitler" → "Greatest president"', enabled: true },
+            { id: 'vance-never-trump-flip', speaker: 'JD Vance', topic: 'Never Trump', preview: '"Never Trump guy" → "Honored running mate"', enabled: true },
+            { id: 'vance-trump-heroin-flip', speaker: 'JD Vance', topic: 'Trump "Heroin"', preview: '"Cultural heroin" → "Great president"', enabled: true },
+            { id: 'vance-abortion-national-ban', speaker: 'JD Vance', topic: 'Abortion', preview: '"Illegal nationally" → "Never supported ban"', enabled: true },
+            { id: 'vance-affordable-care-act', speaker: 'JD Vance', topic: 'Healthcare', preview: 'Praised ACA → "Disaster"', enabled: true },
+            { id: 'vance-red-flag-laws', speaker: 'JD Vance', topic: 'Gun Safety', preview: 'Supported → "Unconstitutional"', enabled: true },
+
+            // Donald Trump (9)
+            { id: 'trump-drain-swamp', speaker: 'Donald Trump', topic: 'Drain the Swamp', preview: '"Drain the swamp" → "I hate that term"', enabled: true },
+            { id: 'trump-wikileaks', speaker: 'Donald Trump', topic: 'WikiLeaks', preview: '"I love WikiLeaks" → "Know nothing about it"', enabled: true },
+            { id: 'trump-golf', speaker: 'Donald Trump', topic: 'Golf', preview: '"No time for golf" → "Golf is my exercise"', enabled: true },
+            { id: 'trump-debt', speaker: 'Donald Trump', topic: 'National Debt', preview: '"Eliminate debt in 8 years" → "Who cares"', enabled: true },
+            { id: 'trump-russia-hoax', speaker: 'Donald Trump', topic: 'Russia Investigation', preview: '"Russia, if you\'re listening" → "Russia hoax"', enabled: true },
+            { id: 'trump-january6', speaker: 'Donald Trump', topic: 'January 6', preview: '"Peacefully" → "Great people"', enabled: true },
+            { id: 'trump-lock-her-up', speaker: 'Donald Trump', topic: 'Lock Her Up', preview: 'Led chants → "I didn\'t say that"', enabled: true },
+            { id: 'trump-ukraine-24-hours', speaker: 'Donald Trump', topic: 'Ukraine War', preview: '"24 hours" → "Said in jest"', enabled: true },
+            { id: 'trump-electoral-college', speaker: 'Donald Trump', topic: 'Electoral College', preview: '"Disaster" → "Genius"', enabled: true },
+            { id: 'trump-tiktok-ban-flip', speaker: 'Donald Trump', topic: 'TikTok Ban', preview: '"National security threat" → "Love TikTok"', enabled: true },
+            { id: 'trump-project-2025-flip', speaker: 'Donald Trump', topic: 'Project 2025', preview: '"Know nothing about it" → "Meeting with architects"', enabled: true },
+
+            // Stephen Miller (1)
+            { id: 'miller-immigration-legal', speaker: 'Stephen Miller', topic: 'Legal Immigration', preview: '"Welcome legal" → "Reduce legal"', enabled: true },
+
+            // Marco Rubio (1)
+            { id: 'rubio-trump-con-man-flip', speaker: 'Marco Rubio', topic: 'Trump Support', preview: '"Con man, dangerous" → "Honored to serve"', enabled: true },
+
+            // RFK Jr (2)
+            { id: 'rfk-vaccine-flip', speaker: 'RFK Jr', topic: 'Vaccines', preview: '"No vaccine is safe" → "I am pro-vaccine"', enabled: true },
+            { id: 'rfk-vaccine-actions-flip', speaker: 'RFK Jr', topic: 'Vaccine Access', preview: '"Won\'t restrict access" → Fired CDC advisors', enabled: true },
+
+            // Tulsi Gabbard (2)
+            { id: 'gabbard-snowden-flip', speaker: 'Tulsi Gabbard', topic: 'Snowden', preview: '"Brave whistleblower" → "Broke the law"', enabled: true },
+            { id: 'gabbard-section-702-flip', speaker: 'Tulsi Gabbard', topic: 'FISA 702', preview: '"Repeal it" → "Crucial capability"', enabled: true },
+
+            // Pete Hegseth (1)
+            { id: 'hegseth-women-combat-flip', speaker: 'Pete Hegseth', topic: 'Women in Combat', preview: '"Should not be in combat" → "Anyone who meets standards"', enabled: true },
+
+            // Elon Musk (2)
+            { id: 'musk-free-speech-flip', speaker: 'Elon Musk', topic: 'Free Speech', preview: '"Absolutist" → Censors critics', enabled: true },
+            { id: 'musk-government-spending-flip', speaker: 'Elon Musk', topic: 'Government Subsidies', preview: '"End all subsidies" → Gets $38B in subsidies', enabled: true },
+
+            // Kristi Noem (1)
+            { id: 'noem-minneapolis-statements-flip', speaker: 'Kristi Noem', topic: 'Minneapolis Shooting', preview: '"Attacked officers" → Video shows otherwise', enabled: true }
+        ];
+
+        // Initialize contradiction list
+        function initContradictionList() {
+            const list = document.getElementById('contradictionList');
+            list.textContent = '';
+
+            contradictions.forEach(c => {
+                const item = document.createElement('div');
+                item.className = 'contradiction-item' + (c.enabled ? '' : ' disabled');
+                item.dataset.id = c.id;
+
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.checked = c.enabled;
+                checkbox.addEventListener('change', (e) => {
+                    c.enabled = e.target.checked;
+                    item.classList.toggle('disabled', !c.enabled);
+                    updateEnabledContradictions();
+                });
+
+                const content = document.createElement('div');
+                content.className = 'contradiction-content';
+
+                const speaker = document.createElement('div');
+                speaker.className = 'contradiction-speaker';
+                speaker.textContent = c.speaker;
+
+                const topic = document.createElement('div');
+                topic.className = 'contradiction-topic';
+                topic.textContent = c.topic;
+
+                const preview = document.createElement('div');
+                preview.className = 'contradiction-preview';
+                preview.textContent = c.preview;
+
+                content.appendChild(speaker);
+                content.appendChild(topic);
+                content.appendChild(preview);
+
+                item.appendChild(checkbox);
+                item.appendChild(content);
+
+                list.appendChild(item);
+            });
+        }
+
+        function updateEnabledContradictions() {
+            const enabled = contradictions.filter(c => c.enabled).map(c => c.id);
+            sendCommand('setContradictions', enabled);
+        }
+
+        document.getElementById('enableAllContradictions').addEventListener('click', () => {
+            contradictions.forEach(c => c.enabled = true);
+            initContradictionList();
+            updateEnabledContradictions();
+        });
+
+        document.getElementById('disableAllContradictions').addEventListener('click', () => {
+            contradictions.forEach(c => c.enabled = false);
+            initContradictionList();
+            updateEnabledContradictions();
+        });
+
+        // Initialize control panel components
+        initSpeakerGrid();
+        initContradictionList();
+
+        } // End initializeControlPanel()
+    </script>
+</body>
+</html>

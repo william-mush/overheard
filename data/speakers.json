@@ -1,0 +1,156 @@
+{
+  "speakers": {
+    "donald-trump": {
+      "name": "Donald Trump",
+      "roles": ["President"],
+      "party": "Republican",
+      "bioguideId": null,
+      "channels": ["@realDonaldTrump", "Truth Social"],
+      "color": "#cc0000",
+      "category": "administration"
+    },
+    "jd-vance": {
+      "name": "JD Vance",
+      "roles": ["Vice President", "Senator"],
+      "party": "Republican",
+      "bioguideId": "V000137",
+      "channels": [],
+      "color": "#bb0000",
+      "category": "administration"
+    },
+    "stephen-miller": {
+      "name": "Stephen Miller",
+      "roles": ["Deputy Chief of Staff"],
+      "party": "Republican",
+      "bioguideId": null,
+      "channels": [],
+      "color": "#990000",
+      "category": "administration"
+    },
+    "kristi-noem": {
+      "name": "Kristi Noem",
+      "roles": ["DHS Secretary"],
+      "party": "Republican",
+      "bioguideId": "N000184",
+      "channels": [],
+      "color": "#aa0000",
+      "category": "administration"
+    },
+    "marco-rubio": {
+      "name": "Marco Rubio",
+      "roles": ["Secretary of State", "Senator"],
+      "party": "Republican",
+      "bioguideId": "R000595",
+      "channels": [],
+      "color": "#880000",
+      "category": "administration"
+    },
+    "pete-hegseth": {
+      "name": "Pete Hegseth",
+      "roles": ["Defense Secretary"],
+      "party": "Republican",
+      "bioguideId": null,
+      "channels": [],
+      "color": "#770000",
+      "category": "administration"
+    },
+    "rfk-jr": {
+      "name": "RFK Jr",
+      "roles": ["HHS Secretary"],
+      "party": "Republican",
+      "bioguideId": null,
+      "channels": [],
+      "color": "#dd0055",
+      "category": "administration"
+    },
+    "tulsi-gabbard": {
+      "name": "Tulsi Gabbard",
+      "roles": ["DNI Director"],
+      "party": "Republican",
+      "bioguideId": null,
+      "channels": [],
+      "color": "#cc0066",
+      "category": "administration"
+    },
+    "elon-musk": {
+      "name": "Elon Musk",
+      "roles": ["DOGE Administrator"],
+      "party": "Republican",
+      "bioguideId": null,
+      "channels": ["@elonmusk"],
+      "color": "#ff6600",
+      "category": "administration"
+    },
+    "marjorie-taylor-greene": {
+      "name": "Marjorie Taylor Greene",
+      "roles": ["Representative"],
+      "party": "Republican",
+      "bioguideId": "G000596",
+      "channels": [],
+      "color": "#dd4400",
+      "category": "congress"
+    },
+    "matt-gaetz": {
+      "name": "Matt Gaetz",
+      "roles": ["Representative"],
+      "party": "Republican",
+      "bioguideId": "G000578",
+      "channels": [],
+      "color": "#cc4400",
+      "category": "congress"
+    },
+    "lauren-boebert": {
+      "name": "Lauren Boebert",
+      "roles": ["Representative"],
+      "party": "Republican",
+      "bioguideId": "B000825",
+      "channels": [],
+      "color": "#bb4400",
+      "category": "congress"
+    },
+    "jim-jordan": {
+      "name": "Jim Jordan",
+      "roles": ["Representative"],
+      "party": "Republican",
+      "bioguideId": "J000289",
+      "channels": [],
+      "color": "#aa4400",
+      "category": "congress"
+    },
+    "tucker-carlson": {
+      "name": "Tucker Carlson",
+      "roles": ["Media Host"],
+      "party": "Republican",
+      "bioguideId": null,
+      "channels": ["Tucker Carlson Network"],
+      "color": "#8800aa",
+      "category": "media"
+    },
+    "steve-bannon": {
+      "name": "Steve Bannon",
+      "roles": ["Media Host", "Former Strategist"],
+      "party": "Republican",
+      "bioguideId": null,
+      "channels": ["War Room"],
+      "color": "#7700aa",
+      "category": "media"
+    }
+  },
+  "categories": {
+    "administration": {
+      "label": "Administration",
+      "description": "Current administration officials",
+      "color": "#cc0000"
+    },
+    "congress": {
+      "label": "Congressional Allies",
+      "description": "Vocal congressional supporters",
+      "color": "#dd4400"
+    },
+    "media": {
+      "label": "Media Figures",
+      "description": "Influential media voices",
+      "color": "#8800aa"
+    }
+  }
+}

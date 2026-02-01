@@ -1,5 +1,14 @@
 // Flow Engine - Character-by-character text flow system
 
+import { TestimonyFlow } from './flows/testimonyFlow.js';
+import { ContradictionFlow } from './flows/contradictionFlow.js';
+import { FactCheckFlow } from './flows/factCheckFlow.js';
+import { TheRecordFlow } from './flows/theRecordFlow.js';
+import { AccumulationFlow } from './flows/accumulationFlow.js';
+import { CorrectionFlow } from './flows/correctionFlow.js';
+import { EchoFlow } from './flows/echoFlow.js';
+import { WhoSaidItFlow } from './flows/whoSaidItFlow.js';
+
 export class FlowEngine {
     constructor() {
         this.container = null;
@@ -7,6 +16,15 @@ export class FlowEngine {
         this.speed = 5;
         this.density = 5;
         this.activeCharacters = [];
+        this.speakers = null; // Loaded from speakers.json
+        this.factCheckRatings = {
+            'false': '#ff0000',
+            'mostly-false': '#ff6600',
+            'half-true': '#ffcc00',
+            'mostly-true': '#99cc00',
+            'true': '#00cc00',
+            'unverified': '#888888'
+        };
         this.flowModes = {
             wave: new WaveFlow(),
             probability: new ProbabilityFlow(),
@@ -23,7 +41,16 @@ export class FlowEngine {
             ticker: new TickerFlow(),
             takeover: new TakeoverFlow(),
             nytimeschaos: new ChaosFlow(), // NY Times only chaos mode
-            nytimestypewriter: new TypewriterFlow() // NY Times only typewriter mode
+            nytimestypewriter: new TypewriterFlow(), // NY Times only typewriter mode
+            testimony: new TestimonyFlow(),
+            contradiction: new ContradictionFlow(),
+            factcheck: new FactCheckFlow(),
+            // Art modes
+            therecord: new TheRecordFlow(),
+            accumulation: new AccumulationFlow(),
+            correction: new CorrectionFlow(),
+            echo: new EchoFlow(),
+            whosaidit: new WhoSaidItFlow()
         };
         this.animationFrame = null;
         this.lastTime = 0;
@@ -31,6 +58,29 @@ export class FlowEngine {
 
     initialize(container) {
         this.container = container;
+        this.loadSpeakers();
+    }
+
+    async loadSpeakers() {
+        try {
+            const response = await fetch('/data/speakers.json');
+            const data = await response.json();
+            this.speakers = data.speakers;
+            console.log('Speakers loaded for flow engine');
+        } catch (error) {
+            console.error('Failed to load speakers:', error);
+        }
+    }
+
+    getFactCheckColor(rating) {
+        return this.factCheckRatings[rating] || this.factCheckRatings['unverified'];
+    }
+
+    getSpeakerColor(speakerId) {
+        if (this.speakers && this.speakers[speakerId]) {
+            return this.speakers[speakerId].color;
+        }
+        return '#ffffff';
     }
 
     start() {
@@ -71,8 +121,18 @@ export class FlowEngine {
     }
 
     addItem(data) {
+        // Art modes need full quote data, not individual words
+        const artModes = ['therecord', 'accumulation', 'correction', 'echo', 'whosaidit', 'contradiction', 'factcheck'];
+
+        if (artModes.includes(this.mode) && data.isPolitical) {
+            // Pass full quote to art mode handler
+            this.addPoliticalQuote(data);
+            return;
+        }
+
         // Split text into words instead of characters for readability
-        const text = data.isLogo ? `${data.content}` : `[${data.source}] ${data.content}`;
+        // Don't show source prefix for custom content or logos
+        const text = (data.isLogo || data.isCustom) ? `${data.content}` : `[${data.source}] ${data.content}`;
         const words = text.split(' ');
 
         words.forEach((word, index) => {
@@ -82,11 +142,88 @@ export class FlowEngine {
                     ? this.flowModes[this.mode].transformWord(word + ' ')
                     : word + ' ';
                 const wordElement = this.createWord(transformedWord, data.source, data.isLogo);
+
+                // Pass political speech data to element for specialized flows
+                if (data.isPolitical) {
+                    wordElement.isPolitical = true;
+                    wordElement.speakerId = data.speakerId;
+                    wordElement.speakerColor = this.getSpeakerColor(data.speakerId);
+                    wordElement.date = data.date;
+                    wordElement.factCheck = data.factCheck;
+                    wordElement.categories = data.categories;
+                    wordElement.rhetoric = data.rhetoric;
+                    wordElement.contradicts = data.contradicts;
+                    wordElement.element.classList.add('political');
+                }
+
                 this.activeCharacters.push(wordElement);
                 this.container.appendChild(wordElement.element);
                 this.flowModes[this.mode].initializeCharacter(wordElement);
             }, index * 200); // Stagger word appearance
         });
+    }
+
+    addPoliticalQuote(data) {
+        // Pass full quote data directly to art mode
+        const flowMode = this.flowModes[this.mode];
+
+        if (flowMode.addQuote) {
+            // Mode has its own addQuote method
+            flowMode.addQuote({
+                text: data.content,
+                speaker: data.speaker,
+                speakerId: data.speakerId,
+                speakerColor: this.getSpeakerColor(data.speakerId),
+                date: data.date,
+                factCheck: data.factCheck,
+                categories: data.categories,
+                rhetoric: data.rhetoric,
+                contradicts: data.contradicts
+            }, this.container);
+        }
+    }
+
+    addImageItem(data) {
+        // Create an image element that flows with physics
+        const img = document.createElement('img');
+        img.src = data.imageUrl;
+        img.className = 'flowing-image';
+
+        // Scale image to reasonable size (max 200px)
+        const maxSize = 200;
+        const scale = Math.min(maxSize / data.imageWidth, maxSize / data.imageHeight, 1);
+        const displayWidth = data.imageWidth * scale;
+        const displayHeight = data.imageHeight * scale;
+
+        img.style.width = `${displayWidth}px`;
+        img.style.height = `${displayHeight}px`;
+        img.style.position = 'absolute';
+        img.style.pointerEvents = 'none';
+        img.style.objectFit = 'contain';
+
+        // Create character object with image element
+        const imageChar = {
+            element: img,
+            content: '', // No text
+            source: data.source,
+            isImage: true,
+            isTile: data.isTile || false,
+            isRepeated: data.isRepeated || false,
+            width: displayWidth,
+            height: displayHeight,
+            // Physics properties (will be set by flow mode)
+            x: 0,
+            y: 0,
+            vx: 0,
+            vy: 0,
+            opacity: 1
+        };
+
+        this.activeCharacters.push(imageChar);
+        this.container.appendChild(img);
+
+        // Initialize with current flow mode
+        this.flowModes[this.mode].initializeCharacter(imageChar);
     }
 
     addFeaturedHeadline(data) {

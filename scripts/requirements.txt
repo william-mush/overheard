@@ -1,0 +1,11 @@
+# Python dependencies for transcript collection scripts
+
+# YouTube transcript extraction
+youtube-transcript-api>=0.6.0
+
+# Web scraping for C-SPAN and White House
+requests>=2.28.0
+beautifulsoup4>=4.11.0
+
+# Optional: for Google YouTube Data API
+# google-api-python-client>=2.0.0

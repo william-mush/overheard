@@ -7,11 +7,12 @@ export class CustomContentManager {
         this.imageProcessor = new ImageProcessor();
         this.customText = '';
         this.customImage = null;
-        this.imageMode = 'ascii'; // 'ascii', 'particles', 'background'
+        this.imageMode = 'whole'; // 'whole', 'tiles', 'repeated'
         this.isActive = false;
         this.loopContent = true;
         this.textIndex = 0;
         this.imageData = null;
+        this.imageUrl = null;
     }
 
     /**
@@ -47,26 +48,43 @@ export class CustomContentManager {
     async processImage() {
         if (!this.customImage) {
             this.imageData = null;
+            this.imageUrl = null;
             return;
         }
 
         console.log(`Processing image in ${this.imageMode} mode...`);
 
+        // Load the image and get its URL
+        const img = await this.imageProcessor.loadImage(this.customImage);
+        this.imageUrl = img.src;
+
         switch (this.imageMode) {
-            case 'ascii':
-                this.imageData = await this.imageProcessor.imageToASCII(this.customImage, 120);
-                console.log(`Generated ${this.imageData.length} ASCII characters`);
+            case 'whole':
+                // Store image dimensions and URL for whole image mode
+                this.imageData = {
+                    type: 'whole',
+                    url: img.src,
+                    width: img.width,
+                    height: img.height
+                };
+                console.log(`Whole image ready: ${img.width}x${img.height}`);
                 break;
 
-            case 'particles':
-                this.imageData = await this.imageProcessor.imageToParticles(this.customImage, 2000);
-                console.log(`Generated ${this.imageData.length} particles`);
+            case 'tiles':
+                // Break image into tiles (e.g., 4x4 grid = 16 tiles)
+                this.imageData = await this.imageProcessor.imageToTiles(this.customImage, 4, 4);
+                console.log(`Generated ${this.imageData.tiles.length} image tiles`);
                 break;
 
-            case 'background':
-                // For background mode, we just need the image URL
-                const img = await this.imageProcessor.loadImage(this.customImage);
-                this.imageData = { type: 'background', imageUrl: img.src };
+            case 'repeated':
+                // Just store the URL - we'll create multiple copies in flow
+                this.imageData = {
+                    type: 'repeated',
+                    url: img.src,
+                    width: img.width,
+                    height: img.height
+                };
+                console.log(`Repeated image ready for flow`);
                 break;
         }
     }
@@ -197,43 +215,67 @@ export class CustomContentManager {
     }
 
     /**
-     * Get ASCII characters as items
-     * @returns {Array} Array of character items
+     * Get whole image item for flow
+     * @returns {Object|null} Image item
      */
-    getASCIIItems() {
-        if (!this.imageData || this.imageMode !== 'ascii') return [];
+    getWholeImageItem() {
+        if (!this.imageData || this.imageMode !== 'whole') return null;
 
-        return this.imageData.map((charData, index) => ({
+        return {
             source: 'Custom Image',
-            content: charData.char,
+            content: '', // No text content
+            timestamp: Date.now(),
+            url: '#',
+            isCustom: true,
+            isImage: true,
+            imageUrl: this.imageData.url,
+            imageWidth: this.imageData.width,
+            imageHeight: this.imageData.height
+        };
+    }
+
+    /**
+     * Get image tiles as items
+     * @returns {Array} Array of tile items
+     */
+    getTileItems() {
+        if (!this.imageData || this.imageMode !== 'tiles') return [];
+
+        return this.imageData.tiles.map((tile, index) => ({
+            source: 'Custom Image',
+            content: '', // No text content
             timestamp: Date.now() + index,
             url: '#',
             isCustom: true,
-            color: charData.color,
-            x: charData.x,
-            y: charData.y
+            isImage: true,
+            isTile: true,
+            imageUrl: tile.url,
+            imageWidth: tile.width,
+            imageHeight: tile.height,
+            tileCol: tile.col,
+            tileRow: tile.row
         }));
     }
 
     /**
-     * Get image particles as items
-     * @returns {Array} Array of particle items
+     * Get repeated image item (will be added multiple times)
+     * @returns {Object|null} Image item
      */
-    getParticleItems() {
-        if (!this.imageData || this.imageMode !== 'particles') return [];
+    getRepeatedImageItem() {
+        if (!this.imageData || this.imageMode !== 'repeated') return null;
 
-        return this.imageData.map((particle, index) => ({
+        return {
             source: 'Custom Image',
-            content: '●', // Unicode circle for particle
-            timestamp: Date.now() + index,
+            content: '', // No text content
+            timestamp: Date.now(),
             url: '#',
             isCustom: true,
-            color: particle.color,
-            x: particle.x,
-            y: particle.y,
-            originalX: particle.originalX,
-            originalY: particle.originalY
-        }));
+            isImage: true,
+            isRepeated: true,
+            imageUrl: this.imageData.url,
+            imageWidth: this.imageData.width,
+            imageHeight: this.imageData.height
+        };
     }
 
     /**

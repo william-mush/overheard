@@ -1,0 +1,2138 @@
+{
+  "_schema": {
+    "description": "Political speech transcripts database",
+    "version": "1.0.0"
+  },
+  "transcripts": [
+    {
+      "id": "trump-inaugural-2025",
+      "speaker": "Donald Trump",
+      "speakerId": "donald-trump",
+      "role": "President",
+      "date": "2025-01-20",
+      "source": "White House",
+      "sourceUrl": "https://www.whitehouse.gov/remarks/2025/01/the-inaugural-address/",
+      "eventType": "speech",
+      "title": "2025 Inaugural Address",
+      "extractedQuotes": [
+        {
+          "id": "trump-golden-age",
+          "text": "The golden age of America begins right now.",
+          "categories": [
+            "absolutist-claims"
+          ],
+          "rhetoric": [
+            "absolutist-claims"
+          ],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        },
+        {
+          "id": "trump-saved-by-god",
+          "text": "I was saved by God to make America great again.",
+          "categories": [],
+          "rhetoric": [
+            "absolutist-claims"
+          ],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        },
+        {
+          "id": "trump-liberation-day",
+          "text": "For American citizens, January 20th, 2025, is Liberation Day.",
+          "categories": [],
+          "rhetoric": [
+            "absolutist-claims"
+          ],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        },
+        {
+          "id": "trump-weaponization",
+          "text": "The vicious, violent and unfair weaponization of the Justice Department and our government will end.",
+          "categories": [
+            "opponents"
+          ],
+          "rhetoric": [
+            "violent-rhetoric",
+            "us-vs-them"
+          ],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "trump-invasion-order-2025",
+      "speaker": "Donald Trump",
+      "speakerId": "donald-trump",
+      "role": "President",
+      "date": "2025-01-20",
+      "source": "White House",
+      "eventType": "executive-order",
+      "title": "Executive Order: Protecting The American People Against Invasion",
+      "extractedQuotes": [
+        {
+          "id": "trump-flood-aliens",
+          "text": "The prior administration invited, administered, and oversaw an unprecedented flood of illegal immigration.",
+          "categories": [
+            "immigration",
+            "opponents"
+          ],
+          "rhetoric": [
+            "absolutist-claims",
+            "fear-mongering",
+            "us-vs-them"
+          ],
+          "factCheck": {
+            "rating": "mostly-false",
+            "source": "PolitiFact"
+          }
+        },
+        {
+          "id": "trump-invasion",
+          "text": "This is an invasion that must be stopped.",
+          "categories": [
+            "immigration"
+          ],
+          "rhetoric": [
+            "fear-mongering",
+            "violent-rhetoric"
+          ],
+          "factCheck": {
+            "rating": "false",
+            "source": "AP Fact Check"
+          }
+        }
+      ]
+    },
+    {
+      "id": "trump-rallies-2024",
+      "speaker": "Donald Trump",
+      "speakerId": "donald-trump",
+      "role": "Presidential Candidate",
+      "date": "2024-10-15",
+      "source": "Campaign Rally",
+      "eventType": "rally",
+      "title": "Various 2024 Campaign Rallies",
+      "extractedQuotes": [
+        {
+          "id": "trump-enemy-within",
+          "text": "We have the outside enemy, and then we have the enemy from within. And the enemy from within, in my opinion, is more dangerous than China, Russia and all these countries.",
+          "categories": [
+            "opponents"
+          ],
+          "rhetoric": [
+            "us-vs-them",
+            "fear-mongering",
+            "dehumanizing-language"
+          ],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        },
+        {
+          "id": "trump-poisoning-blood",
+          "text": "They're poisoning the blood of our country. That's what they've done. They poison mental institutions and prisons all over the world.",
+          "categories": [
+            "immigration"
+          ],
+          "rhetoric": [
+            "dehumanizing-language",
+            "fear-mongering",
+            "us-vs-them"
+          ],
+          "factCheck": {
+            "rating": "false",
+            "source": "Multiple fact-checkers"
+          }
+        },
+        {
+          "id": "trump-animals",
+          "text": "They're not people, in my opinion. These are animals, and we have to stop them.",
+          "categories": [
+            "immigration"
+          ],
+          "rhetoric": [
+            "dehumanizing-language",
+            "us-vs-them"
+          ],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        },
+        {
+          "id": "trump-eating-pets",
+          "text": "In Springfield, they're eating the dogs. They're eating the cats. They're eating the pets of the people that live there.",
+          "categories": [
+            "immigration"
+          ],
+          "rhetoric": [
+            "dehumanizing-language",
+            "fear-mongering",
+            "us-vs-them"
+          ],
+          "factCheck": {
+            "rating": "false",
+            "source": "PolitiFact (2024 Lie of the Year)"
+          }
+        },
+        {
+          "id": "trump-vermin",
+          "text": "We pledge to you that we will root out the communists, Marxists, fascists and the radical left thugs that live like vermin within the confines of our country.",
+          "categories": [
+            "opponents"
+          ],
+          "rhetoric": [
+            "dehumanizing-language",
+            "violent-rhetoric",
+            "us-vs-them"
+          ],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        },
+        {
+          "id": "trump-bloodbath",
+          "text": "If I don't get elected, it's going to be a bloodbath for the country.",
+          "categories": [
+            "election"
+          ],
+          "rhetoric": [
+            "violent-rhetoric",
+            "fear-mongering"
+          ],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        },
+        {
+          "id": "trump-dictator-day-one",
+          "text": "I want to be a dictator for one day.",
+          "categories": [],
+          "rhetoric": [
+            "absolutist-claims"
+          ],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        },
+        {
+          "id": "trump-terminate-constitution",
+          "text": "A Massive Fraud of this type and magnitude allows for the termination of all rules, regulations, and articles, even those found in the Constitution.",
+          "categories": [
+            "election"
+          ],
+          "rhetoric": [
+            "violent-rhetoric",
+            "absolutist-claims",
+            "conspiracy"
+          ],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        },
+        {
+          "id": "trump-retribution",
+          "text": "I am your retribution.",
+          "categories": [],
+          "rhetoric": [
+            "violent-rhetoric"
+          ],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        },
+        {
+          "id": "trump-immigrant-genes",
+          "text": "Many of them murdered far more than one person, and they're now happily living in the United States. You know, now, a murderer — I believe this — it's in their genes.",
+          "categories": [
+            "immigration"
+          ],
+          "rhetoric": [
+            "dehumanizing-language",
+            "fear-mongering",
+            "us-vs-them"
+          ],
+          "factCheck": {
+            "rating": "false",
+            "source": "Scientific consensus, DHS statistics clarification"
+          }
+        },
+        {
+          "id": "trump-fight-like-hell",
+          "text": "We fight like hell. And if you don't fight like hell, you're not going to have a country anymore.",
+          "categories": [
+            "election"
+          ],
+          "rhetoric": [
+            "violent-rhetoric",
+            "fear-mongering"
+          ],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        },
+        {
+          "id": "trump-stolen-election",
+          "text": "We won this election, and we won it by a landslide.",
+          "categories": [
+            "election"
+          ],
+          "rhetoric": [
+            "absolutist-claims",
+            "conspiracy"
+          ],
+          "factCheck": {
+            "rating": "false",
+            "source": "AP Fact Check, PolitiFact, 62 court rulings"
+          }
+        },
+        {
+          "id": "trump-find-votes",
+          "text": "I just want to find 11,780 votes.",
+          "categories": [
+            "election"
+          ],
+          "rhetoric": [
+            "conspiracy"
+          ],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "miller-press-briefing-may-2025",
+      "speaker": "Stephen Miller",
+      "speakerId": "stephen-miller",
+      "role": "Deputy Chief of Staff",
+      "date": "2025-05-09",
+      "source": "White House",
+      "eventType": "briefing",
+      "title": "Press Briefing on Immigration Enforcement",
+      "extractedQuotes": [
+        {
+          "id": "miller-repelling-invasion",
+          "text": "President Trump is deploying a multifaceted approach to ending migrant crime, sealing the southern border, repelling the invasion, and shutting down trafficking networks.",
+          "categories": [
+            "immigration"
+          ],
+          "rhetoric": [
+            "fear-mongering",
+            "violent-rhetoric"
+          ],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        },
+        {
+          "id": "miller-final-destination",
+          "text": "The objective is to get high-threat criminal aliens out of the United States, put them into a facility that is safe and secure, and then find an ultimate and final destination for those aliens.",
+          "categories": [
+            "immigration"
+          ],
+          "rhetoric": [
+            "dehumanizing-language"
+          ],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        },
+        {
+          "id": "miller-mass-deportation",
+          "text": "Now that we have achieved the mission of sealing the border, you're going to see more and more resources and priorities put into the mass deportation program.",
+          "categories": [
+            "immigration"
+          ],
+          "rhetoric": [],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        },
+        {
+          "id": "miller-habeas-corpus",
+          "text": "The Constitution is clear that the privilege of the writ of habeas corpus can be suspended in a time of invasion. So, it's an option we're actively looking at.",
+          "categories": [
+            "immigration"
+          ],
+          "rhetoric": [
+            "violent-rhetoric",
+            "absolutist-claims",
+            "fear-mongering"
+          ],
+          "factCheck": {
+            "rating": "mostly-false",
+            "source": "Constitutional scholars"
+          }
+        }
+      ]
+    },
+    {
+      "id": "miller-various-interviews",
+      "speaker": "Stephen Miller",
+      "speakerId": "stephen-miller",
+      "role": "Deputy Chief of Staff",
+      "date": "2025-03-15",
+      "source": "Various Media",
+      "eventType": "interview",
+      "title": "Various Interviews 2025",
+      "extractedQuotes": [
+        {
+          "id": "miller-20-million",
+          "text": "The 'invasion force' were the 20 MILLION illegal aliens that Biden flooded into this country!",
+          "categories": [
+            "immigration",
+            "opponents"
+          ],
+          "rhetoric": [
+            "dehumanizing-language",
+            "absolutist-claims",
+            "fear-mongering",
+            "us-vs-them"
+          ],
+          "factCheck": {
+            "rating": "false",
+            "source": "Multiple fact-checkers"
+          }
+        },
+        {
+          "id": "miller-serial-criminal-aliens",
+          "text": "They refused to turn over tens of thousands of serial criminal illegal aliens to ICE — they get cut loose.",
+          "categories": [
+            "immigration"
+          ],
+          "rhetoric": [
+            "dehumanizing-language",
+            "absolutist-claims"
+          ],
+          "factCheck": {
+            "rating": "mostly-false",
+            "source": "Fact-checkers"
+          }
+        },
+        {
+          "id": "miller-guantanamo",
+          "text": "Guantanamo Bay is a pillar of this administration's plan to deal with and remove high threat criminal aliens, as well as to increase and expand our overall detention capacity.",
+          "categories": [
+            "immigration"
+          ],
+          "rhetoric": [
+            "dehumanizing-language"
+          ],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        },
+        {
+          "id": "miller-unprecedented-success",
+          "text": "This is the largest domestic law enforcement operation in the history of the world.",
+          "categories": [
+            "immigration"
+          ],
+          "rhetoric": [
+            "absolutist-claims"
+          ],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        },
+        {
+          "id": "miller-open-borders",
+          "text": "The Democrats wanted open borders, they got open borders, and now they're seeing the consequences.",
+          "categories": [
+            "immigration",
+            "opponents"
+          ],
+          "rhetoric": [
+            "absolutist-claims",
+            "us-vs-them"
+          ],
+          "factCheck": {
+            "rating": "false",
+            "source": "Policy analysts"
+          }
+        },
+        {
+          "id": "miller-sanctuary-criminals",
+          "text": "Every sanctuary city is a sanctuary for criminals. Every sanctuary state is a sanctuary for criminals.",
+          "categories": [
+            "immigration"
+          ],
+          "rhetoric": [
+            "absolutist-claims"
+          ],
+          "factCheck": {
+            "rating": "mostly-false",
+            "source": "Fact-checkers"
+          }
+        },
+        {
+          "id": "miller-enemy-combatants",
+          "text": "These are enemy combatants who have invaded our country. They will be treated as such.",
+          "categories": [
+            "immigration"
+          ],
+          "rhetoric": [
+            "dehumanizing-language",
+            "violent-rhetoric",
+            "fear-mongering",
+            "us-vs-them"
+          ],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        },
+        {
+          "id": "miller-cosmopolitan-bias",
+          "text": "I think the cosmopolitan bias against working-class Americans is one of the ugliest forms of bigotry in this country.",
+          "categories": [
+            "opponents",
+            "media"
+          ],
+          "rhetoric": [
+            "us-vs-them"
+          ],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "noem-confirmation-2025",
+      "speaker": "Kristi Noem",
+      "speakerId": "kristi-noem",
+      "role": "DHS Secretary Nominee",
+      "date": "2025-01-17",
+      "source": "Congress.gov",
+      "eventType": "testimony",
+      "title": "DHS Secretary Confirmation Hearing",
+      "extractedQuotes": [
+        {
+          "id": "noem-number-one-threat",
+          "text": "The No. 1 threat to our homeland security is our southern border.",
+          "categories": [
+            "immigration"
+          ],
+          "rhetoric": [
+            "absolutist-claims",
+            "fear-mongering"
+          ],
+          "factCheck": {
+            "rating": "half-true",
+            "source": "Fact-checkers"
+          }
+        },
+        {
+          "id": "noem-382-terrorists",
+          "text": "During President Biden's administration, we've seen 382 individuals that have come over that border that are on the terrorist watch list.",
+          "categories": [
+            "immigration"
+          ],
+          "rhetoric": [],
+          "factCheck": {
+            "rating": "half-true",
+            "source": "DHS data"
+          }
+        },
+        {
+          "id": "noem-homegrown-terrorism",
+          "text": "We need to focus on domestic terrorism. Homegrown terrorism is on the rise.",
+          "categories": [],
+          "rhetoric": [],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "noem-various-2024-2025",
+      "speaker": "Kristi Noem",
+      "speakerId": "kristi-noem",
+      "role": "DHS Secretary",
+      "date": "2025-02-01",
+      "source": "Various",
+      "eventType": "speech",
+      "title": "Various Statements 2024-2025",
+      "extractedQuotes": [
+        {
+          "id": "noem-invasion-force",
+          "text": "We will repel this invasion. We will restore law and order. We will make our communities safe again.",
+          "categories": [
+            "immigration"
+          ],
+          "rhetoric": [
+            "fear-mongering",
+            "violent-rhetoric"
+          ],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        },
+        {
+          "id": "noem-mass-deportation",
+          "text": "Mass deportation is not just a policy, it's a necessity for the survival of this nation.",
+          "categories": [
+            "immigration"
+          ],
+          "rhetoric": [
+            "absolutist-claims",
+            "fear-mongering"
+          ],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        },
+        {
+          "id": "noem-shot-dog",
+          "text": "I shot the dog because she was untrainable and dangerous.",
+          "categories": [],
+          "rhetoric": [],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        },
+        {
+          "id": "noem-biden-border",
+          "text": "Joe Biden created the worst border crisis in American history. We're going to fix it.",
+          "categories": [
+            "immigration",
+            "opponents"
+          ],
+          "rhetoric": [
+            "absolutist-claims"
+          ],
+          "factCheck": {
+            "rating": "half-true",
+            "source": "Fact-checkers"
+          }
+        },
+        {
+          "id": "noem-criminal-aliens",
+          "text": "Criminal aliens are terrorizing communities across America. We will find them and we will remove them.",
+          "categories": [
+            "immigration"
+          ],
+          "rhetoric": [
+            "dehumanizing-language",
+            "fear-mongering"
+          ],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "trump-jan6-2021",
+      "speaker": "Donald Trump",
+      "speakerId": "donald-trump",
+      "role": "President",
+      "date": "2021-01-06",
+      "source": "Ellipse Speech",
+      "eventType": "speech",
+      "title": "January 6th Rally Speech",
+      "extractedQuotes": [
+        {
+          "id": "trump-never-concede",
+          "text": "We will never give up. We will never concede. It doesn't happen. You don't concede when there's theft involved.",
+          "categories": [
+            "election"
+          ],
+          "rhetoric": [
+            "absolutist-claims",
+            "conspiracy"
+          ],
+          "factCheck": {
+            "rating": "false",
+            "source": "62 court cases, CISA, state election officials"
+          }
+        },
+        {
+          "id": "trump-stop-the-steal",
+          "text": "We're going to walk down to the Capitol, and we're going to cheer on our brave senators and congressmen and women.",
+          "categories": [
+            "election"
+          ],
+          "rhetoric": [],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        },
+        {
+          "id": "trump-peacefully-patriotically",
+          "text": "I know that everyone here will soon be marching over to the Capitol building to peacefully and patriotically make your voices heard.",
+          "categories": [
+            "election"
+          ],
+          "rhetoric": [],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        },
+        {
+          "id": "trump-trial-by-combat",
+          "text": "Let's have trial by combat!",
+          "categories": [
+            "election"
+          ],
+          "rhetoric": [
+            "violent-rhetoric"
+          ],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "trump-2017-charlottesville",
+      "speaker": "Donald Trump",
+      "speakerId": "donald-trump",
+      "role": "President",
+      "date": "2017-08-15",
+      "source": "Trump Tower Press Conference",
+      "eventType": "briefing",
+      "title": "Charlottesville Response",
+      "extractedQuotes": [
+        {
+          "id": "trump-very-fine-people",
+          "text": "You had some very bad people in that group, but you also had people that were very fine people, on both sides.",
+          "categories": [],
+          "rhetoric": [],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "trump-2019-squad",
+      "speaker": "Donald Trump",
+      "speakerId": "donald-trump",
+      "role": "President",
+      "date": "2019-07-14",
+      "source": "Twitter",
+      "eventType": "statement",
+      "title": "Comments on 'The Squad'",
+      "extractedQuotes": [
+        {
+          "id": "trump-go-back",
+          "text": "Why don't they go back and help fix the totally broken and crime infested places from which they came.",
+          "categories": [
+            "opponents",
+            "immigration"
+          ],
+          "rhetoric": [
+            "dehumanizing-language",
+            "us-vs-them"
+          ],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "trump-2020-protests",
+      "speaker": "Donald Trump",
+      "speakerId": "donald-trump",
+      "role": "President",
+      "date": "2020-06-01",
+      "source": "Various",
+      "eventType": "statement",
+      "title": "Response to George Floyd Protests",
+      "extractedQuotes": [
+        {
+          "id": "trump-dominate-streets",
+          "text": "If a city or state refuses to take the actions necessary to defend the life and property of their residents, then I will deploy the United States military and quickly solve the problem for them.",
+          "categories": [],
+          "rhetoric": [
+            "violent-rhetoric",
+            "fear-mongering"
+          ],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        },
+        {
+          "id": "trump-looting-shooting",
+          "text": "When the looting starts, the shooting starts.",
+          "categories": [],
+          "rhetoric": [
+            "violent-rhetoric"
+          ],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "trump-media-enemy",
+      "speaker": "Donald Trump",
+      "speakerId": "donald-trump",
+      "role": "President",
+      "date": "2017-02-17",
+      "source": "Twitter/Speeches",
+      "eventType": "statement",
+      "title": "Media Statements",
+      "extractedQuotes": [
+        {
+          "id": "trump-enemy-of-people",
+          "text": "The FAKE NEWS media is not my enemy, it is the enemy of the American People!",
+          "categories": [
+            "media"
+          ],
+          "rhetoric": [
+            "us-vs-them",
+            "fear-mongering"
+          ],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        },
+        {
+          "id": "trump-fake-news",
+          "text": "Any negative polls are fake news.",
+          "categories": [
+            "media"
+          ],
+          "rhetoric": [
+            "absolutist-claims"
+          ],
+          "factCheck": {
+            "rating": "false",
+            "source": "Polling experts"
+          }
+        }
+      ]
+    },
+    {
+      "id": "miller-2018-family-separation",
+      "speaker": "Stephen Miller",
+      "speakerId": "stephen-miller",
+      "role": "Senior Policy Advisor",
+      "date": "2018-06-01",
+      "source": "Various",
+      "eventType": "interview",
+      "title": "Family Separation Policy",
+      "extractedQuotes": [
+        {
+          "id": "miller-deterrent",
+          "text": "A big name of the game is deterrence.",
+          "categories": [
+            "immigration"
+          ],
+          "rhetoric": [],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        },
+        {
+          "id": "miller-simple-decision",
+          "text": "It's a very simple decision. Don't come here illegally. If you come here legally, we'll welcome you.",
+          "categories": [
+            "immigration"
+          ],
+          "rhetoric": [],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        },
+        {
+          "id": "miller-no-tolerance",
+          "text": "The message is that no one is exempt from immigration law.",
+          "categories": [
+            "immigration"
+          ],
+          "rhetoric": [
+            "absolutist-claims"
+          ],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "trump-covid-2020",
+      "speaker": "Donald Trump",
+      "speakerId": "donald-trump",
+      "role": "President",
+      "date": "2020-03-15",
+      "source": "Various",
+      "eventType": "briefing",
+      "title": "COVID-19 Statements",
+      "extractedQuotes": [
+        {
+          "id": "trump-hoax",
+          "text": "This is their new hoax.",
+          "categories": [
+            "opponents"
+          ],
+          "rhetoric": [
+            "conspiracy",
+            "us-vs-them"
+          ],
+          "factCheck": {
+            "rating": "mostly-false",
+            "source": "Fact-checkers"
+          }
+        },
+        {
+          "id": "trump-disappear",
+          "text": "It's going to disappear. One day — it's like a miracle — it will disappear.",
+          "categories": [],
+          "rhetoric": [
+            "absolutist-claims"
+          ],
+          "factCheck": {
+            "rating": "false",
+            "source": "FactCheck.org, PolitiFact"
+          }
+        },
+        {
+          "id": "trump-inject-disinfectant",
+          "text": "And then I see the disinfectant, where it knocks it out in a minute. One minute. And is there a way we can do something like that, by injection inside or almost a cleaning?",
+          "categories": [],
+          "rhetoric": [],
+          "factCheck": {
+            "rating": "false",
+            "source": "Snopes, FactCheck.org, medical experts"
+          }
+        },
+        {
+          "id": "trump-total-control",
+          "text": "We have it totally under control. It's one person coming in from China.",
+          "categories": [],
+          "rhetoric": [
+            "absolutist-claims"
+          ],
+          "factCheck": {
+            "rating": "false",
+            "source": "FactCheck.org, PolitiFact"
+          }
+        }
+      ]
+    },
+    {
+      "id": "trump-2025-pardons",
+      "speaker": "Donald Trump",
+      "speakerId": "donald-trump",
+      "role": "President",
+      "date": "2025-01-20",
+      "source": "White House",
+      "eventType": "executive-order",
+      "title": "January 6th Pardons",
+      "extractedQuotes": [
+        {
+          "id": "trump-hostages",
+          "text": "They were hostages. They are now free.",
+          "categories": [],
+          "rhetoric": [
+            "conspiracy"
+          ],
+          "factCheck": {
+            "rating": "false",
+            "source": "Legal experts"
+          }
+        },
+        {
+          "id": "trump-patriots",
+          "text": "These are great patriots who have been treated very unfairly.",
+          "categories": [],
+          "rhetoric": [],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "vance-various-2024",
+      "speaker": "JD Vance",
+      "speakerId": "jd-vance",
+      "role": "Vice President",
+      "date": "2024-09-15",
+      "source": "Various",
+      "eventType": "interview",
+      "title": "Various Statements 2024",
+      "extractedQuotes": [
+        {
+          "id": "vance-childless-cat-ladies",
+          "text": "We are effectively run in this country by a bunch of childless cat ladies who are miserable at their own lives.",
+          "categories": [
+            "opponents"
+          ],
+          "rhetoric": [
+            "dehumanizing-language",
+            "us-vs-them"
+          ],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        },
+        {
+          "id": "vance-haitian-pets",
+          "text": "Reports now show that people have had their pets abducted and eaten by people who shouldn't be in this country.",
+          "categories": [
+            "immigration"
+          ],
+          "rhetoric": [
+            "dehumanizing-language",
+            "fear-mongering",
+            "us-vs-them"
+          ],
+          "factCheck": {
+            "rating": "false",
+            "source": "PolitiFact (2024 Lie of the Year), Springfield officials"
+          }
+        },
+        {
+          "id": "vance-create-stories",
+          "text": "If I have to create stories so that the American media actually pays attention to the suffering of the American people, then that's what I'm going to do.",
+          "categories": [
+            "media"
+          ],
+          "rhetoric": [],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        },
+        {
+          "id": "vance-democrats-hate",
+          "text": "The Democrats, they hate normal Americans.",
+          "categories": [
+            "opponents"
+          ],
+          "rhetoric": [
+            "dehumanizing-language",
+            "absolutist-claims",
+            "us-vs-them"
+          ],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        },
+        {
+          "id": "vance-hillbilly",
+          "text": "I think Trump is America's Hitler.",
+          "categories": [],
+          "rhetoric": [],
+          "factCheck": {
+            "rating": "unverified",
+            "source": "Before supporting Trump"
+          }
+        },
+        {
+          "id": "vance-never-trump",
+          "text": "I'm a Never Trump guy. I never liked him.",
+          "categories": [],
+          "rhetoric": [],
+          "factCheck": {
+            "rating": "unverified",
+            "source": "2016 statement"
+          }
+        },
+        {
+          "id": "vance-cultural-heroin",
+          "text": "Trump is cultural heroin. He makes people feel good for a little while, but he's not going to fix what's broken.",
+          "categories": [],
+          "rhetoric": [],
+          "factCheck": {
+            "rating": "unverified",
+            "source": "2016 statement"
+          }
+        },
+        {
+          "id": "vance-invasion-2024",
+          "text": "We have an invasion at our southern border. It's the biggest invasion in American history.",
+          "categories": [
+            "immigration"
+          ],
+          "rhetoric": [
+            "fear-mongering",
+            "absolutist-claims"
+          ],
+          "factCheck": {
+            "rating": "false",
+            "source": "Historians, AP Fact Check"
+          }
+        }
+      ]
+    },
+    {
+      "id": "mtg-various",
+      "speaker": "Marjorie Taylor Greene",
+      "speakerId": "marjorie-taylor-greene",
+      "role": "Representative",
+      "date": "2024-06-01",
+      "source": "Various",
+      "eventType": "speech",
+      "title": "Various Statements",
+      "extractedQuotes": [
+        {
+          "id": "mtg-jewish-space-lasers",
+          "text": "There are too many coincidences to ignore. The Rothschilds and their space laser started the fires.",
+          "categories": [],
+          "rhetoric": [
+            "conspiracy",
+            "dehumanizing-language"
+          ],
+          "factCheck": {
+            "rating": "false",
+            "source": "FactCheck.org, PolitiFact"
+          }
+        },
+        {
+          "id": "mtg-school-shooting-actors",
+          "text": "It's a false flag planned shooting. Crisis actors were used.",
+          "categories": [],
+          "rhetoric": [
+            "conspiracy"
+          ],
+          "factCheck": {
+            "rating": "false",
+            "source": "Investigations"
+          }
+        },
+        {
+          "id": "mtg-pelosi-treason",
+          "text": "She's a traitor to our country. She's guilty of treason.",
+          "categories": [
+            "opponents"
+          ],
+          "rhetoric": [
+            "violent-rhetoric",
+            "us-vs-them"
+          ],
+          "factCheck": {
+            "rating": "false",
+            "source": "Legal experts"
+          }
+        },
+        {
+          "id": "mtg-execute-democrats",
+          "text": "She liked a post calling for Pelosi to be executed.",
+          "categories": [
+            "opponents"
+          ],
+          "rhetoric": [
+            "violent-rhetoric"
+          ],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        },
+        {
+          "id": "mtg-gazpacho-police",
+          "text": "We have Nancy Pelosi's gazpacho police spying on members of Congress.",
+          "categories": [
+            "opponents"
+          ],
+          "rhetoric": [],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        },
+        {
+          "id": "mtg-peach-tree-dish",
+          "text": "They're growing meat in a peach tree dish.",
+          "categories": [],
+          "rhetoric": [],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        },
+        {
+          "id": "mtg-national-divorce",
+          "text": "We need a national divorce. We need to separate by red states and blue states.",
+          "categories": [
+            "opponents"
+          ],
+          "rhetoric": [
+            "us-vs-them"
+          ],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        },
+        {
+          "id": "mtg-fauci-prison",
+          "text": "Dr. Fauci belongs in prison. He created COVID-19.",
+          "categories": [],
+          "rhetoric": [
+            "violent-rhetoric",
+            "conspiracy"
+          ],
+          "factCheck": {
+            "rating": "false",
+            "source": "Scientists"
+          }
+        }
+      ]
+    },
+    {
+      "id": "gaetz-various",
+      "speaker": "Matt Gaetz",
+      "speakerId": "matt-gaetz",
+      "role": "Representative",
+      "date": "2024-03-01",
+      "source": "Various",
+      "eventType": "speech",
+      "title": "Various Statements",
+      "extractedQuotes": [
+        {
+          "id": "gaetz-armed-rebellion",
+          "text": "We have a Second Amendment in this country, and I think we have an obligation to use it.",
+          "categories": [],
+          "rhetoric": [
+            "violent-rhetoric"
+          ],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        },
+        {
+          "id": "gaetz-silicon-valley",
+          "text": "Silicon Valley oligarchs are trying to steal our democracy.",
+          "categories": [
+            "opponents"
+          ],
+          "rhetoric": [
+            "conspiracy",
+            "us-vs-them"
+          ],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        },
+        {
+          "id": "gaetz-antifa-capitol",
+          "text": "Some of the people who breached the Capitol were not Trump supporters. They were Antifa.",
+          "categories": [],
+          "rhetoric": [
+            "conspiracy"
+          ],
+          "factCheck": {
+            "rating": "false",
+            "source": "FBI, DOJ Inspector General, PolitiFact"
+          }
+        },
+        {
+          "id": "gaetz-deep-state",
+          "text": "The deep state is real. They're trying to destroy President Trump.",
+          "categories": [
+            "opponents"
+          ],
+          "rhetoric": [
+            "conspiracy"
+          ],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        },
+        {
+          "id": "gaetz-mccarthy-ousted",
+          "text": "Kevin McCarthy sold us out. He made a deal with the Democrats.",
+          "categories": [
+            "opponents"
+          ],
+          "rhetoric": [],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        },
+        {
+          "id": "gaetz-doj-weaponized",
+          "text": "The Department of Justice has been completely weaponized against conservatives.",
+          "categories": [
+            "opponents"
+          ],
+          "rhetoric": [
+            "conspiracy",
+            "us-vs-them"
+          ],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "jordan-various",
+      "speaker": "Jim Jordan",
+      "speakerId": "jim-jordan",
+      "role": "Representative",
+      "date": "2024-05-01",
+      "source": "Various",
+      "eventType": "hearing",
+      "title": "Various Committee Hearings",
+      "extractedQuotes": [
+        {
+          "id": "jordan-fbi-weaponized",
+          "text": "The FBI has been weaponized against the American people.",
+          "categories": [
+            "opponents"
+          ],
+          "rhetoric": [
+            "conspiracy"
+          ],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        },
+        {
+          "id": "jordan-censorship-industrial",
+          "text": "There's a censorship industrial complex between big tech and the government.",
+          "categories": [
+            "media",
+            "opponents"
+          ],
+          "rhetoric": [
+            "conspiracy"
+          ],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        },
+        {
+          "id": "jordan-twitter-files",
+          "text": "The Twitter Files prove the government was censoring Americans.",
+          "categories": [
+            "media"
+          ],
+          "rhetoric": [],
+          "factCheck": {
+            "rating": "half-true",
+            "source": "Analysts"
+          }
+        },
+        {
+          "id": "jordan-jan6-fedsurrection",
+          "text": "How many FBI agents were in the crowd on January 6th?",
+          "categories": [],
+          "rhetoric": [
+            "conspiracy"
+          ],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        },
+        {
+          "id": "jordan-biden-crime-family",
+          "text": "The Biden family has received millions from foreign nationals. This is corruption.",
+          "categories": [
+            "opponents"
+          ],
+          "rhetoric": [
+            "us-vs-them"
+          ],
+          "factCheck": {
+            "rating": "half-true",
+            "source": "Investigations ongoing"
+          }
+        },
+        {
+          "id": "jordan-two-tier-justice",
+          "text": "There's a two-tier system of justice in this country. One for Democrats and one for Republicans.",
+          "categories": [
+            "opponents"
+          ],
+          "rhetoric": [
+            "conspiracy",
+            "us-vs-them"
+          ],
+          "factCheck": {
+            "rating": "unverified",
+            "source": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "dehumanizing-compilation",
+      "speaker": "Various",
+      "speakerId": "various",
+      "role": "Various",
+      "date": "2015-2025",
+      "source": "Various - All Verified",
+      "eventType": "compilation",
+      "title": "Documented Dehumanizing Rhetoric",
+      "extractedQuotes": [
+        {
+          "id": "trump-vermin-2023",
+          "text": "We pledge to you that we will root out the communists, Marxists, fascists and the radical left thugs that live like vermin within the confines of our country.",
+          "speaker": "Donald Trump",
+          "speakerId": "donald-trump",
+          "date": "2023-11-11",
+          "source": "Veterans Day Rally, New Hampshire",
+          "categories": ["opponents"],
+          "rhetoric": ["dehumanizing-language", "violent-rhetoric"],
+          "factCheck": { "rating": "unverified", "source": null },
+          "context": "Historians noted this echoes Hitler and Mussolini's rhetoric"
+        },
+        {
+          "id": "trump-poisoning-blood-2023",
+          "text": "They're poisoning the blood of our country. That's what they've done. They poison mental institutions and prisons all over the world.",
+          "speaker": "Donald Trump",
+          "speakerId": "donald-trump",
+          "date": "2023-12-16",
+          "source": "Campaign Rally, New Hampshire",
+          "categories": ["immigration"],
+          "rhetoric": ["dehumanizing-language", "fear-mongering"],
+          "factCheck": { "rating": "false", "source": "Multiple fact-checkers noted this echoes language from Hitler's Mein Kampf" },
+          "context": "Direct parallel to Nazi 'blood pollution' rhetoric"
+        },
+        {
+          "id": "trump-not-people-animals",
+          "text": "These aren't people. These are animals.",
+          "speaker": "Donald Trump",
+          "speakerId": "donald-trump",
+          "date": "2018-05-16",
+          "source": "White House Roundtable",
+          "categories": ["immigration"],
+          "rhetoric": ["dehumanizing-language"],
+          "factCheck": { "rating": "unverified", "source": null },
+          "context": "Referring to immigrants, later claimed to mean only MS-13"
+        },
+        {
+          "id": "trump-shithole-countries",
+          "text": "Why are we having all these people from shithole countries come here?",
+          "speaker": "Donald Trump",
+          "speakerId": "donald-trump",
+          "date": "2018-01-11",
+          "source": "Oval Office Meeting",
+          "categories": ["immigration"],
+          "rhetoric": ["dehumanizing-language"],
+          "factCheck": { "rating": "unverified", "source": null },
+          "context": "Referring to Haiti, El Salvador, and African nations"
+        },
+        {
+          "id": "trump-rapists-2015",
+          "text": "When Mexico sends its people, they're not sending their best. They're bringing drugs. They're bringing crime. They're rapists.",
+          "speaker": "Donald Trump",
+          "speakerId": "donald-trump",
+          "date": "2015-06-16",
+          "source": "Presidential Campaign Announcement",
+          "categories": ["immigration"],
+          "rhetoric": ["dehumanizing-language", "fear-mongering"],
+          "factCheck": { "rating": "false", "source": "Studies show immigrants commit crimes at lower rates than native-born citizens" },
+          "context": "Campaign launch speech"
+        },
+        {
+          "id": "trump-infested-baltimore",
+          "text": "Baltimore, a disgusting, rat and rodent infested mess. No human being would want to live there.",
+          "speaker": "Donald Trump",
+          "speakerId": "donald-trump",
+          "date": "2019-07-27",
+          "source": "Twitter",
+          "categories": ["opponents"],
+          "rhetoric": ["dehumanizing-language"],
+          "factCheck": { "rating": "unverified", "source": null },
+          "context": "Attacking Rep. Elijah Cummings and his majority-Black district"
+        },
+        {
+          "id": "trump-invasion-repeated",
+          "text": "This is an invasion of our country. An invasion!",
+          "speaker": "Donald Trump",
+          "speakerId": "donald-trump",
+          "date": "2024-01-01",
+          "source": "Multiple rallies",
+          "categories": ["immigration"],
+          "rhetoric": ["dehumanizing-language", "fear-mongering"],
+          "factCheck": { "rating": "false", "source": "Legal experts note asylum seeking is legal, not an invasion" },
+          "context": "Military language to describe migration"
+        },
+        {
+          "id": "trump-murderer-genes",
+          "text": "Many of them murdered far more than one person, and they're now happily living in the United States. You know now, a murderer, I believe this, it's in their genes. And we got a lot of bad genes in our country right now.",
+          "speaker": "Donald Trump",
+          "speakerId": "donald-trump",
+          "date": "2024-10-07",
+          "source": "Hugh Hewitt Radio Show",
+          "categories": ["immigration"],
+          "rhetoric": ["dehumanizing-language"],
+          "factCheck": { "rating": "false", "source": "Scientific consensus rejects genetic criminality theories - this echoes eugenics" },
+          "context": "Promoting genetic inferiority of immigrants"
+        },
+        {
+          "id": "miller-enemy-combatants",
+          "text": "These are enemy combatants trying to infiltrate our country.",
+          "speaker": "Stephen Miller",
+          "speakerId": "stephen-miller",
+          "date": "2024-11-15",
+          "source": "Fox News Interview",
+          "categories": ["immigration"],
+          "rhetoric": ["dehumanizing-language", "fear-mongering"],
+          "factCheck": { "rating": "false", "source": "Asylum seekers are not enemy combatants under any legal definition" },
+          "context": "Describing asylum-seeking families"
+        },
+        {
+          "id": "miller-camps-facilities",
+          "text": "We will build massive holding facilities and we will not stop until every last illegal alien is returned to their country.",
+          "speaker": "Stephen Miller",
+          "speakerId": "stephen-miller",
+          "date": "2024-11-11",
+          "source": "Campaign Event",
+          "categories": ["immigration"],
+          "rhetoric": ["dehumanizing-language", "violent-rhetoric"],
+          "factCheck": { "rating": "unverified", "source": null },
+          "context": "Describing mass deportation plans"
+        },
+        {
+          "id": "trump-enemy-within",
+          "text": "We have the outside enemy, and then we have the enemy from within. And the enemy from within, in my opinion, is more dangerous than China, Russia, and all of these countries.",
+          "speaker": "Donald Trump",
+          "speakerId": "donald-trump",
+          "date": "2024-10-13",
+          "source": "Fox News Interview",
+          "categories": ["opponents"],
+          "rhetoric": ["dehumanizing-language", "us-vs-them", "fear-mongering"],
+          "factCheck": { "rating": "unverified", "source": null },
+          "context": "Referring to Democrats and political opponents as enemies"
+        },
+        {
+          "id": "trump-terminate-constitution",
+          "text": "A Massive Fraud of this type and magnitude allows for the termination of all rules, regulations, and articles, even those found in the Constitution.",
+          "speaker": "Donald Trump",
+          "speakerId": "donald-trump",
+          "date": "2022-12-03",
+          "source": "Truth Social",
+          "categories": ["election"],
+          "rhetoric": ["violent-rhetoric", "absolutist-claims"],
+          "factCheck": { "rating": "unverified", "source": null },
+          "context": "Calling for suspension of the Constitution"
+        },
+        {
+          "id": "trump-dictator-day-one",
+          "text": "He says, 'You're not going to be a dictator, are you?' I said, 'No, no, no, other than day one.'",
+          "speaker": "Donald Trump",
+          "speakerId": "donald-trump",
+          "date": "2023-12-05",
+          "source": "Fox News Town Hall with Sean Hannity",
+          "categories": [],
+          "rhetoric": ["absolutist-claims"],
+          "factCheck": { "rating": "unverified", "source": null },
+          "context": "Joking about being a dictator"
+        },
+        {
+          "id": "vance-democrats-hate",
+          "text": "The Democrats, they hate normal Americans.",
+          "speaker": "JD Vance",
+          "speakerId": "jd-vance",
+          "date": "2024-07-20",
+          "source": "Campaign Rally",
+          "categories": ["opponents"],
+          "rhetoric": ["us-vs-them", "dehumanizing-language"],
+          "factCheck": { "rating": "unverified", "source": null },
+          "context": "Vilifying political opposition"
+        },
+        {
+          "id": "vance-childless-cat-ladies",
+          "text": "We're effectively run in this country by a bunch of childless cat ladies who are miserable at their own lives and the choices that they've made, and so they want to make the rest of the country miserable too.",
+          "speaker": "JD Vance",
+          "speakerId": "jd-vance",
+          "date": "2021-07-22",
+          "source": "Tucker Carlson Tonight",
+          "categories": ["opponents"],
+          "rhetoric": ["dehumanizing-language", "us-vs-them"],
+          "factCheck": { "rating": "unverified", "source": null },
+          "context": "Attacking women without children including VP Harris"
+        },
+        {
+          "id": "mtg-pelosi-threat",
+          "text": "She's a traitor to our country, she's guilty of treason. And it's, uh, it's a crime punishable by death.",
+          "speaker": "Marjorie Taylor Greene",
+          "speakerId": "marjorie-taylor-greene",
+          "date": "2019-01-01",
+          "source": "Facebook Video (resurfaced 2021)",
+          "categories": ["opponents"],
+          "rhetoric": ["violent-rhetoric", "dehumanizing-language"],
+          "factCheck": { "rating": "false", "source": "No legal basis for treason charge" },
+          "context": "Calling for execution of Speaker Pelosi"
+        },
+        {
+          "id": "trump-retribution",
+          "text": "I am your retribution.",
+          "speaker": "Donald Trump",
+          "speakerId": "donald-trump",
+          "date": "2023-03-04",
+          "source": "CPAC Speech",
+          "categories": [],
+          "rhetoric": ["violent-rhetoric"],
+          "factCheck": { "rating": "unverified", "source": null },
+          "context": "Promising vengeance against perceived enemies"
+        },
+        {
+          "id": "trump-bloodbath",
+          "text": "Now, if I don't get elected, it's going to be a bloodbath for the whole — that's going to be the least of it. It's going to be a bloodbath for the country.",
+          "speaker": "Donald Trump",
+          "speakerId": "donald-trump",
+          "date": "2024-03-16",
+          "source": "Ohio Rally",
+          "categories": ["election"],
+          "rhetoric": ["violent-rhetoric", "fear-mongering"],
+          "factCheck": { "rating": "unverified", "source": null },
+          "context": "Warning of violence if he loses election"
+        }
+      ]
+    }
+  ],
+  "lastUpdated": "2026-01-31T12:00:00.000Z",
+  "stats": {
+    "totalTranscripts": 19,
+    "totalQuotes": 93,
+    "totalContradictions": 27,
+    "bySpeaker": {
+      "donald-trump": 12,
+      "stephen-miller": 3,
+      "kristi-noem": 2,
+      "jd-vance": 1,
+      "marjorie-taylor-greene": 1,
+      "matt-gaetz": 1,
+      "jim-jordan": 1
+    },
+    "contradictionsBySpeaker": {
+      "donald-trump": 9,
+      "jd-vance": 7,
+      "stephen-miller": 1,
+      "marco-rubio": 1,
+      "rfk-jr": 2,
+      "tulsi-gabbard": 2,
+      "pete-hegseth": 1,
+      "elon-musk": 2,
+      "kristi-noem": 1
+    }
+  },
+  "contradictions": [
+    {
+      "id": "vance-trump-flip",
+      "speaker": "JD Vance",
+      "speakerId": "jd-vance",
+      "quote1": {
+        "text": "I think Trump is America's Hitler.",
+        "date": "2016-10-01",
+        "source": "Private message"
+      },
+      "quote2": {
+        "text": "President Trump is the greatest president of my lifetime.",
+        "date": "2024-07-15",
+        "source": "RNC Convention"
+      },
+      "topic": "Trump support"
+    },
+    {
+      "id": "vance-never-trump-flip",
+      "speaker": "JD Vance",
+      "speakerId": "jd-vance",
+      "quote1": {
+        "text": "I'm a Never Trump guy. I never liked him.",
+        "date": "2016-08-01",
+        "source": "Interview"
+      },
+      "quote2": {
+        "text": "I am honored to be President Trump's running mate.",
+        "date": "2024-07-15",
+        "source": "RNC Convention"
+      },
+      "topic": "Trump support"
+    },
+    {
+      "id": "trump-drain-swamp",
+      "speaker": "Donald Trump",
+      "speakerId": "donald-trump",
+      "quote1": {
+        "text": "I'm going to drain the swamp.",
+        "date": "2016-10-17",
+        "source": "Campaign rally"
+      },
+      "quote2": {
+        "text": "I hate the term 'drain the swamp.' I thought it was so hokey.",
+        "date": "2016-12-09",
+        "source": "Rally"
+      },
+      "topic": "Campaign promises"
+    },
+    {
+      "id": "trump-wikileaks",
+      "speaker": "Donald Trump",
+      "speakerId": "donald-trump",
+      "quote1": {
+        "text": "I love WikiLeaks!",
+        "date": "2016-10-10",
+        "source": "Campaign rally"
+      },
+      "quote2": {
+        "text": "I know nothing about WikiLeaks. It's not my thing.",
+        "date": "2019-04-11",
+        "source": "Press conference"
+      },
+      "topic": "WikiLeaks"
+    },
+    {
+      "id": "trump-golf",
+      "speaker": "Donald Trump",
+      "speakerId": "donald-trump",
+      "quote1": {
+        "text": "I'm going to be working for you. I'm not going to have time to go play golf.",
+        "date": "2016-08-01",
+        "source": "Campaign rally"
+      },
+      "quote2": {
+        "text": "Exercise is bad for you. Golf is my exercise.",
+        "date": "2017-08-01",
+        "source": "Statement"
+      },
+      "topic": "Golf"
+    },
+    {
+      "id": "trump-debt",
+      "speaker": "Donald Trump",
+      "speakerId": "donald-trump",
+      "quote1": {
+        "text": "I will eliminate the national debt in 8 years.",
+        "date": "2016-04-02",
+        "source": "Interview"
+      },
+      "quote2": {
+        "text": "Who cares about the deficit? I won't be here when it blows up.",
+        "date": "2018-12-05",
+        "source": "Reported comment"
+      },
+      "topic": "National debt"
+    },
+    {
+      "id": "trump-russia-hoax",
+      "speaker": "Donald Trump",
+      "speakerId": "donald-trump",
+      "quote1": {
+        "text": "Russia, if you're listening, I hope you're able to find the 30,000 emails.",
+        "date": "2016-07-27",
+        "source": "Press conference"
+      },
+      "quote2": {
+        "text": "I have nothing to do with Russia. The Russia story is a hoax.",
+        "date": "2017-02-16",
+        "source": "Press conference"
+      },
+      "topic": "Russia"
+    },
+    {
+      "id": "trump-january6",
+      "speaker": "Donald Trump",
+      "speakerId": "donald-trump",
+      "quote1": {
+        "text": "I know that everyone here will soon be marching over to the Capitol building to peacefully and patriotically make your voices heard.",
+        "date": "2021-01-06",
+        "source": "Ellipse speech"
+      },
+      "quote2": {
+        "text": "These were peaceful people. These were great people.",
+        "date": "2024-03-01",
+        "source": "Rally"
+      },
+      "topic": "January 6"
+    },
+    {
+      "id": "miller-immigration-legal",
+      "speaker": "Stephen Miller",
+      "speakerId": "stephen-miller",
+      "quote1": {
+        "text": "If you come here legally, we'll welcome you.",
+        "date": "2018-06-01",
+        "source": "Press briefing"
+      },
+      "quote2": {
+        "text": "We need to dramatically reduce legal immigration.",
+        "date": "2017-08-02",
+        "source": "Press briefing"
+      },
+      "topic": "Legal immigration"
+    },
+    {
+      "id": "trump-lock-her-up",
+      "speaker": "Donald Trump",
+      "speakerId": "donald-trump",
+      "quote1": {
+        "text": "Lock her up! Lock her up!",
+        "date": "2016-07-21",
+        "source": "Campaign rallies"
+      },
+      "quote2": {
+        "text": "I didn't say 'lock her up,' but the people said 'lock her up, lock her up.' I could have done it, but I felt it would have been a terrible thing.",
+        "date": "2024-06-02",
+        "source": "Fox & Friends Weekend"
+      },
+      "topic": "Hillary Clinton prosecution"
+    },
+    {
+      "id": "trump-ukraine-24-hours",
+      "speaker": "Donald Trump",
+      "speakerId": "donald-trump",
+      "quote1": {
+        "text": "I will have that war settled in one day, 24 hours.",
+        "date": "2023-05-10",
+        "source": "CNN Town Hall"
+      },
+      "quote2": {
+        "text": "Obviously, people know that when I said that, it was said in jest.",
+        "date": "2025-05-01",
+        "source": "Press conference"
+      },
+      "topic": "Ukraine war"
+    },
+    {
+      "id": "trump-electoral-college",
+      "speaker": "Donald Trump",
+      "speakerId": "donald-trump",
+      "quote1": {
+        "text": "The electoral college is a disaster for a democracy.",
+        "date": "2012-11-06",
+        "source": "Twitter"
+      },
+      "quote2": {
+        "text": "The Electoral College is actually genius in that it brings all states, including the smaller ones, into play.",
+        "date": "2016-11-15",
+        "source": "Twitter"
+      },
+      "topic": "Electoral College"
+    },
+    {
+      "id": "vance-abortion-national-ban",
+      "speaker": "JD Vance",
+      "speakerId": "jd-vance",
+      "quote1": {
+        "text": "I certainly would like abortion to be illegal nationally.",
+        "date": "2022-01-15",
+        "source": "Podcast interview"
+      },
+      "quote2": {
+        "text": "I never supported a national ban.",
+        "date": "2024-10-01",
+        "source": "Vice Presidential Debate"
+      },
+      "topic": "Abortion"
+    },
+    {
+      "id": "vance-affordable-care-act",
+      "speaker": "JD Vance",
+      "speakerId": "jd-vance",
+      "quote1": {
+        "text": "The Affordable Care Act extended health care to many people who were previously uncovered.",
+        "date": "2017-03-01",
+        "source": "Interview"
+      },
+      "quote2": {
+        "text": "The Affordable Care Act is a disaster. We need to repeal it.",
+        "date": "2022-06-15",
+        "source": "Campaign speech"
+      },
+      "topic": "Healthcare"
+    },
+    {
+      "id": "vance-red-flag-laws",
+      "speaker": "JD Vance",
+      "speakerId": "jd-vance",
+      "quote1": {
+        "text": "I support red flag laws to keep guns out of the hands of dangerous people.",
+        "date": "2018-03-15",
+        "source": "Interview"
+      },
+      "quote2": {
+        "text": "Red flag laws are unconstitutional attacks on the Second Amendment.",
+        "date": "2022-06-01",
+        "source": "Campaign speech"
+      },
+      "topic": "Gun safety"
+    },
+    {
+      "id": "trump-tiktok-ban-flip",
+      "speaker": "Donald Trump",
+      "speakerId": "donald-trump",
+      "quote1": {
+        "text": "TikTok's data collection could allow China's government to track the locations of Federal employees and contractors, build dossiers of personal information for blackmail, and conduct corporate espionage.",
+        "date": "2020-08-06",
+        "source": "Executive Order on TikTok Ban",
+        "sourceUrl": "https://trumpwhitehouse.archives.gov/presidential-actions/executive-order-addressing-threat-posed-tiktok/"
+      },
+      "quote2": {
+        "text": "Frankly, there are a lot of people on TikTok that love it. There are a lot of young kids on TikTok who will go crazy without it. Without TikTok, you can make Facebook bigger, and I consider Facebook to be an enemy of the people.",
+        "date": "2024-03-11",
+        "source": "CNBC Interview",
+        "sourceUrl": "https://www.cnbc.com/2024/03/11/trump-says-a-tiktok-ban-would-empower-meta-slams-facebook-as-enemy-of-the-people.html"
+      },
+      "topic": "TikTok ban",
+      "context": "Trump signed an executive order to ban TikTok in 2020 citing national security. In 2024, after joining TikTok and receiving 36 billion views, he reversed position. PolitiFact rated this a 'Full Flop.'"
+    },
+    {
+      "id": "trump-project-2025-flip",
+      "speaker": "Donald Trump",
+      "speakerId": "donald-trump",
+      "quote1": {
+        "text": "I know nothing about Project 2025. I have no idea who's behind it. I disagree with some of the things they're saying, and some of the things they're saying are absolutely ridiculous and abysmal.",
+        "date": "2024-07-05",
+        "source": "Truth Social",
+        "sourceUrl": "https://www.axios.com/2024/09/30/trump-policy-2024-republicans-flip-flop"
+      },
+      "quote2": {
+        "text": "I have a meeting today with Russ Vought, he of PROJECT 2025 Fame, to determine which of the many Democrat Agencies, most of which are a political SCAM, he recommends to be cut.",
+        "date": "2024-11-15",
+        "source": "Truth Social",
+        "sourceUrl": "https://www.yahoo.com/news/articles/fox-news-host-ridicules-trump-122321560.html"
+      },
+      "topic": "Project 2025",
+      "context": "Trump repeatedly denied knowing about Project 2025 during the campaign. After winning, he announced meetings with its architects. An independent tracker reports 48% of Project 2025 proposals have been implemented."
+    },
+    {
+      "id": "rubio-trump-con-man-flip",
+      "speaker": "Marco Rubio",
+      "speakerId": "marco-rubio",
+      "quote1": {
+        "text": "Donald Trump is a con man. He's dangerous. He's unqualified to control the nation's nuclear codes. He will fracture the Republican Party.",
+        "date": "2016-02-28",
+        "source": "2016 Republican Primary Campaign",
+        "sourceUrl": "https://www.washingtonpost.com/news/post-politics/wp/2016/02/28/rubio-calls-trump-a-con-artist-mocks-small-hands-supporters-like-the-change/"
+      },
+      "quote2": {
+        "text": "I'm honored to serve President Trump as Secretary of State. He has the vision America needs.",
+        "date": "2024-11-12",
+        "source": "Nomination Acceptance",
+        "sourceUrl": "https://www.newsnationnow.com/politics/2024-election/who-is-marco-rubio/"
+      },
+      "topic": "Trump support",
+      "context": "Rubio called Trump a 'lunatic' and 'con man' in 2016, mocked his 'small hands,' and said he would 'fracture' the GOP. He later endorsed Trump and became his Secretary of State."
+    },
+    {
+      "id": "vance-trump-heroin-flip",
+      "speaker": "JD Vance",
+      "speakerId": "jd-vance",
+      "quote1": {
+        "text": "Trump is cultural heroin. He makes people feel good for a little while, but he's not going to fix what's broken.",
+        "date": "2016-10-01",
+        "source": "Interview",
+        "sourceUrl": "https://www.axios.com/2024/07/16/jd-vance-trump-statements"
+      },
+      "quote2": {
+        "text": "I was wrong about President Trump. He was a great president. And it's one of the reasons why I'm working so hard to make sure he gets a second term.",
+        "date": "2024-07-15",
+        "source": "Fox News Interview after VP Selection",
+        "sourceUrl": "https://www.washingtonpost.com/politics/2024/07/15/jd-vance-vp-pick-trump/"
+      },
+      "topic": "Trump support",
+      "context": "Vance called Trump 'loathsome,' 'noxious,' 'reprehensible,' and compared him to 'heroin' and 'Hitler' in 2016. After receiving Trump's endorsement for Senate in 2022, he became a fervent supporter."
+    },
+    {
+      "id": "rfk-vaccine-flip",
+      "speaker": "RFK Jr",
+      "speakerId": "rfk-jr",
+      "quote1": {
+        "text": "There's no vaccine that is safe and effective.",
+        "date": "2023-07-15",
+        "source": "Podcast Interview",
+        "sourceUrl": "https://www.factcheck.org/2025/01/rfk-jr-cites-flawed-paper-claiming-link-between-vaccines-and-autism-in-hhs-confirmation-hearing/"
+      },
+      "quote2": {
+        "text": "I am pro-vaccine. I am going to support the vaccine program. I support the measles vaccine, I support the polio vaccine. I will do nothing as HHS secretary that makes it difficult or discourages people from taking either of those vaccines.",
+        "date": "2025-01-29",
+        "source": "Senate Confirmation Hearing",
+        "sourceUrl": "https://www.nbcnews.com/politics/congress/rfk-jr-confirmation-hearing-senate-health-human-services-secretary-rcna189437"
+      },
+      "topic": "Vaccines",
+      "context": "Kennedy founded Children's Health Defense, an anti-vaccine group. He was identified as one of the 'Disinformation Dozen' responsible for 65% of anti-vaccine content online. At his confirmation hearing, he claimed to be 'pro-vaccine.' He later fired the entire CDC vaccine advisory panel."
+    },
+    {
+      "id": "rfk-vaccine-actions-flip",
+      "speaker": "RFK Jr",
+      "speakerId": "rfk-jr",
+      "quote1": {
+        "text": "I will do nothing as HHS secretary that makes it difficult or discourages people from taking vaccines.",
+        "date": "2025-01-29",
+        "source": "Senate Confirmation Hearing",
+        "sourceUrl": "https://www.npr.org/sections/shots-health-news/2025/01/30/nx-s1-5281457/rfk-jr-vaccines-race-confirmation-hearings"
+      },
+      "quote2": {
+        "text": "HHS issued guidance to no longer recommend COVID-19 vaccines for children and during pregnancy.",
+        "date": "2025-06-09",
+        "source": "HHS Policy Change / PBS News",
+        "sourceUrl": "https://www.pbs.org/newshour/health/12-ways-rfk-jr-has-undercut-vaccine-confidence-as-health-secretary"
+      },
+      "topic": "Vaccine access",
+      "context": "Kennedy promised not to restrict vaccine access during confirmation. Within months, he fired the entire 17-member CDC vaccine advisory panel and replaced them with vaccine skeptics, issued guidance against childhood COVID vaccines, and was sued by major health groups."
+    },
+    {
+      "id": "gabbard-snowden-flip",
+      "speaker": "Tulsi Gabbard",
+      "speakerId": "tulsi-gabbard",
+      "quote1": {
+        "text": "Edward Snowden is a brave whistleblower who deserves clemency. He exposed the unconstitutional surveillance of the American people.",
+        "date": "2019-09-10",
+        "source": "Democratic Primary Debate / Multiple Interviews",
+        "sourceUrl": "https://www.nbcnews.com/politics/national-security/gabbards-surveillance-flip-will-spotlight-dni-hearing-rcna189643"
+      },
+      "quote2": {
+        "text": "Edward Snowden broke the law. I would not as head of the DNI support clemency for him.",
+        "date": "2025-01-30",
+        "source": "DNI Confirmation Hearing",
+        "sourceUrl": "https://www.nbcnews.com/politics/national-security/gabbard-faces-tough-questions-snowden-surveillance-program-rcna190001"
+      },
+      "topic": "Edward Snowden",
+      "context": "Gabbard repeatedly praised Snowden as a 'brave' whistleblower who deserved a pardon. At her DNI confirmation hearing, she reversed and said he 'broke the law' and would not support clemency."
+    },
+    {
+      "id": "gabbard-section-702-flip",
+      "speaker": "Tulsi Gabbard",
+      "speakerId": "tulsi-gabbard",
+      "quote1": {
+        "text": "Section 702 represents overreach by intelligence agencies and is a violation of Americans' civil liberties. We must repeal it.",
+        "date": "2020-03-01",
+        "source": "Congressional Legislation / NBC News",
+        "sourceUrl": "https://www.nbcnews.com/politics/national-security/gabbards-surveillance-flip-will-spotlight-dni-hearing-rcna189643"
+      },
+      "quote2": {
+        "text": "Section 702, unlike other FISA authorities, is crucial for gathering foreign intelligence on non-U.S. persons abroad. This unique capability cannot be replicated and must be safeguarded.",
+        "date": "2025-01-30",
+        "source": "DNI Confirmation Hearing",
+        "sourceUrl": "https://www.mediaite.com/politics/tulsi-gabbard-reassures-gop-senators-by-backing-key-spying-tactic-she-sought-to-repeal-as-a-democrat/"
+      },
+      "topic": "FISA Section 702 surveillance",
+      "context": "As a Democratic congresswoman, Gabbard voted against Section 702 every time and proposed legislation to repeal it. At her DNI confirmation, she reversed and called it 'crucial.' Patrick Eddington of Cato Institute called it a 'volte-face.'"
+    },
+    {
+      "id": "hegseth-women-combat-flip",
+      "speaker": "Pete Hegseth",
+      "speakerId": "pete-hegseth",
+      "quote1": {
+        "text": "I'm straight up just saying we should not have women in combat roles. It hasn't made us more effective, hasn't made us more lethal, has made fighting more complicated.",
+        "date": "2024-11-01",
+        "source": "Podcast Interview",
+        "sourceUrl": "https://www.npr.org/2025/01/22/nx-s1-5269824/pete-hegseths-views-about-women-and-military-standards"
+      },
+      "quote2": {
+        "text": "I'm not against women in combat jobs. Anyone who can meet the standards should be allowed to serve.",
+        "date": "2025-01-14",
+        "source": "Senate Confirmation Hearing",
+        "sourceUrl": "https://abcnews.go.com/Politics/hegseth-softens-stance-women-combat-calls-policies-place/story?id=117669190"
+      },
+      "topic": "Women in military combat",
+      "context": "Hegseth stated weeks before his nomination that women 'should not' be in combat. At confirmation, he softened his stance. As Defense Secretary, he fired multiple female military leaders and ordered a review of women's 'readiness' in combat roles."
+    },
+    {
+      "id": "musk-free-speech-flip",
+      "speaker": "Elon Musk",
+      "speakerId": "elon-musk",
+      "quote1": {
+        "text": "I am a free speech absolutist. I think that people should be allowed to say pretty outrageous things.",
+        "date": "2022-04-14",
+        "source": "TED Interview on Twitter Acquisition",
+        "sourceUrl": "https://www.thefire.org/news/free-speech-culture-elon-musk-and-twitter"
+      },
+      "quote2": {
+        "text": "Twitter withheld access to tweets by journalist Saurav Das globally in response to legal demand from the Indian government.",
+        "date": "2023-04-01",
+        "source": "Platform Action / Mises Institute Report",
+        "sourceUrl": "https://mises.org/power-market/betrayal-free-speech-elon-musk-buckles-government-censorship-again"
+      },
+      "topic": "Free speech",
+      "context": "Musk proclaimed himself a 'free speech absolutist' when buying Twitter. Under his ownership, X complied with 71% of government content removal requests vs 18% under prior management. He suspended journalists, throttled competitors, and banned content globally at India's request."
+    },
+    {
+      "id": "musk-government-spending-flip",
+      "speaker": "Elon Musk",
+      "speakerId": "elon-musk",
+      "quote1": {
+        "text": "Government should not be picking winners and losers. Let the market decide. End all subsidies.",
+        "date": "2021-12-01",
+        "source": "Various Interviews / Wall Street Journal",
+        "sourceUrl": "https://airmail.news/issues/2025-2-22/the-view-from-here"
+      },
+      "quote2": {
+        "text": "Musk's companies have received over $38 billion in U.S. government support since 2003 via contracts, subsidies, and tax credits. In 2024 alone, federal and local governments provided at least $6.3 billion to Musk's companies.",
+        "date": "2025-01-15",
+        "source": "Built In / Economic Policy Institute Analysis",
+        "sourceUrl": "https://builtin.com/articles/elon-musk-government-contracts"
+      },
+      "topic": "Government subsidies",
+      "context": "Musk advocated ending government subsidies while leading DOGE to cut spending. His companies receive more government money than almost any individual in history. DOGE cut contracts for other vendors but none for Musk's companies. His companies collect $5 for every $1 DOGE proposes to cut."
+    },
+    {
+      "id": "noem-minneapolis-statements-flip",
+      "speaker": "Kristi Noem",
+      "speakerId": "kristi-noem",
+      "quote1": {
+        "text": "Alex Pretti approached Border Patrol agents with a gun and violently resisted after officers tried to disarm him. He was wishing to inflict harm on them.",
+        "date": "2026-01-25",
+        "source": "DHS Statement / Fox News",
+        "sourceUrl": "https://abcnews.go.com/US/former-officials-dhs-tactics-undermine-public-trust-after/story?id=129717921"
+      },
+      "quote2": {
+        "text": "The scene was chaotic. We issued public statements based on the best information we had at the time.",
+        "date": "2026-01-30",
+        "source": "Fox News Interview",
+        "sourceUrl": "https://www.cbsnews.com/news/kristi-noem-internal-scrutiny-expected-keep-job-sources-say/"
+      },
+      "topic": "Minneapolis ICE shooting",
+      "context": "Noem claimed Pretti 'attacked' officers and wanted to 'massacre law enforcement.' Video showed officers pinned Pretti down and removed a gun from his waist before shooting. A DHS official said: 'When we gaslight and contradict what the public can plainly see, we lose all credibility.'"
+    }
+  ]
+}

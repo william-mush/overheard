@@ -1,0 +1,108 @@
+{
+  "topics": {
+    "immigration": {
+      "label": "Immigration",
+      "keywords": ["immigrant", "immigrants", "immigration", "border", "deportation", "deport", "alien", "aliens", "invasion", "invade", "invaders", "migrant", "migrants", "illegal", "illegals", "caravan", "MS-13", "ICE", "CBP", "wall", "asylum"],
+      "color": "#ff6b6b"
+    },
+    "election": {
+      "label": "Election",
+      "keywords": ["vote", "votes", "voter", "voting", "fraud", "rigged", "stolen", "steal", "election", "ballot", "ballots", "dominion", "2020", "cheating", "illegitimate"],
+      "color": "#4ecdc4"
+    },
+    "media": {
+      "label": "Media",
+      "keywords": ["fake news", "enemy of the people", "press", "journalist", "journalists", "media", "CNN", "MSNBC", "New York Times", "Washington Post", "reporters", "lying media", "corrupt media"],
+      "color": "#ffe66d"
+    },
+    "opponents": {
+      "label": "Political Opponents",
+      "keywords": ["democrat", "democrats", "radical", "socialist", "socialists", "communist", "communists", "enemy", "enemies", "left", "leftist", "leftists", "Pelosi", "Schumer", "Biden", "Obama", "Clinton", "deep state"],
+      "color": "#95e1d3"
+    },
+    "military": {
+      "label": "Military/Defense",
+      "keywords": ["troops", "military", "war", "defense", "army", "navy", "marines", "veterans", "soldiers", "generals", "NATO", "terrorism", "terrorist"],
+      "color": "#6c5ce7"
+    },
+    "economy": {
+      "label": "Economy",
+      "keywords": ["jobs", "economy", "trade", "tariff", "tariffs", "China", "manufacturing", "unemployment", "stock market", "GDP", "taxes", "inflation"],
+      "color": "#00b894"
+    },
+    "law-enforcement": {
+      "label": "Law Enforcement",
+      "keywords": ["police", "cops", "law enforcement", "crime", "criminals", "drugs", "fentanyl", "gangs", "prisons", "defund", "blue lives"],
+      "color": "#0984e3"
+    }
+  },
+  "rhetoric": {
+    "dehumanizing-language": {
+      "label": "Dehumanizing Language",
+      "description": "Language that dehumanizes groups of people",
+      "keywords": ["animal", "animals", "vermin", "pest", "pests", "infestation", "plague", "scum", "filth", "garbage", "trash", "predator", "predators", "savage", "savages", "monster", "monsters", "subhuman", "disease", "poison", "poisoning"],
+      "color": "#d63031",
+      "severity": "high"
+    },
+    "violent-rhetoric": {
+      "label": "Violent Rhetoric",
+      "description": "Language suggesting violence or physical harm",
+      "keywords": ["fight", "destroy", "eliminate", "wipe out", "eradicate", "annihilate", "crush", "beat", "punch", "shoot", "kill", "war", "battle", "attack", "execute", "terminate"],
+      "color": "#e17055",
+      "severity": "high"
+    },
+    "absolutist-claims": {
+      "label": "Absolutist Claims",
+      "description": "Sweeping generalizations and absolute statements",
+      "keywords": ["always", "never", "everyone", "no one", "nobody", "best ever", "worst ever", "greatest", "most", "least", "all", "none", "totally", "completely", "absolutely", "perfect", "disaster"],
+      "color": "#fdcb6e",
+      "severity": "medium"
+    },
+    "conspiracy-language": {
+      "label": "Conspiracy Language",
+      "description": "Language suggesting secret plots or hidden agendas",
+      "keywords": ["they don't want you to know", "hidden", "secret", "plot", "scheme", "cabal", "deep state", "rigged", "controlled", "puppet", "cover up", "coverup", "hoax", "scam", "setup"],
+      "color": "#a29bfe",
+      "severity": "medium"
+    },
+    "us-vs-them": {
+      "label": "Us vs Them",
+      "description": "Language that divides into in-groups and out-groups",
+      "keywords": ["real Americans", "true patriots", "our people", "those people", "they", "them", "their kind", "outsiders", "elites", "establishment", "swamp"],
+      "color": "#74b9ff",
+      "severity": "medium"
+    }
+  },
+  "factCheckRatings": {
+    "false": {
+      "label": "False",
+      "color": "#ff0000",
+      "description": "Statement is not accurate"
+    },
+    "mostly-false": {
+      "label": "Mostly False",
+      "color": "#ff6600",
+      "description": "Statement contains some element of truth but ignores critical facts"
+    },
+    "half-true": {
+      "label": "Half True",
+      "color": "#ffcc00",
+      "description": "Statement is partially accurate but leaves out important details"
+    },
+    "mostly-true": {
+      "label": "Mostly True",
+      "color": "#99cc00",
+      "description": "Statement is accurate but needs clarification"
+    },
+    "true": {
+      "label": "True",
+      "color": "#00cc00",
+      "description": "Statement is accurate"
+    },
+    "unverified": {
+      "label": "Unverified",
+      "color": "#888888",
+      "description": "Statement has not been fact-checked"
+    }
+  }
+}
