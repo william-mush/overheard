@@ -108,8 +108,10 @@ export class FlowEngine {
         const headlines = this.container.querySelectorAll('.featured-headline');
         headlines.forEach(h => h.remove());
 
-        // Reset the new flow mode
-        this.flowModes[mode].reset();
+        // Reset the new flow mode if it has a reset method
+        if (this.flowModes[mode] && typeof this.flowModes[mode].reset === 'function') {
+            this.flowModes[mode].reset();
+        }
     }
 
     setSpeed(speed) {
