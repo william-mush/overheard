@@ -433,19 +433,12 @@ function sendNextContradiction(politicalSource) {
         isPolitical: true
     };
 
-    console.log('Sending contradiction:', contradiction.id, enrichedContradiction);
-
     // Get the contradiction flow and send it directly
     const contradictionFlow = flowEngine.flowModes['contradiction'];
     const container = flowEngine.container || document.getElementById('oceanContainer');
 
-    console.log('Contradiction flow:', contradictionFlow);
-    console.log('Container:', container);
-
     if (contradictionFlow && contradictionFlow.showContradiction && container) {
         contradictionFlow.showContradiction(enrichedContradiction, container);
-    } else {
-        console.error('Missing: flow=', !!contradictionFlow, 'method=', !!(contradictionFlow?.showContradiction), 'container=', !!container);
     }
 }
 
