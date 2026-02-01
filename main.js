@@ -53,6 +53,7 @@ let testDataTimeouts = [];
 let activeSpeakerFilters = new Set();
 let activeTopicFilter = '';
 let activeRhetoricFilter = '';
+let enabledContradictionIds = null; // null means all enabled
 
 // Initialize
 async function init() {
@@ -1319,9 +1320,6 @@ controlChannel.onmessage = (event) => {
             break;
     }
 };
-
-// Track enabled contradictions (all enabled by default)
-let enabledContradictionIds = null; // null means all enabled
 
 // Track quotes shown and notify control panel
 const originalAddItem = flowEngine.addItem.bind(flowEngine);
