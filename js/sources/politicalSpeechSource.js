@@ -1,67 +1,106 @@
-// Political Speech Source - Loads transcripts and speakers data
+// Political Speech Source - Loads data from Neon database via API
 
 export class PoliticalSpeechSource {
     constructor() {
         this.name = 'Political Speech';
-        this.transcripts = null;
         this.speakers = null;
         this.categories = null;
+        this.contradictions = [];
         this.quotes = [];
+        this.apiBase = '/api/data';
     }
 
     async initialize() {
         try {
+            // Fetch all data from API
+            const response = await fetch(`${this.apiBase}?type=all`);
+
+            if (!response.ok) {
+                throw new Error(`API error: ${response.status}`);
+            }
+
+            const data = await response.json();
+
+            this.speakers = data.speakers;
+            this.categories = data.categories;
+            this.contradictions = data.contradictions || [];
+
+            // Fetch quotes separately
+            const quotesResponse = await fetch(`${this.apiBase}?type=quotes&limit=200`);
+            if (quotesResponse.ok) {
+                const quotesData = await quotesResponse.json();
+                this.quotes = quotesData.map(q => ({
+                    id: q.id,
+                    content: q.text,
+                    speaker: q.speaker,
+                    speakerId: q.speakerId,
+                    speakerColor: q.speakerColor,
+                    date: q.date,
+                    source: q.source,
+                    sourceUrl: q.sourceUrl,
+                    eventType: q.eventType,
+                    categories: q.categories || [],
+                    rhetoric: q.rhetoric || [],
+                    factCheck: q.factCheck,
+                    context: q.context
+                }));
+            }
+
+            console.log(`Political Speech Source initialized from database:`);
+            console.log(`  - ${Object.keys(this.speakers || {}).length} speakers`);
+            console.log(`  - ${this.quotes.length} quotes`);
+            console.log(`  - ${this.contradictions.length} contradictions`);
+        } catch (error) {
+            console.error('Failed to initialize Political Speech Source from API:', error);
+            // Fallback to static JSON files
+            await this.initializeFromStaticFiles();
+        }
+    }
+
+    // Fallback to static files if API fails
+    async initializeFromStaticFiles() {
+        try {
+            console.log('Falling back to static JSON files...');
             const [transcriptsRes, speakersRes, categoriesRes] = await Promise.all([
                 fetch('/data/transcripts.json'),
                 fetch('/data/speakers.json'),
                 fetch('/data/categories.json')
             ]);
 
-            this.transcripts = await transcriptsRes.json();
+            const transcripts = await transcriptsRes.json();
             this.speakers = (await speakersRes.json()).speakers;
             this.categories = await categoriesRes.json();
+            this.contradictions = transcripts.contradictions || [];
 
             // Build quotes array from transcripts
-            this.buildQuotesArray();
-
-            console.log(`Political Speech Source initialized: ${this.quotes.length} quotes available`);
-        } catch (error) {
-            console.error('Failed to initialize Political Speech Source:', error);
-        }
-    }
-
-    buildQuotesArray() {
-        this.quotes = [];
-
-        if (!this.transcripts || !this.transcripts.transcripts) {
-            return;
-        }
-
-        for (const transcript of this.transcripts.transcripts) {
-            if (transcript.extractedQuotes) {
-                for (const quote of transcript.extractedQuotes) {
-                    this.quotes.push({
-                        id: quote.id,
-                        content: quote.text,
-                        speaker: transcript.speaker,
-                        speakerId: transcript.speakerId,
-                        date: transcript.date,
-                        source: transcript.source,
-                        sourceUrl: transcript.sourceUrl,
-                        eventType: transcript.eventType,
-                        title: transcript.title,
-                        categories: quote.categories || [],
-                        rhetoric: quote.rhetoric || [],
-                        factCheck: quote.factCheck || null,
-                        contradicts: quote.contradicts || null
-                    });
+            this.quotes = [];
+            for (const transcript of transcripts.transcripts || []) {
+                if (transcript.extractedQuotes) {
+                    for (const quote of transcript.extractedQuotes) {
+                        this.quotes.push({
+                            id: quote.id,
+                            content: quote.text,
+                            speaker: transcript.speaker,
+                            speakerId: transcript.speakerId,
+                            date: transcript.date,
+                            source: transcript.source,
+                            sourceUrl: transcript.sourceUrl,
+                            eventType: transcript.eventType,
+                            categories: quote.categories || [],
+                            rhetoric: quote.rhetoric || [],
+                            factCheck: quote.factCheck || null
+                        });
+                    }
                 }
             }
+
+            console.log(`Fallback complete: ${this.quotes.length} quotes loaded from static files`);
+        } catch (error) {
+            console.error('Failed to load from static files:', error);
         }
     }
 
     async fetch() {
-        // Return a few random quotes
         return this.getRandomQuotes(3);
     }
 
@@ -74,8 +113,7 @@ export class PoliticalSpeechSource {
         const shuffled = [...this.quotes].sort(() => Math.random() - 0.5);
 
         for (let i = 0; i < Math.min(count, shuffled.length); i++) {
-            const quote = shuffled[i];
-            items.push(this.formatQuote(quote));
+            items.push(this.formatQuote(shuffled[i]));
         }
 
         return items;
@@ -87,16 +125,15 @@ export class PoliticalSpeechSource {
             content: quote.content,
             timestamp: Date.now(),
             url: quote.sourceUrl || '#',
-            // Extra fields for political speech flows
             speaker: quote.speaker,
             speakerId: quote.speakerId,
+            speakerColor: quote.speakerColor || this.getSpeakerColor(quote.speakerId),
             date: quote.date,
             eventType: quote.eventType,
-            title: quote.title,
             categories: quote.categories,
             rhetoric: quote.rhetoric,
             factCheck: quote.factCheck,
-            contradicts: quote.contradicts,
+            context: quote.context,
             isPolitical: true
         };
     }
@@ -114,13 +151,11 @@ export class PoliticalSpeechSource {
             return filtered.map(q => this.formatQuote(q));
         }
 
-        // Return random selection of specified count
         const shuffled = [...filtered].sort(() => Math.random() - 0.5);
         return shuffled.slice(0, count).map(q => this.formatQuote(q));
     }
 
     getQuotesBySpeakerSequential(speakerId) {
-        // Track which quotes have been shown per speaker
         if (!this.shownQuotes) {
             this.shownQuotes = {};
         }
@@ -130,7 +165,6 @@ export class PoliticalSpeechSource {
 
         const filtered = this.quotes.filter(q => q.speakerId === speakerId);
 
-        // Find a quote we haven't shown yet
         for (const quote of filtered) {
             if (!this.shownQuotes[speakerId].has(quote.id)) {
                 this.shownQuotes[speakerId].add(quote.id);
@@ -138,7 +172,6 @@ export class PoliticalSpeechSource {
             }
         }
 
-        // If all shown, reset and start over
         this.shownQuotes[speakerId].clear();
         if (filtered.length > 0) {
             const quote = filtered[0];
@@ -161,38 +194,33 @@ export class PoliticalSpeechSource {
 
     getFactCheckedQuotes() {
         return this.quotes
-            .filter(q => q.factCheck && q.factCheck.rating)
+            .filter(q => q.factCheck && q.factCheck.rating && q.factCheck.rating !== 'unverified')
             .map(q => this.formatQuote(q));
     }
 
     getContradictions() {
-        // Return contradictions from the dedicated contradictions array
-        if (!this.transcripts || !this.transcripts.contradictions) {
-            return [];
-        }
-        return this.transcripts.contradictions;
+        return this.contradictions;
     }
 
     getRandomContradiction() {
-        const contradictions = this.getContradictions();
-        if (contradictions.length === 0) return null;
+        if (this.contradictions.length === 0) return null;
 
-        const index = Math.floor(Math.random() * contradictions.length);
-        const contradiction = contradictions[index];
+        const index = Math.floor(Math.random() * this.contradictions.length);
+        const contradiction = this.contradictions[index];
 
-        // Add speaker color
         return {
             ...contradiction,
-            speakerColor: this.getSpeakerColor(contradiction.speakerId)
+            speakerColor: contradiction.speakerColor || this.getSpeakerColor(contradiction.speakerId)
         };
     }
 
     getContradictionsBySpeaker(speakerId) {
-        const contradictions = this.getContradictions();
-        return contradictions.filter(c => c.speakerId === speakerId).map(c => ({
-            ...c,
-            speakerColor: this.getSpeakerColor(c.speakerId)
-        }));
+        return this.contradictions
+            .filter(c => c.speakerId === speakerId)
+            .map(c => ({
+                ...c,
+                speakerColor: c.speakerColor || this.getSpeakerColor(c.speakerId)
+            }));
     }
 
     getQuoteById(id) {
@@ -228,48 +256,48 @@ export class PoliticalSpeechSource {
         return this.categories ? this.categories.factCheckRatings : {};
     }
 
+    // Async method to fetch fresh data from API
+    async refreshFromDatabase() {
+        try {
+            const response = await fetch(`${this.apiBase}?type=all`);
+            if (response.ok) {
+                const data = await response.json();
+                this.speakers = data.speakers;
+                this.categories = data.categories;
+                this.contradictions = data.contradictions || [];
+                console.log('Data refreshed from database');
+            }
+        } catch (error) {
+            console.error('Failed to refresh from database:', error);
+        }
+    }
+
     getMockQuotes(count) {
         const mockQuotes = [
             {
-                speaker: 'Sample Speaker',
-                speakerId: 'sample',
-                content: 'This is sample political content for demonstration purposes.',
-                date: '2025-01-15',
-                source: 'Demo',
-                categories: ['media'],
+                speaker: 'Loading...',
+                speakerId: 'loading',
+                content: 'Connecting to database...',
+                date: new Date().toISOString().split('T')[0],
+                source: 'System',
+                categories: [],
                 rhetoric: [],
-                factCheck: { rating: 'unverified' }
-            },
-            {
-                speaker: 'Sample Speaker',
-                speakerId: 'sample',
-                content: 'Another sample quote to show how the visualization works.',
-                date: '2025-01-16',
-                source: 'Demo',
-                categories: ['economy'],
-                rhetoric: [],
-                factCheck: { rating: 'unverified' }
+                factCheck: null
             }
         ];
 
-        const items = [];
-        for (let i = 0; i < Math.min(count, mockQuotes.length); i++) {
-            const quote = mockQuotes[i];
-            items.push({
-                source: quote.speaker,
-                content: quote.content,
-                timestamp: Date.now(),
-                url: '#',
-                speaker: quote.speaker,
-                speakerId: quote.speakerId,
-                date: quote.date,
-                categories: quote.categories,
-                rhetoric: quote.rhetoric,
-                factCheck: quote.factCheck,
-                isPolitical: true
-            });
-        }
-
-        return items;
+        return mockQuotes.slice(0, count).map(quote => ({
+            source: quote.speaker,
+            content: quote.content,
+            timestamp: Date.now(),
+            url: '#',
+            speaker: quote.speaker,
+            speakerId: quote.speakerId,
+            date: quote.date,
+            categories: quote.categories,
+            rhetoric: quote.rhetoric,
+            factCheck: quote.factCheck,
+            isPolitical: true
+        }));
     }
 }

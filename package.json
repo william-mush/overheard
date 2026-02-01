@@ -1,0 +1,28 @@
+{
+  "name": "overheard",
+  "version": "1.0.0",
+  "description": "> The internet, washing over you",
+  "main": "main.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/william-mush/overheard.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/william-mush/overheard/issues"
+  },
+  "homepage": "https://github.com/william-mush/overheard#readme",
+  "dependencies": {
+    "@neondatabase/serverless": "^1.0.2",
+    "dotenv": "^17.2.3"
+  }
+}
