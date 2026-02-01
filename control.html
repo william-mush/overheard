@@ -519,6 +519,168 @@
         .contradiction-delete:hover {
             color: #ff4444;
         }
+
+        /* Filter Section Styles */
+        .filter-section {
+            background: #1a1a1a;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 3px solid #4af;
+        }
+
+        .filter-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .filter-group label {
+            display: block;
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .filter-group select,
+        .filter-group input[type="text"],
+        .filter-group input[type="date"] {
+            width: 100%;
+            padding: 10px 12px;
+            background: #222;
+            border: 1px solid #333;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .filter-group select:focus,
+        .filter-group input:focus {
+            outline: none;
+            border-color: #4af;
+        }
+
+        .filter-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .filter-chip {
+            padding: 6px 12px;
+            background: #222;
+            border: 1px solid #333;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-chip:hover {
+            border-color: #4af;
+        }
+
+        .filter-chip.active {
+            background: #4af;
+            color: #000;
+            border-color: #4af;
+        }
+
+        .filter-chip.category {
+            border-color: #44aa44;
+        }
+
+        .filter-chip.category.active {
+            background: #44aa44;
+            border-color: #44aa44;
+        }
+
+        .filter-chip.rhetoric {
+            border-color: #aa4444;
+        }
+
+        .filter-chip.rhetoric.active {
+            background: #aa4444;
+            border-color: #aa4444;
+        }
+
+        .filter-chip.factcheck {
+            border-color: #aaaa44;
+        }
+
+        .filter-chip.factcheck.active {
+            background: #aaaa44;
+            color: #000;
+            border-color: #aaaa44;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            padding-left: 35px;
+        }
+
+        .search-box::before {
+            content: "\\1F50D";
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px;
+            opacity: 0.5;
+        }
+
+        .filter-summary {
+            background: #222;
+            padding: 12px 15px;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #888;
+            margin-top: 15px;
+        }
+
+        .filter-summary strong {
+            color: #4af;
+        }
+
+        .preset-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .preset-btn {
+            padding: 8px 16px;
+            background: #333;
+            border: 1px solid #444;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .preset-btn:hover {
+            background: #444;
+            border-color: #4af;
+        }
+
+        .preset-btn.active {
+            background: #4af;
+            color: #000;
+            border-color: #4af;
+        }
     </style>
 </head>
 <body>
@@ -540,7 +702,7 @@
         <div class="status-bar">
         <div class="status-indicator" id="connectionStatus"></div>
         <span class="status-text" id="connectionText">Connecting to display...</span>
-        <button class="open-display-btn" onclick="window.open('/?display', 'OverheardDisplay', 'fullscreen=yes')">Open Display Window</button>
+        <button class="open-display-btn" onclick="window.open('/', 'OverheardDisplay', 'fullscreen=yes')">Open Display Window</button>
     </div>
 
     <!-- Stats -->
@@ -613,6 +775,92 @@
         <div class="action-buttons">
             <button class="action-btn primary" id="selectAll">Select All</button>
             <button class="action-btn secondary" id="selectNone">Select None</button>
+        </div>
+    </div>
+
+    <!-- Content Filters -->
+    <div class="filter-section">
+        <h2>Content Filters</h2>
+
+        <!-- Quick Presets -->
+        <div class="preset-buttons" id="presetButtons">
+            <button class="preset-btn active" data-preset="all">All Content</button>
+            <button class="preset-btn" data-preset="contradictions">Contradictions Only</button>
+            <button class="preset-btn" data-preset="factcheck">Fact-Checked False</button>
+            <button class="preset-btn" data-preset="immigration">Immigration</button>
+            <button class="preset-btn" data-preset="election">Election Claims</button>
+            <button class="preset-btn" data-preset="dehumanizing">Dehumanizing Language</button>
+        </div>
+
+        <!-- Search -->
+        <div class="filter-row">
+            <div class="filter-group" style="flex: 2;">
+                <label>Search Quotes</label>
+                <div class="search-box">
+                    <input type="text" id="quoteSearch" placeholder="Search quote text...">
+                </div>
+            </div>
+            <div class="filter-group">
+                <label>Date Range</label>
+                <div style="display: flex; gap: 10px;">
+                    <input type="date" id="dateFrom" placeholder="From">
+                    <input type="date" id="dateTo" placeholder="To">
+                </div>
+            </div>
+        </div>
+
+        <!-- Category Chips -->
+        <div class="filter-row">
+            <div class="filter-group">
+                <label>Topics</label>
+                <div class="filter-chips" id="categoryChips">
+                    <span class="filter-chip category" data-category="immigration">Immigration</span>
+                    <span class="filter-chip category" data-category="election">Election</span>
+                    <span class="filter-chip category" data-category="economy">Economy</span>
+                    <span class="filter-chip category" data-category="media">Media</span>
+                    <span class="filter-chip category" data-category="opponents">Opponents</span>
+                    <span class="filter-chip category" data-category="military">Military</span>
+                    <span class="filter-chip category" data-category="healthcare">Healthcare</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rhetoric Chips -->
+        <div class="filter-row">
+            <div class="filter-group">
+                <label>Rhetoric Type</label>
+                <div class="filter-chips" id="rhetoricChips">
+                    <span class="filter-chip rhetoric" data-rhetoric="dehumanizing">Dehumanizing</span>
+                    <span class="filter-chip rhetoric" data-rhetoric="violent">Violent</span>
+                    <span class="filter-chip rhetoric" data-rhetoric="absolutist">Absolutist</span>
+                    <span class="filter-chip rhetoric" data-rhetoric="victimhood">Victimhood</span>
+                    <span class="filter-chip rhetoric" data-rhetoric="conspiracy">Conspiracy</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fact Check Filter -->
+        <div class="filter-row">
+            <div class="filter-group">
+                <label>Fact-Check Rating</label>
+                <div class="filter-chips" id="factcheckChips">
+                    <span class="filter-chip factcheck" data-factcheck="false">False</span>
+                    <span class="filter-chip factcheck" data-factcheck="pants-on-fire">Pants on Fire</span>
+                    <span class="filter-chip factcheck" data-factcheck="mostly-false">Mostly False</span>
+                    <span class="filter-chip factcheck" data-factcheck="half-true">Half True</span>
+                    <span class="filter-chip factcheck" data-factcheck="unverified">Unverified</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter Summary -->
+        <div class="filter-summary" id="filterSummary">
+            Showing <strong id="filteredCount">0</strong> of <strong id="totalCount">0</strong> quotes
+        </div>
+
+        <div class="action-buttons">
+            <button class="action-btn primary" id="applyFilters">Apply Filters</button>
+            <button class="action-btn secondary" id="clearFilters">Clear All</button>
         </div>
     </div>
 
@@ -795,23 +1043,34 @@
         // Control Panel (only runs after auth)
         // ============================================
 
-        function initializeControlPanel() {
+        async function initializeControlPanel() {
         // BroadcastChannel for cross-tab communication
         const channel = new BroadcastChannel('overheard-control');
         let isConnected = false;
 
-        // Speakers data
-        const speakers = [
-            { id: 'donald-trump', name: 'Donald Trump', color: '#cc0000', count: 25 },
-            { id: 'stephen-miller', name: 'Stephen Miller', color: '#990000', count: 15 },
-            { id: 'kristi-noem', name: 'Kristi Noem', color: '#aa0000', count: 12 },
-            { id: 'jd-vance', name: 'JD Vance', color: '#bb0000', count: 8 },
-            { id: 'marjorie-taylor-greene', name: 'Marjorie Taylor Greene', color: '#dd4400', count: 8 },
-            { id: 'matt-gaetz', name: 'Matt Gaetz', color: '#cc4400', count: 6 },
-            { id: 'jim-jordan', name: 'Jim Jordan', color: '#aa4400', count: 6 }
-        ];
+        // Speakers data (loaded from API)
+        let speakers = [];
+        let selectedSpeakers = new Set();
 
-        let selectedSpeakers = new Set(speakers.map(s => s.id));
+        // Load speakers from database
+        async function loadSpeakers() {
+            try {
+                const response = await fetch('/api/data?type=speakers');
+                const data = await response.json();
+                speakers = Object.entries(data.speakers).map(([id, info]) => ({
+                    id,
+                    name: info.name,
+                    color: info.color,
+                    count: info.quoteCount || 0
+                }));
+                selectedSpeakers = new Set(speakers.map(s => s.id));
+                initSpeakerGrid();
+            } catch (error) {
+                console.error('Failed to load speakers:', error);
+                // Fallback to empty array
+                speakers = [];
+            }
+        }
 
         // Initialize speaker grid
         function initSpeakerGrid() {
@@ -959,53 +1218,68 @@
             sendCommand('ping', null);
         }, 2000);
 
-        // Contradictions data (cabinet only) - all 27 contradictions
-        const contradictions = [
-            // JD Vance (7)
-            { id: 'vance-trump-flip', speaker: 'JD Vance', topic: 'Trump Support', preview: '"America\'s Hitler" → "Greatest president"', enabled: true },
-            { id: 'vance-never-trump-flip', speaker: 'JD Vance', topic: 'Never Trump', preview: '"Never Trump guy" → "Honored running mate"', enabled: true },
-            { id: 'vance-trump-heroin-flip', speaker: 'JD Vance', topic: 'Trump "Heroin"', preview: '"Cultural heroin" → "Great president"', enabled: true },
-            { id: 'vance-abortion-national-ban', speaker: 'JD Vance', topic: 'Abortion', preview: '"Illegal nationally" → "Never supported ban"', enabled: true },
-            { id: 'vance-affordable-care-act', speaker: 'JD Vance', topic: 'Healthcare', preview: 'Praised ACA → "Disaster"', enabled: true },
-            { id: 'vance-red-flag-laws', speaker: 'JD Vance', topic: 'Gun Safety', preview: 'Supported → "Unconstitutional"', enabled: true },
+        // Contradictions data (loaded from API)
+        let contradictions = [];
 
-            // Donald Trump (9)
-            { id: 'trump-drain-swamp', speaker: 'Donald Trump', topic: 'Drain the Swamp', preview: '"Drain the swamp" → "I hate that term"', enabled: true },
-            { id: 'trump-wikileaks', speaker: 'Donald Trump', topic: 'WikiLeaks', preview: '"I love WikiLeaks" → "Know nothing about it"', enabled: true },
-            { id: 'trump-golf', speaker: 'Donald Trump', topic: 'Golf', preview: '"No time for golf" → "Golf is my exercise"', enabled: true },
-            { id: 'trump-debt', speaker: 'Donald Trump', topic: 'National Debt', preview: '"Eliminate debt in 8 years" → "Who cares"', enabled: true },
-            { id: 'trump-russia-hoax', speaker: 'Donald Trump', topic: 'Russia Investigation', preview: '"Russia, if you\'re listening" → "Russia hoax"', enabled: true },
-            { id: 'trump-january6', speaker: 'Donald Trump', topic: 'January 6', preview: '"Peacefully" → "Great people"', enabled: true },
-            { id: 'trump-lock-her-up', speaker: 'Donald Trump', topic: 'Lock Her Up', preview: 'Led chants → "I didn\'t say that"', enabled: true },
-            { id: 'trump-ukraine-24-hours', speaker: 'Donald Trump', topic: 'Ukraine War', preview: '"24 hours" → "Said in jest"', enabled: true },
-            { id: 'trump-electoral-college', speaker: 'Donald Trump', topic: 'Electoral College', preview: '"Disaster" → "Genius"', enabled: true },
-            { id: 'trump-tiktok-ban-flip', speaker: 'Donald Trump', topic: 'TikTok Ban', preview: '"National security threat" → "Love TikTok"', enabled: true },
-            { id: 'trump-project-2025-flip', speaker: 'Donald Trump', topic: 'Project 2025', preview: '"Know nothing about it" → "Meeting with architects"', enabled: true },
+        // Helper to create preview text from quote texts
+        function createPreview(text1, text2) {
+            const t1 = text1 ? (text1.substring(0, 25) + '...') : '';
+            const t2 = text2 ? (text2.substring(0, 25) + '...') : '';
+            return '"' + t1 + '" -> "' + t2 + '"';
+        }
 
-            // Stephen Miller (1)
-            { id: 'miller-immigration-legal', speaker: 'Stephen Miller', topic: 'Legal Immigration', preview: '"Welcome legal" → "Reduce legal"', enabled: true },
+        // Load contradictions from database
+        async function loadContradictions() {
+            try {
+                const response = await fetch('/api/data?type=contradictions&limit=200');
+                const data = await response.json();
+                contradictions = data.map(c => ({
+                    id: c.id,
+                    speaker: c.speaker,
+                    topic: c.topic,
+                    preview: createPreview(c.quote1?.text, c.quote2?.text),
+                    enabled: true
+                }));
+                initContradictionList();
+            } catch (error) {
+                console.error('Failed to load contradictions:', error);
+                contradictions = [];
+            }
+        }
 
-            // Marco Rubio (1)
-            { id: 'rubio-trump-con-man-flip', speaker: 'Marco Rubio', topic: 'Trump Support', preview: '"Con man, dangerous" → "Honored to serve"', enabled: true },
+        // Load stats from database
+        async function loadStats() {
+            try {
+                const response = await fetch('/api/admin?action=stats', {
+                    headers: { 'Authorization': 'Bearer ' + sessionToken }
+                });
+                const stats = await response.json();
+                document.getElementById('totalQuotes').textContent = stats.quotes || 0;
+            } catch (error) {
+                console.error('Failed to load stats:', error);
+            }
+        }
 
-            // RFK Jr (2)
-            { id: 'rfk-vaccine-flip', speaker: 'RFK Jr', topic: 'Vaccines', preview: '"No vaccine is safe" → "I am pro-vaccine"', enabled: true },
-            { id: 'rfk-vaccine-actions-flip', speaker: 'RFK Jr', topic: 'Vaccine Access', preview: '"Won\'t restrict access" → Fired CDC advisors', enabled: true },
-
-            // Tulsi Gabbard (2)
-            { id: 'gabbard-snowden-flip', speaker: 'Tulsi Gabbard', topic: 'Snowden', preview: '"Brave whistleblower" → "Broke the law"', enabled: true },
-            { id: 'gabbard-section-702-flip', speaker: 'Tulsi Gabbard', topic: 'FISA 702', preview: '"Repeal it" → "Crucial capability"', enabled: true },
-
-            // Pete Hegseth (1)
-            { id: 'hegseth-women-combat-flip', speaker: 'Pete Hegseth', topic: 'Women in Combat', preview: '"Should not be in combat" → "Anyone who meets standards"', enabled: true },
-
-            // Elon Musk (2)
-            { id: 'musk-free-speech-flip', speaker: 'Elon Musk', topic: 'Free Speech', preview: '"Absolutist" → Censors critics', enabled: true },
-            { id: 'musk-government-spending-flip', speaker: 'Elon Musk', topic: 'Government Subsidies', preview: '"End all subsidies" → Gets $38B in subsidies', enabled: true },
-
-            // Kristi Noem (1)
-            { id: 'noem-minneapolis-statements-flip', speaker: 'Kristi Noem', topic: 'Minneapolis Shooting', preview: '"Attacked officers" → Video shows otherwise', enabled: true }
-        ];
+        // Delete a contradiction
+        async function deleteContradiction(id) {
+            try {
+                const response = await fetch('/api/admin?action=contradiction', {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + sessionToken
+                    },
+                    body: JSON.stringify({ id })
+                });
+                if (response.ok) {
+                    await loadContradictions(); // Refresh list
+                } else {
+                    console.error('Failed to delete contradiction:', await response.text());
+                }
+            } catch (error) {
+                console.error('Failed to delete contradiction:', error);
+            }
+        }
 
         // Initialize contradiction list
         function initContradictionList() {
@@ -1045,8 +1319,21 @@
                 content.appendChild(topic);
                 content.appendChild(preview);
 
+                // Delete button
+                const deleteBtn = document.createElement('button');
+                deleteBtn.className = 'contradiction-delete';
+                deleteBtn.textContent = 'x';
+                deleteBtn.title = 'Delete this contradiction';
+                deleteBtn.addEventListener('click', async (e) => {
+                    e.stopPropagation();
+                    if (confirm('Delete "' + c.topic + '" contradiction for ' + c.speaker + '?')) {
+                        await deleteContradiction(c.id);
+                    }
+                });
+
                 item.appendChild(checkbox);
                 item.appendChild(content);
+                item.appendChild(deleteBtn);
 
                 list.appendChild(item);
             });
@@ -1069,9 +1356,260 @@
             updateEnabledContradictions();
         });
 
-        // Initialize control panel components
-        initSpeakerGrid();
-        initContradictionList();
+        // Initialize control panel components - load data from API
+        await loadSpeakers();
+        await loadContradictions();
+        await loadStats();
+
+        // ============================================
+        // Content Filtering System
+        // ============================================
+
+        let allQuotes = [];
+        let activeFilters = {
+            categories: [],
+            rhetoric: [],
+            factcheck: [],
+            search: '',
+            dateFrom: null,
+            dateTo: null,
+            speakers: []
+        };
+
+        // Load all quotes for filtering
+        async function loadQuotes() {
+            try {
+                const response = await fetch('/api/data?type=quotes&limit=1000');
+                const data = await response.json();
+                allQuotes = data.quotes || data || [];
+                document.getElementById('totalCount').textContent = allQuotes.length;
+                document.getElementById('filteredCount').textContent = allQuotes.length;
+            } catch (error) {
+                console.error('Failed to load quotes:', error);
+                allQuotes = [];
+            }
+        }
+
+        // Initialize filter event listeners
+        function initFilters() {
+            // Preset buttons
+            document.querySelectorAll('.preset-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    applyPreset(btn.dataset.preset);
+                });
+            });
+
+            // Category chips
+            document.querySelectorAll('.filter-chip.category').forEach(chip => {
+                chip.addEventListener('click', () => {
+                    chip.classList.toggle('active');
+                    updateActiveFilters();
+                });
+            });
+
+            // Rhetoric chips
+            document.querySelectorAll('.filter-chip.rhetoric').forEach(chip => {
+                chip.addEventListener('click', () => {
+                    chip.classList.toggle('active');
+                    updateActiveFilters();
+                });
+            });
+
+            // Factcheck chips
+            document.querySelectorAll('.filter-chip.factcheck').forEach(chip => {
+                chip.addEventListener('click', () => {
+                    chip.classList.toggle('active');
+                    updateActiveFilters();
+                });
+            });
+
+            // Search input
+            document.getElementById('quoteSearch').addEventListener('input', (e) => {
+                activeFilters.search = e.target.value.toLowerCase();
+                updateFilterSummary();
+            });
+
+            // Date inputs
+            document.getElementById('dateFrom').addEventListener('change', (e) => {
+                activeFilters.dateFrom = e.target.value || null;
+                updateFilterSummary();
+            });
+
+            document.getElementById('dateTo').addEventListener('change', (e) => {
+                activeFilters.dateTo = e.target.value || null;
+                updateFilterSummary();
+            });
+
+            // Apply filters button
+            document.getElementById('applyFilters').addEventListener('click', () => {
+                applyFiltersToDisplay();
+            });
+
+            // Clear filters button
+            document.getElementById('clearFilters').addEventListener('click', () => {
+                clearAllFilters();
+            });
+        }
+
+        function updateActiveFilters() {
+            activeFilters.categories = Array.from(document.querySelectorAll('.filter-chip.category.active'))
+                .map(c => c.dataset.category);
+            activeFilters.rhetoric = Array.from(document.querySelectorAll('.filter-chip.rhetoric.active'))
+                .map(c => c.dataset.rhetoric);
+            activeFilters.factcheck = Array.from(document.querySelectorAll('.filter-chip.factcheck.active'))
+                .map(c => c.dataset.factcheck);
+            updateFilterSummary();
+        }
+
+        function getFilteredQuotes() {
+            return allQuotes.filter(quote => {
+                // Speaker filter
+                if (selectedSpeakers.size > 0 && !selectedSpeakers.has(quote.speaker_id || quote.speakerId)) {
+                    return false;
+                }
+
+                // Category filter
+                if (activeFilters.categories.length > 0) {
+                    const quoteCategories = quote.categories || [];
+                    if (!activeFilters.categories.some(c => quoteCategories.includes(c))) {
+                        return false;
+                    }
+                }
+
+                // Rhetoric filter
+                if (activeFilters.rhetoric.length > 0) {
+                    const quoteRhetoric = quote.rhetoric || [];
+                    if (!activeFilters.rhetoric.some(r => quoteRhetoric.includes(r))) {
+                        return false;
+                    }
+                }
+
+                // Fact-check filter
+                if (activeFilters.factcheck.length > 0) {
+                    const rating = (quote.fact_check_rating || quote.factCheckRating || '').toLowerCase();
+                    if (!activeFilters.factcheck.some(f => rating.includes(f.replace('-', ' ')))) {
+                        return false;
+                    }
+                }
+
+                // Search filter
+                if (activeFilters.search) {
+                    const text = (quote.text || '').toLowerCase();
+                    if (!text.includes(activeFilters.search)) {
+                        return false;
+                    }
+                }
+
+                // Date filter
+                if (activeFilters.dateFrom && quote.date) {
+                    if (quote.date < activeFilters.dateFrom) return false;
+                }
+                if (activeFilters.dateTo && quote.date) {
+                    if (quote.date > activeFilters.dateTo) return false;
+                }
+
+                return true;
+            });
+        }
+
+        function updateFilterSummary() {
+            const filtered = getFilteredQuotes();
+            document.getElementById('filteredCount').textContent = filtered.length;
+        }
+
+        function applyPreset(preset) {
+            // Clear all filters first
+            document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+            document.getElementById('quoteSearch').value = '';
+            document.getElementById('dateFrom').value = '';
+            document.getElementById('dateTo').value = '';
+            activeFilters = {
+                categories: [],
+                rhetoric: [],
+                factcheck: [],
+                search: '',
+                dateFrom: null,
+                dateTo: null,
+                speakers: []
+            };
+
+            // Apply preset
+            switch (preset) {
+                case 'all':
+                    // No filters
+                    break;
+                case 'contradictions':
+                    // Show only contradictions mode
+                    sendCommand('setMode', 'contradiction');
+                    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelector('[data-mode="contradiction"]').classList.add('active');
+                    break;
+                case 'factcheck':
+                    document.querySelectorAll('.filter-chip.factcheck').forEach(c => c.classList.add('active'));
+                    activeFilters.factcheck = ['false', 'pants-on-fire', 'mostly-false'];
+                    break;
+                case 'immigration':
+                    document.querySelector('[data-category="immigration"]').classList.add('active');
+                    activeFilters.categories = ['immigration'];
+                    break;
+                case 'election':
+                    document.querySelector('[data-category="election"]').classList.add('active');
+                    activeFilters.categories = ['election'];
+                    break;
+                case 'dehumanizing':
+                    document.querySelector('[data-rhetoric="dehumanizing"]').classList.add('active');
+                    activeFilters.rhetoric = ['dehumanizing'];
+                    break;
+            }
+
+            updateFilterSummary();
+            applyFiltersToDisplay();
+        }
+
+        function applyFiltersToDisplay() {
+            const filtered = getFilteredQuotes();
+            const quoteIds = filtered.map(q => q.id);
+
+            // Send filter command to display
+            sendCommand('setQuoteFilter', {
+                quoteIds: quoteIds,
+                categories: activeFilters.categories,
+                rhetoric: activeFilters.rhetoric,
+                factcheck: activeFilters.factcheck,
+                speakers: Array.from(selectedSpeakers)
+            });
+
+            console.log('Applied filters:', activeFilters);
+            console.log('Filtered quotes:', filtered.length);
+        }
+
+        function clearAllFilters() {
+            document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+            document.querySelector('[data-preset="all"]').classList.add('active');
+            document.getElementById('quoteSearch').value = '';
+            document.getElementById('dateFrom').value = '';
+            document.getElementById('dateTo').value = '';
+
+            activeFilters = {
+                categories: [],
+                rhetoric: [],
+                factcheck: [],
+                search: '',
+                dateFrom: null,
+                dateTo: null,
+                speakers: []
+            };
+
+            updateFilterSummary();
+            sendCommand('clearFilters', null);
+        }
+
+        // Call filter initialization at the end
+        await loadQuotes();
+        initFilters();
 
         } // End initializeControlPanel()
     </script>

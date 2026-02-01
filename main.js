@@ -55,6 +55,33 @@ let activeTopicFilter = '';
 let activeRhetoricFilter = '';
 let enabledContradictionIds = null; // null means all enabled
 
+// Content filters from control panel
+let activeQuoteFilter = null; // Set of quote IDs to show, null = all
+let activeCategories = [];
+let activeRhetoric = [];
+let activeFactcheck = [];
+
+// Helper function to get filtered quotes
+function getFilteredPoliticalQuotes(count) {
+    const hasFilters = activeQuoteFilter ||
+                       activeCategories.length > 0 ||
+                       activeRhetoric.length > 0 ||
+                       activeFactcheck.length > 0;
+
+    if (!hasFilters) {
+        return politicalSource.getRandomQuotes(count);
+    }
+
+    const filters = {
+        quoteIds: activeQuoteFilter,
+        categories: activeCategories,
+        rhetoric: activeRhetoric,
+        factcheck: activeFactcheck
+    };
+
+    return politicalSource.getRandomQuotes(count, filters);
+}
+
 // Initialize - Display mode only (controlled via control.html)
 async function init() {
     console.log('Initializing overheard.com display...');
@@ -363,7 +390,7 @@ function startArtModeQuotes(mode) {
     const interval = intervals[mode] || 10000;
 
     // Send first quote immediately
-    const quotes = politicalSource.getRandomQuotes(1);
+    const quotes = getFilteredPoliticalQuotes(1);
     if (quotes.length > 0) {
         const quote = quotes[0];
         quote.isPolitical = true;
@@ -373,7 +400,7 @@ function startArtModeQuotes(mode) {
 
     // Then continue at interval
     artModeInterval = setInterval(() => {
-        const quotes = politicalSource.getRandomQuotes(1);
+        const quotes = getFilteredPoliticalQuotes(1);
         if (quotes.length > 0) {
             const quote = quotes[0];
             quote.isPolitical = true;
@@ -1305,6 +1332,33 @@ controlChannel.onmessage = (event) => {
             // Filter contradictions to only enabled ones
             enabledContradictionIds = new Set(data);
             console.log('Enabled contradictions:', enabledContradictionIds.size);
+            break;
+
+        case 'setQuoteFilter':
+            // Apply content filters from control panel
+            if (data.quoteIds && data.quoteIds.length > 0) {
+                activeQuoteFilter = new Set(data.quoteIds);
+            } else {
+                activeQuoteFilter = null; // No filter = show all
+            }
+            activeCategories = data.categories || [];
+            activeRhetoric = data.rhetoric || [];
+            activeFactcheck = data.factcheck || [];
+            console.log('Quote filter applied:', {
+                quoteIds: activeQuoteFilter ? activeQuoteFilter.size : 'all',
+                categories: activeCategories,
+                rhetoric: activeRhetoric,
+                factcheck: activeFactcheck
+            });
+            break;
+
+        case 'clearFilters':
+            // Clear all content filters
+            activeQuoteFilter = null;
+            activeCategories = [];
+            activeRhetoric = [];
+            activeFactcheck = [];
+            console.log('Filters cleared');
             break;
     }
 };

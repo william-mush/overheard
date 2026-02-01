@@ -108,19 +108,98 @@ export class PoliticalSpeechSource {
         return this.getRandomQuotes(3);
     }
 
-    getRandomQuotes(count = 1) {
+    getRandomQuotes(count = 1, filters = null) {
         if (this.quotes.length === 0) {
             return this.getMockQuotes(count);
         }
 
+        // Apply filters if provided
+        let filtered = this.quotes;
+        if (filters) {
+            filtered = this.applyFilters(this.quotes, filters);
+        }
+
+        if (filtered.length === 0) {
+            return this.getMockQuotes(count);
+        }
+
         const items = [];
-        const shuffled = [...this.quotes].sort(() => Math.random() - 0.5);
+        const shuffled = [...filtered].sort(() => Math.random() - 0.5);
 
         for (let i = 0; i < Math.min(count, shuffled.length); i++) {
             items.push(this.formatQuote(shuffled[i]));
         }
 
         return items;
+    }
+
+    // Apply content filters to quotes
+    applyFilters(quotes, filters) {
+        return quotes.filter(quote => {
+            // Quote ID filter
+            if (filters.quoteIds && filters.quoteIds.size > 0) {
+                if (!filters.quoteIds.has(quote.id)) return false;
+            }
+
+            // Speaker filter
+            if (filters.speakers && filters.speakers.length > 0) {
+                if (!filters.speakers.includes(quote.speakerId)) return false;
+            }
+
+            // Category filter
+            if (filters.categories && filters.categories.length > 0) {
+                const quoteCategories = quote.categories || [];
+                if (!filters.categories.some(c => quoteCategories.includes(c))) return false;
+            }
+
+            // Rhetoric filter
+            if (filters.rhetoric && filters.rhetoric.length > 0) {
+                const quoteRhetoric = quote.rhetoric || [];
+                if (!filters.rhetoric.some(r => quoteRhetoric.includes(r))) return false;
+            }
+
+            // Fact-check filter
+            if (filters.factcheck && filters.factcheck.length > 0) {
+                const rating = (quote.factCheck?.rating || '').toLowerCase();
+                if (!filters.factcheck.some(f => rating.includes(f.replace('-', ' ')))) return false;
+            }
+
+            // Search filter
+            if (filters.search && filters.search.length > 0) {
+                const text = (quote.content || '').toLowerCase();
+                if (!text.includes(filters.search.toLowerCase())) return false;
+            }
+
+            // Date range filter
+            if (filters.dateFrom && quote.date) {
+                if (quote.date < filters.dateFrom) return false;
+            }
+            if (filters.dateTo && quote.date) {
+                if (quote.date > filters.dateTo) return false;
+            }
+
+            return true;
+        });
+    }
+
+    // Get quotes with current active filters
+    getFilteredQuotes(count = 1) {
+        // Access global filter variables if they exist
+        const filters = {};
+        if (typeof activeQuoteFilter !== 'undefined' && activeQuoteFilter) {
+            filters.quoteIds = activeQuoteFilter;
+        }
+        if (typeof activeCategories !== 'undefined' && activeCategories.length > 0) {
+            filters.categories = activeCategories;
+        }
+        if (typeof activeRhetoric !== 'undefined' && activeRhetoric.length > 0) {
+            filters.rhetoric = activeRhetoric;
+        }
+        if (typeof activeFactcheck !== 'undefined' && activeFactcheck.length > 0) {
+            filters.factcheck = activeFactcheck;
+        }
+
+        return this.getRandomQuotes(count, Object.keys(filters).length > 0 ? filters : null);
     }
 
     formatQuote(quote) {
