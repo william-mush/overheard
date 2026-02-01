@@ -59,28 +59,40 @@ let enabledContradictionIds = null; // null means all enabled
 async function init() {
     console.log('Initializing overheard.com display...');
 
-    // Set up flow engine
-    flowEngine.initialize(document.getElementById('oceanContainer'));
-    flowEngine.start();
-    console.log('Flow engine started');
+    try {
+        // Set up flow engine
+        const container = document.getElementById('oceanContainer');
+        if (!container) {
+            console.error('oceanContainer not found!');
+            return;
+        }
+        flowEngine.initialize(container);
+        flowEngine.start();
+        console.log('Flow engine started');
 
-    // Start data sources
-    console.log('Starting data sources...');
-    await dataSource.initialize();
+        // Start data sources
+        console.log('Starting data sources...');
+        await dataSource.initialize();
+        console.log('Data sources initialized');
 
-    // Start in contradiction mode by default
-    flowEngine.setMode('contradiction');
-    if (flowModeSelect) flowModeSelect.value = 'contradiction';
-    document.body.classList.add('art-mode-active');
-
-    // Give political source a moment to fully load, then start contradictions
-    setTimeout(() => {
+        // Get political source and verify it loaded
         const politicalSource = dataSource.getPoliticalSpeechSource();
-        console.log('Starting contradiction mode with source:', politicalSource);
-        startContradictionMode(politicalSource);
-    }, 1000);
+        console.log('Political source:', politicalSource);
+        console.log('Contradictions available:', politicalSource.getContradictions().length);
 
-    console.log('Display initialized - controlled via control.html');
+        // Start in contradiction mode by default
+        flowEngine.setMode('contradiction');
+        if (flowModeSelect) flowModeSelect.value = 'contradiction';
+        document.body.classList.add('art-mode-active');
+
+        // Start contradiction mode immediately since data is already loaded
+        console.log('Starting contradiction mode...');
+        startContradictionMode(politicalSource);
+
+        console.log('Display initialized - controlled via control.html');
+    } catch (error) {
+        console.error('Initialization error:', error);
+    }
 }
 
 // Set up remote control via BroadcastChannel
