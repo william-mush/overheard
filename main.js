@@ -55,75 +55,37 @@ let activeTopicFilter = '';
 let activeRhetoricFilter = '';
 let enabledContradictionIds = null; // null means all enabled
 
-// Initialize
+// Initialize - Display mode only (controlled via control.html)
 async function init() {
-    console.log('Initializing overheard.com...');
+    console.log('Initializing overheard.com display...');
 
     // Set up flow engine
     flowEngine.initialize(document.getElementById('oceanContainer'));
     flowEngine.start();
     console.log('Flow engine started');
 
-    // Check if we're in display mode (clean, no controls)
-    const isDisplayMode = new URLSearchParams(window.location.search).has('display');
-
-    // Start data sources first (needed for all modes)
+    // Start data sources
     console.log('Starting data sources...');
     await dataSource.initialize();
 
-    // Default to contradiction mode for art display
-    if (isDisplayMode) {
-        // Start in contradiction mode
-        flowEngine.setMode('contradiction');
-        flowModeSelect.value = 'contradiction';
-        document.body.classList.add('art-mode-active');
+    // Start in contradiction mode by default
+    flowEngine.setMode('contradiction');
+    if (flowModeSelect) flowModeSelect.value = 'contradiction';
+    document.body.classList.add('art-mode-active');
 
-        // Give political source a moment to fully load, then start contradictions
-        setTimeout(() => {
-            const politicalSource = dataSource.getPoliticalSpeechSource();
-            console.log('Starting contradiction mode with source:', politicalSource);
-            startContradictionMode(politicalSource);
-        }, 1000);
+    // Give political source a moment to fully load, then start contradictions
+    setTimeout(() => {
+        const politicalSource = dataSource.getPoliticalSpeechSource();
+        console.log('Starting contradiction mode with source:', politicalSource);
+        startContradictionMode(politicalSource);
+    }, 1000);
 
-        console.log('Display mode: Starting with contradiction flow');
-        return; // Skip test data and other subscriptions in display mode
-    }
+    console.log('Display initialized - controlled via control.html');
+}
 
-    // Add some immediate test data to verify flow is working
-    addTestData();
-
-    // Subscribe to new data
-    dataSource.on('newData', (data) => {
-        console.log('New data received:', data.source);
-
-        // Block ALL live data when custom content is active
-        if (customContent.isActive) {
-            console.log('Custom content active - blocking live data');
-            return;
-        }
-
-        // Filter data based on flow mode
-        const currentMode = flowEngine.mode;
-        const isNYTimesMode = currentMode === 'nytimeschaos' || currentMode === 'nytimestypewriter';
-        const isNYTimesData = data.source.includes('NY Times');
-
-        // If we're in NY Times mode, only show NY Times content
-        // If we're in regular mode, show everything
-        if (isNYTimesMode && !isNYTimesData) {
-            return; // Skip non-NY Times data in NY Times modes
-        }
-
-        flowEngine.addItem(data);
-        analytics.track(data);
-    });
-
-    // Start analytics update loop
-    setInterval(updateAnalytics, 1000);
-
-    // Initialize political speech panel
-    initPoliticalSpeechPanel();
-
-    console.log('Initialization complete');
+// Set up remote control via BroadcastChannel
+function setupRemoteControl() {
+    // This is handled later in the file via controlChannel
 }
 
 // Initialize political speech panel with speakers and filters

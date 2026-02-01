@@ -3,273 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Overheard - The Internet Washing Over You</title>
+    <title>Overheard</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
-    <script>
-        // Check for display mode (no controls)
-        const isDisplayMode = new URLSearchParams(window.location.search).has('display');
-        if (isDisplayMode) {
-            document.documentElement.classList.add('display-mode');
-        }
-    </script>
     <style>
-        /* Hide all controls in display mode */
-        html.display-mode .controls,
-        html.display-mode .political-panel,
-        html.display-mode .custom-content-panel,
-        html.display-mode .analytics-panel,
-        html.display-mode .accumulation-panel,
-        html.display-mode .panel-header,
-        html.display-mode .toggle-btn,
-        html.display-mode button:not(.close-btn) {
-            display: none !important;
-            visibility: hidden !important;
-            opacity: 0 !important;
-            pointer-events: none !important;
-        }
-
-        html.display-mode body {
+        /* Clean art display - no controls */
+        body {
+            margin: 0;
+            padding: 0;
             overflow: hidden;
+            cursor: none;
+            background: #000000;
         }
 
-        html.display-mode .ocean-container {
+        .ocean-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
+            background: #000000;
         }
     </style>
 </head>
-<body>
+<body class="art-mode-active">
     <div class="ocean-container" id="oceanContainer"></div>
 
-    <div class="controls">
-        <div class="control-group">
-            <label>Flow Mode:</label>
-            <select id="flowMode">
-                <option value="wave">Wave Flow</option>
-                <option value="customtext">Custom Text</option>
-                <option value="probability">AI Probability Flow</option>
-                <option value="cascade">Cascade</option>
-                <option value="chaos">Chaos</option>
-                <option value="matrix">Matrix Rain</option>
-                <option value="spiral">Spiral Vortex</option>
-                <option value="explosion">Explosion</option>
-                <option value="river">River Stream</option>
-                <option value="orbit">Orbital</option>
-                <option value="redacted">Redacted</option>
-                <option value="typewriter">Typewriter</option>
-                <option value="overwrite">Overwrite</option>
-                <option value="ticker">News Ticker</option>
-                <option value="takeover">Takeover</option>
-                <option value="nytimeschaos">NY Times Chaos</option>
-                <option value="nytimestypewriter">NY Times Typewriter</option>
-                <optgroup label="Political Speech">
-                    <option value="testimony">Testimony</option>
-                    <option value="contradiction">Contradiction</option>
-                    <option value="factcheck">Fact Check</option>
-                </optgroup>
-                <optgroup label="Political Art">
-                    <option value="therecord">The Record</option>
-                    <option value="accumulation">Accumulation</option>
-                    <option value="correction">The Correction</option>
-                    <option value="whosaidit">Who Said It?</option>
-                </optgroup>
-            </select>
-        </div>
-        <div class="control-group">
-            <label>Speed:</label>
-            <input type="range" id="speedControl" min="1" max="10" value="5">
-        </div>
-        <div class="control-group">
-            <label>Density:</label>
-            <input type="range" id="densityControl" min="1" max="10" value="5">
-        </div>
-        <button id="toggleAnalytics">Analytics: OFF</button>
-        <button id="toggleCustomContent" class="toggle-btn">Custom Content</button>
-        <button id="togglePoliticalPanel" class="toggle-btn political-btn">Political Speech</button>
-    </div>
-
-    <!-- Political Speech Panel -->
-    <div class="political-panel" id="politicalPanel" style="display: none;">
-        <div class="panel-header">
-            <h3>Political Speech</h3>
-            <button id="closePoliticalPanel" class="close-btn">x</button>
-        </div>
-
-        <div class="panel-content">
-            <!-- Political Only Toggle -->
-            <div class="toggle-section">
-                <label class="toggle-switch">
-                    <input type="checkbox" id="politicalOnlyMode">
-                    <span class="slider"></span>
-                    <span class="toggle-label">Political Speeches Only</span>
-                </label>
-            </div>
-
-            <!-- Speaker Filter -->
-            <div class="filter-section">
-                <label>Filter by Speaker:</label>
-                <div id="speakerFilters" class="checkbox-grid">
-                    <!-- Populated by JavaScript -->
-                </div>
-            </div>
-
-            <!-- Topic Filter -->
-            <div class="filter-section">
-                <label>Filter by Topic:</label>
-                <select id="topicFilter">
-                    <option value="">All Topics</option>
-                    <!-- Populated by JavaScript -->
-                </select>
-            </div>
-
-            <!-- Rhetoric Filter -->
-            <div class="filter-section">
-                <label>Filter by Rhetoric:</label>
-                <select id="rhetoricFilter">
-                    <option value="">All Types</option>
-                    <!-- Populated by JavaScript -->
-                </select>
-            </div>
-        </div>
-    </div>
-
-    <!-- Custom Content Panel -->
-    <div class="custom-content-panel" id="customContentPanel" style="display: none;">
-        <div class="panel-header">
-            <h3>🎨 Custom Content</h3>
-            <button id="closeCustomPanel" class="close-btn">×</button>
-        </div>
-
-        <div class="panel-content">
-            <!-- Toggle Switch -->
-            <div class="toggle-section">
-                <label class="toggle-switch">
-                    <input type="checkbox" id="useCustomContent">
-                    <span class="slider"></span>
-                    <span class="toggle-label">Use Custom Content (stops live data)</span>
-                </label>
-            </div>
-
-            <!-- Text Input -->
-            <div class="input-section">
-                <label>📝 Your Text:</label>
-                <textarea id="customTextInput" placeholder="Enter any text... paste a poem, article, message, or anything you want to see flow across the screen.
-
-You can paste as much text as you want!
-
-Try 'Typewriter' mode for the most readable experience." rows="6"></textarea>
-                <div class="input-controls">
-                    <button id="clearTextBtn" class="small-btn">Clear Text</button>
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="loopContent" checked>
-                        Loop content continuously
-                    </label>
-                </div>
-            </div>
-
-            <!-- Image Input -->
-            <div class="input-section">
-                <label>🖼️ Your Image:</label>
-                <div class="image-upload-area">
-                    <input type="file" id="imageInput" accept="image/*" style="display: none;">
-                    <button id="uploadImageBtn" class="upload-btn">📁 Choose Image</button>
-                    <div id="imagePreview" class="image-preview" style="display: none;">
-                        <img id="previewImg" alt="Preview">
-                        <button id="clearImageBtn" class="remove-btn">×</button>
-                    </div>
-                </div>
-
-                <!-- Image Mode Selection -->
-                <div class="image-mode-selection" id="imageModeSection" style="display: none;">
-                    <label>Image Flow Mode:</label>
-                    <div class="radio-group">
-                        <label class="radio-label">
-                            <input type="radio" name="imageMode" value="whole" checked>
-                            <span>Whole Image</span>
-                            <small>Single image moves as one unit with flow physics</small>
-                        </label>
-                        <label class="radio-label">
-                            <input type="radio" name="imageMode" value="tiles">
-                            <span>Tiled Pieces</span>
-                            <small>Image broken into tiles that flow independently</small>
-                        </label>
-                        <label class="radio-label">
-                            <input type="radio" name="imageMode" value="repeated">
-                            <span>Repeated Copies</span>
-                            <small>Multiple copies of image flowing across screen</small>
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Submit Button -->
-            <button id="applyCustomContent" class="apply-btn">✨ Apply & Start Flow</button>
-
-            <!-- Stats -->
-            <div class="custom-stats" id="customStats" style="display: none;">
-                <h4>Content Stats:</h4>
-                <div id="statsDisplay"></div>
-            </div>
-        </div>
-    </div>
-
-    <div class="analytics-panel" id="analyticsPanel" style="display: none;">
-        <h3>Flow Analytics</h3>
-        <div id="analyticsData"></div>
-    </div>
-
-    <!-- Accumulation Control Panel -->
-    <div class="accumulation-panel" id="accumulationPanel" style="display: none;">
-        <div class="panel-header">
-            <h3>Accumulation Controls</h3>
-            <button id="closeAccumulationPanel" class="close-btn">x</button>
-        </div>
-
-        <div class="panel-content">
-            <!-- Speaker Sequence -->
-            <div class="filter-section">
-                <label>Speaker Sequence (drag to reorder):</label>
-                <div id="speakerSequence" class="speaker-sequence">
-                    <!-- Populated by JavaScript -->
-                </div>
-            </div>
-
-            <!-- Timing Controls -->
-            <div class="filter-section">
-                <label>Time per Speaker:</label>
-                <div class="timing-control">
-                    <input type="range" id="speakerDuration" min="10" max="120" value="30">
-                    <span id="speakerDurationLabel">30 seconds</span>
-                </div>
-            </div>
-
-            <div class="filter-section">
-                <label>Quote Interval:</label>
-                <div class="timing-control">
-                    <input type="range" id="quoteInterval" min="1" max="10" value="3">
-                    <span id="quoteIntervalLabel">3 seconds</span>
-                </div>
-            </div>
-
-            <div class="filter-section">
-                <label>Max Quotes per Speaker:</label>
-                <div class="timing-control">
-                    <input type="range" id="quotesPerSpeaker" min="5" max="50" value="15">
-                    <span id="quotesPerSpeakerLabel">15 quotes</span>
-                </div>
-            </div>
-
-            <!-- Control Buttons -->
-            <div class="control-buttons">
-                <button id="startAccumulation" class="apply-btn">Start Accumulation</button>
-                <button id="skipSpeaker" class="small-btn">Skip to Next Speaker</button>
-            </div>
-        </div>
-    </div>
+    <!-- Hidden elements needed by main.js for initialization -->
+    <select id="flowMode" style="display:none;">
+        <option value="contradiction" selected>Contradiction</option>
+    </select>
+    <input type="range" id="speedControl" value="5" style="display:none;">
+    <input type="range" id="densityControl" value="5" style="display:none;">
 
     <script type="module" src="main.js"></script>
 </body>
